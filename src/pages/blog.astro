@@ -1,0 +1,140 @@
+---
+import CardBlogRecent from '@/components/ui/cards/CardBlogRecent.astro';
+import CardBlog from '@/components/ui/cards/CardBlog.astro';
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts')
+
+
+posts.sort((a, b) => {
+	const dateA = new Date(a.data.pubDate);
+	const dateB = new Date(b.data.pubDate);
+  return dateB.getTime() - dateA.getTime();   
+});
+
+const otherPosts =posts.slice(1);
+const mostRecentPost = posts[0];
+
+
+const pageTitle = "Blog";
+const title: string = `<span class="text-sky-500">Belgrano</span> al día`;
+
+
+
+const subTitle: string =
+  "Mantenete informado sobre todas las novedades del <b>Club Atlético Belgrano</b>. Noticias, entrevistas, análisis, estadísticas y mucho más."
+---
+
+<Layout title={pageTitle}>
+
+	<!--Page header-->
+	<main class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"></main>
+		<div class="mx-auto max-w-3xl text-center">
+			<h1
+				class="block text-balance text-4xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0"
+			>
+				<Fragment set:html={title} />
+			</h1>
+			<p
+			class="mt-4 text-pretty text-lg text-neutral-600 dark:text-neutral-400"
+		  >			
+			<Fragment set:html={subTitle} />
+		  </p>
+		</div>
+	</main>
+
+	<!-- Comienza el post mas reciente -->
+	<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+		<CardBlogRecent post={mostRecentPost} />
+	</section>
+
+	
+	
+	<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+			<div class="grid gap-6 lg:grid-cols-2">
+				{
+                    otherPosts.map( (post: { slug: any; data: any; }) => {
+                        const { slug, data} = post
+                        const { title, image, author, pubDate} = data
+
+                        return (
+                            <article>
+								<CardBlog
+									title={title} 
+									url={slug} 
+									image={image.url}
+									alt={image.alt}
+									author={author}
+									date={pubDate}
+									/>                                
+                            </article>
+							
+                        )
+                    })
+                }
+
+            </div>
+
+    </section>
+</Layout>
+
+
+<style>
+	{/* main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	} */}
+</style>

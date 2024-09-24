@@ -1,0 +1,72 @@
+---
+import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
+import { getCollection } from "astro:content";
+
+
+export async function getStaticPaths () {
+    const posts = await getCollection("posts");
+
+    return posts.map((post) => ({
+        params: { id: post.slug},
+        props: { post }
+    }))
+}
+
+const {post} = Astro.props
+const { data, slug } = post
+const { title, author, image } = data
+
+---
+<div class="grid gap-8 sm:grid-cols-2 sm:items-center">
+
+  <div class="sm:order-2">
+    <a
+    class="group relative block rounded-xl outline-none ring-zinc-500 transition duration-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
+    href={`/posts/${slug}`} transition:name={`title-${slug}`}
+    data-astro-prefetch
+  >
+    <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">
+
+      
+      <img
+        class="absolute start-0 top-0 size-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
+        src={`./images/blog/${image.url}`}
+        alt={image.alt}
+        draggable={"false"}
+        loading={"eager"}
+      />
+    </div>
+  </a>
+  </div>
+
+  <div class="sm:order-1">
+    <h2
+      class="text-balance text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-3xl lg:text-4xl lg:leading-tight xl:text-5xl xl:leading-tight"
+    >
+      <a
+        class="outline-none ring-zinc-500 transition duration-300 hover:text-sky-400 focus-visible:ring dark:text-neutral-300 dark:ring-zinc-200 dark:hover:text-sky-400 dark:focus:outline-none"
+        href={`/posts/${slug}`}
+      >
+      {title}
+      </a>
+    </h2>
+
+    <div class="mt-6 flex items-center sm:mt-10">
+
+
+      <div class="ms-3 sm:ms-4">
+        <p class="font-bold text-neutral-800 dark:text-neutral-200 sm:mb-1">
+          {author}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <PrimaryCTA
+        url={`/posts/${slug}`}
+        title="Leer más"
+        data-astro-prefetch
+      />
+    </div>
+  </div>
+</div>
