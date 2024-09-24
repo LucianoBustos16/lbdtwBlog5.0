@@ -27,16 +27,14 @@ const strings = navBarLinks;
       <div
         class="px-4 flex justify-between gap-x-2 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7"
       >
-      {strings.navBarLinks.map(link  => (
-        
-        <NavLink url={link.url} name={link.name} icon={link.icon} />
-        
+      {strings.navBarLinks.map(link => (
+        <NavLink
+          url={link.url}
+          name={link.name}
+          icon="sun" 
+        />
       ))}
 
-        <!-- ThemeIcon component specifically for larger screens -->
-        <!-- <span class="hidden md:inline-block">
-          <ThemeIcon />
-        </span> -->
       </div>
     </div>
     </nav>
