@@ -16,7 +16,7 @@ export async function getStaticPaths () {
 
 const {post} = Astro.props
 const { data, slug } = post
-const { title, author, image, pubDate } = data
+const { title, author, image, pubDate, tags } = data
 
 const { Content } = await render(post)
 
@@ -31,7 +31,7 @@ const { Content } = await render(post)
             <h1 class="block text-balance text-4xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0">
                 <Fragment set:html={title} />
             </h1>		
-
+            
             <div class="text-sm">
                 <h4 class="font-bold text-neutral-50">
                 {author}
@@ -54,6 +54,16 @@ const { Content } = await render(post)
         <div class="prose-xl text-white prose-invert m-auto">
         <Content />
         </div>
+
+        <div class="mt-2">
+            {
+                tags.map( (tag) => 
+                <span class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{tag}</span>
+    
+                )
+            }
+        </div>
+        
 
 </section>
 

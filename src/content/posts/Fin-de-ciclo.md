@@ -5,7 +5,7 @@ image:
     url: "Guille-Farre.webp"
     alt: "Guillermo Farre dando indicaciones"
 pubDate: 2024-03-13
-tags: ["Analisis"]
+tags: ["Analisis", "Noticias"]
 ---
 
 Belgrano empató una vez más, esta vez frente a **Central Córdoba en Santiago del Estero**, con un marcador final de 2-2. Los goles fueron obra de Lucas Passerini, Ulises Sánchez, Santiago Laquidaín y Thiago Nuss, culminando así un encuentro que terminó nivelado, donde el equipo Pirata no pudo superar a un rival que se mostró inferior en el terreno de juego.
