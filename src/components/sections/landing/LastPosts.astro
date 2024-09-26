@@ -1,0 +1,55 @@
+---
+import PrimaryCTA from '@/components/ui/buttons/PrimaryCTA.astro';
+import CardBlog from '@/components/ui/cards/CardBlog.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts')
+
+
+posts.sort((a, b) => {
+	const dateA = new Date(a.data.pubDate);
+	const dateB = new Date(b.data.pubDate);
+  return dateB.getTime() - dateA.getTime();   
+});
+
+    const latesPosts =posts.slice(0,5);
+
+const title: string = `<span class="text-sky-500">Noticias</span>`;
+---
+<section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+	<div class="mx-auto mb-6 w-full space-y-1 text-center sm:w-1/2 lg:w-1/3">
+        <h2 class="text-balance text-2xl font-bold leading-tight text-slate-900 dark:text-neutral-200 sm:text-3xl">
+            <Fragment set:html={title}/>
+        <h2/>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+        {
+            latesPosts.map( (post: { slug: any; data: any; }) => {
+                const { slug, data} = post
+                const { title, image, author, pubDate} = data
+
+                return (
+                    <article>
+                        <CardBlog
+                            title={title} 
+                            url={slug} 
+                            image={image.url}
+                            alt={image.alt}
+                            author={author} 
+                            date={pubDate}
+                            />                                
+                    </article>
+                    
+                )
+            })
+        }
+    </div>
+
+    <div class="mt-5 flex justify-center">
+        <PrimaryCTA title='Ver todas' url='/blog'/>
+    </div>
+
+
+
+</section>
