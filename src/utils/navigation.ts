@@ -3,7 +3,7 @@ const navBarLinks = [
     { name: "Inicio", url: "/", icon: "home", },
     { name: "Blog", url: "/blog", icon: "noticias", },
     { name: "Estadisticas", url: "/statistics", icon: "noticias", },
-    {name: "Live", url: "/about", icon: "noticias",}
+    {name: "LBDTw Tv", url: "/lbdtwtv", icon: "noticias",}
   ];
   // An array of links for footer
   const footerLinks = [
