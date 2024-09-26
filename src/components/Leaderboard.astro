@@ -9,8 +9,8 @@ const onlyMobile = "hidden md:table-cell text-center"
 
 
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+<div class="relative overflow-x-auto shadow-md rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-800 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class=`${thClasses}`>
@@ -46,14 +46,14 @@ const onlyMobile = "hidden md:table-cell text-center"
         </thead>
         <tbody>
             {leaderboard.map((team) => (
-                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <tr class={`odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ${team.team.id == 'Belgrano' ? 'row-CAB' : '' }`}>
                     <th scope="row" class={`${bodyTdClasses} font-bold`}>
                         {team.rank}
                     </th>
-                    <td class="px-2 py-4 text-gray-900 whitespace-nowrap flex gap-1 items-center">
-                        <img src={team.team.image} alt={`Escudo de ${team.team.name}`} class=" w-6" width="24" height="24">
-                        <div class="font-normal hidden md:block">{team.team.name}</div>
-                        <div class="font-normal md:hidden">{team.team.shortName}</div>
+                    <td class="px-2 py-4 whitespace-nowrap flex gap-2 items-center">
+                        <img src={team.team.image} alt={`Escudo de ${team.team.name}`} class="w-6 md:w-10" width="40" height="40">
+                        <div class="font-bold hidden md:block">{team.team.name}</div>
+                        <div class="font-bold md:hidden">{team.team.shortName}</div>
                     </td>
                 <td class={`${bodyTdClasses} font-bold`}>
                     {team.points}
@@ -86,3 +86,11 @@ const onlyMobile = "hidden md:table-cell text-center"
         </tbody>
     </table>
 </div>
+
+
+<style>
+    .row-CAB{
+        background-color: #0598D1 !important;
+        color: white !important;
+    }
+</style>

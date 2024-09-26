@@ -11,7 +11,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -20,6 +20,7 @@ const { title } = Astro.props;
 		<ClientRouter/>
 
 		<script is:inline>
+			// This code is inlined in the head to make dark mode instant & blocking.
 			const getThemePreference = () => {
 				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
 					return localStorage.getItem('theme');
@@ -30,6 +31,7 @@ const { title } = Astro.props;
 			document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
 		
 			if (typeof localStorage !== 'undefined') {
+				// Watch the document element and persist user preference when it changes.
 				const observer = new MutationObserver(() => {
 					const isDark = document.documentElement.classList.contains('dark');
 					localStorage.setItem('theme', isDark ? 'dark' : 'light');
@@ -38,7 +40,7 @@ const { title } = Astro.props;
 			}
 		</script>
 	</head>
-	<body class="bg-neutral-200 selection:bg-primary selection:text-neutral-200 dark:bg-[#000214]">
+	<body class="bg-neutral-50 selection:bg-primary selection:text-neutral-200 dark:bg-[#000214]">
 		<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
 			<Header />
 			<slot />
