@@ -2,6 +2,7 @@
 import BrandLogo from '@components/BrandLogo.astro';
 import navBarLinks from "@utils/navigation.ts";
 import NavLink from '../../ui/links/NavLink.astro';
+import ThemeToggle from '@/components/ui/buttons/ThemeToggle.astro';
 
 const strings = navBarLinks;
 ---
@@ -33,7 +34,9 @@ const strings = navBarLinks;
       ))}
 
       </div>
+
     </div>
+    <ThemeToggle/>
     </nav>
 </header>
 
