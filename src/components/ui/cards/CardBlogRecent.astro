@@ -1,6 +1,7 @@
 ---
 import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
 import { getCollection } from "astro:content";
+import { formatDate } from "@utils/utils";
 
 
 export async function getStaticPaths () {
@@ -14,8 +15,7 @@ export async function getStaticPaths () {
 
 const {post} = Astro.props
 const { data, slug } = post
-const { title, author, image } = data
-
+const { title, author, image, pubDate } = data
 ---
 <div class="grid gap-8 sm:grid-cols-2 sm:items-center">
 
@@ -56,7 +56,7 @@ const { title, author, image } = data
 
       <div class="ms-3 sm:ms-4">
         <p class="font-bold text-neutral-800 dark:text-neutral-200 sm:mb-1">
-          {author}
+          {author} • <span class="text-xs text-slate-900 dark:text-neutral-50/[.8]">{formatDate(pubDate)}</span> 
         </p>
       </div>
     </div>
