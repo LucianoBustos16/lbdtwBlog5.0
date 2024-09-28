@@ -22,7 +22,7 @@ const { title, author, image, pubDate } = data
   <div class="sm:order-2">
     <a
     class="group relative block rounded-xl outline-none ring-zinc-500 transition duration-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
-    href={`/posts/${slug}`} transition:name={`title-${slug}`}
+    href={`/blog/${slug}`} transition:name={`title-${slug}`}
     data-astro-prefetch
   >
     <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">
@@ -45,7 +45,7 @@ const { title, author, image, pubDate } = data
     >
       <a
         class="outline-none ring-zinc-500 transition duration-300 hover:text-sky-400 focus-visible:ring dark:text-neutral-300 dark:ring-zinc-200 dark:hover:text-sky-400 dark:focus:outline-none"
-        href={`/posts/${slug}`}
+        href={`/blog/${slug}`}
       >
       {title}
       </a>
@@ -63,7 +63,7 @@ const { title, author, image, pubDate } = data
 
     <div class="mt-5">
       <PrimaryCTA
-        url={`/posts/${slug}`}
+        url={`/blog/${slug}`}
         title="Leer más"
         data-astro-prefetch
       />

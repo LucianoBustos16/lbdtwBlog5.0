@@ -7,12 +7,12 @@ import ThemeToggle from '@/components/ui/buttons/ThemeToggle.astro';
 const strings = navBarLinks;
 
 const { pathname } = Astro.url
-const normalizedPathName =
-	pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
+const normalizedPathName = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
+const isBlogIntern = normalizedPathName.startsWith("/blog") ? "/blog" : pathname
 
 const pages = strings.navBarLinks.map((page) => ({
 	...page,
-	active: page.active ?? normalizedPathName === page.url
+	active: page.active ?? (normalizedPathName === page.url || isBlogIntern === page.url)
 }))
 
 ---
@@ -41,7 +41,7 @@ const pages = strings.navBarLinks.map((page) => ({
           name={link.name}
           icon="sun"
           class:list={[
-							{ "current-page text-accent": link.active },
+							{ "current-page active": link.active },
 							{ "text-white": !link.active },
 						]}
         />
