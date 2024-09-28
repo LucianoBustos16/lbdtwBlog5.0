@@ -5,6 +5,16 @@ import NavLink from '../../ui/links/NavLink.astro';
 import ThemeToggle from '@/components/ui/buttons/ThemeToggle.astro';
 
 const strings = navBarLinks;
+
+const { pathname } = Astro.url
+const normalizedPathName =
+	pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
+
+const pages = strings.navBarLinks.map((page) => ({
+	...page,
+	active: page.active ?? normalizedPathName === page.url
+}))
+
 ---
 
 <header class="fixed md:sticky inset-x-0 bottom-4 md:top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start">
@@ -25,11 +35,15 @@ const strings = navBarLinks;
       <div
         class="px-4 flex justify-between gap-x-2 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7"
       >
-      {strings.navBarLinks.map(link => (
+      {pages.map(link => (
         <NavLink
           url={link.url}
           name={link.name}
-          icon="sun" 
+          icon="sun"
+          class:list={[
+							{ "current-page text-accent": link.active },
+							{ "text-white": !link.active },
+						]}
         />
       ))}
 
