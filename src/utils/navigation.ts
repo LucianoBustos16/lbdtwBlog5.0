@@ -1,12 +1,12 @@
-import { boolean } from "astro:schema";
 
-// An array of links for navigation bar
-const navBarLinks = [
-    { name: "Inicio", url: "/", icon: "home",  },
-    { name: "Blog", url: "/blog", icon: "noticias", active: boolean },
-    { name: "Estadisticas", url: "/statistics", icon: "noticias", },
-    {name: "LBDTw Tv", url: "/lbdtwtv", icon: "noticias",}
-  ];
+
+// const navBarLinks = [
+//     { name: "Inicio", url: "/", icon: `home`,  },
+//     { name: "Blog", url: "/blog", icon: `noticias`,active: },
+//     { name: "Estadisticas", url: "/statistics", icon: `trofeo`, },
+//     {name: "LBDTw Tv", url: "/lbdtwtv", icon: `youtube`,}
+//   ];
+
   // An array of links for footer
   const footerLinks = [
     {
@@ -38,7 +38,7 @@ const navBarLinks = [
   };
   
   export default {
-    navBarLinks,
+    // navBarLinks,
     footerLinks,
     socialLinks,
   };
