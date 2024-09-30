@@ -2,12 +2,13 @@
 import BrandLogo from '@components/BrandLogo.astro';
 import NavLink from '../../ui/links/NavLink.astro';
 import ThemeToggle from '@/components/ui/buttons/ThemeToggle.astro';
+import { iconPaths } from '@components/ui/icons/icons';
 
 const { pathname } = Astro.url
 const normalizedPathName = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
 
-const navBarLinks = [
-    { name: "Inicio", url: "/", icon: `home`,  },
+const navBarLinks: { name: string; url: string; icon: keyof typeof iconPaths; active?: boolean }[] = [
+    { name: "Inicio", url: "/", icon: "home",  },
     { name: "Blog", url: "/blog", icon: `noticias`, active: normalizedPathName.startsWith("/blog") },
     { name: "Estadisticas", url: "/statistics", icon: `trofeo`, },
     {name: "LBDTw Tv", url: "/lbdtwtv", icon: `youtube`,}
