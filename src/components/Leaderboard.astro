@@ -45,7 +45,7 @@ const onlyMobile = "hidden md:table-cell text-center"
                 </th>
         </thead>
         <tbody>
-            {leaderboard.map((team) => (
+            {leaderboard.map((team: { team: { id: string; image: string; name: unknown; shortName: unknown }; rank: unknown; points: unknown; matchesPlayed: unknown; matchesWon: unknown; matchesDrawn: unknown; matchesLost: unknown; goalsFor: unknown; goalsAgainst: unknown; goalDifference: unknown }) => (
                 <tr class={`odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ${team.team.id == 'Belgrano' ? 'row-CAB' : '' }`}>
                     <th scope="row" class={`${bodyTdClasses} font-bold`}>
                         {team.rank}
