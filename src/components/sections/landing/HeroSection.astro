@@ -3,6 +3,7 @@
 
 import SmokeBackground from '../../SmokeBackground.astro';
 import BrandLogo from '../../BrandLogo.astro';
+import HeroLogo from './HeroLogo.astro';
 
 // Define props from Astro
 const {
@@ -23,10 +24,11 @@ class="h-screen flex flex-col items-center justify-center bg-cover bg-center"
 >
 <SmokeBackground />
 
-<BrandLogo class="text-white w-32 animate-fade-in-up" />
+<HeroLogo/>
+
   <div class="text-center animate-fade-in-up animate-delay-300">
     <h1
-      class="text-balance text-3xl font-bold tracking-tight text-neutral-200 sm:text-4xl lg:text-6xl lg:leading-tight"
+      class="animate-fade-in-up text-balance text-3xl font-bold tracking-tight text-neutral-200 sm:text-4xl lg:text-6xl lg:leading-tight"
     >
       <Fragment set:html={title} />
     </h1>
