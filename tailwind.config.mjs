@@ -8,7 +8,8 @@ export default {
 		extend: {
 			colors: {
 				'primary': '#0598D1',
-			}
+				'textDark': '#4b5563'
+			},
 		},
 	},
 	plugins: [typography],

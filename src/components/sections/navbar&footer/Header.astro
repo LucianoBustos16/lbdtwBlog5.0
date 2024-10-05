@@ -21,7 +21,7 @@ const pages = navBarLinks.map((page) => ({
 
 ---
 
-<header class="header-animate backdrop-blur-[50px] md:backdrop-blur-0 w-full mb-10 overflow-visible z-[99999] py-6">
+<header class="header-animate backdrop-blur-[50px] md:backdrop-blur-0 w-full mb-10 overflow-visible z-[99999] py-6 text-textDark dark:text-white ">
   <div class="grid items-center justify-center md:justify-normal w-full grid-cols-[auto_1fr] mx-auto 	gap-x-10 md:flex max-w-[1200px]">
     <div class="md:flex-grow md:basis-0 flex justify-start">
       <a href="/" class="ml-4 flex items-center gap-2.5 font-bold transition-transform duration-300 hover:scale-110"
@@ -29,12 +29,12 @@ const pages = navBarLinks.map((page) => ({
         aria-label="Ir a la página principal">
         <BrandLogo class="text-primary h-auto w-8 md:w-12" />
       <!-- <span class="hidden lg:block text-3xl font-montserrat">LBDtw</span> -->
-      <span class="text-gray-800 text-[10px] uppercase border px-1.5 py-0.5 rounded-full dark:text-gray-300 leading-none">Beta</span>
+      <span class="text-gray-800 border-gray-800 text-[10px] uppercase border px-1.5 py-0.5 rounded-full dark:text-gray-300 dark:border-gray-300  leading-none">Beta</span>
 
     </a>
     </div>
     
-    <nav id="header-navbar" class="col-span-full overflow-x-auto row-[2/3] grid grid-rows-[0fr] transition-[grid-template-rows] data-[open]:grid-rows-[1fr] md:justify-center md:flex group/nav">
+    <nav id="header-navbar" class=" col-span-full overflow-x-auto row-[2/3] grid grid-rows-[0fr] transition-[grid-template-rows] data-[open]:grid-rows-[1fr] md:justify-center md:flex group/nav">
       <ul class="flex flex-col items-center overflow-x-hidden overflow-y-hidden md:flex-row gap-x-2">
         {pages.map(link => (
             <li class="flex justify-center w-full first:mt-5 md:first:mt-0 md:block md:w-auto">
@@ -44,7 +44,6 @@ const pages = navBarLinks.map((page) => ({
               icon={link.icon}
               class:list={[
                   { "current-page active": link.active },
-                  { "text-white": !link.active },
                 ]}
             />
         </li>
