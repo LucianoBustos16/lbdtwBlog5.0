@@ -21,40 +21,60 @@ const pages = navBarLinks.map((page) => ({
 
 ---
 
-<header class="fixed md:sticky inset-x-0 bottom-4 md:top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start">
-    <nav
-      class="relative mx-2 w-full rounded-[36px] border border-yellow-100/40 bg-yellow-50/60 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-800/80 dark:backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 md:py-0 lg:px-8 xl:mx-auto"
-      aria-label="Global"
-    >
-    <div class="flex items-center justify-between">
-      <a class="hidden md:inline-block flex-none rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none" href="/" aria-label="Brand">
-        <BrandLogo class="text-primary h-auto w-8 md:w-20" /> 
-      </a>
+<header class="header-animate backdrop-blur-[50px] md:backdrop-blur-0 w-full mb-10 overflow-visible z-[99999] py-6">
+  <div class="grid items-center justify-center md:justify-normal w-full grid-cols-[auto_1fr] mx-auto 	gap-x-10 md:flex max-w-[1200px]">
+    <div class="md:flex-grow md:basis-0 flex justify-start">
+      <a href="/" class="ml-4 flex items-center gap-2.5 font-bold transition-transform duration-300 hover:scale-110"
+        title="Ir a la página principal"
+        aria-label="Ir a la página principal">
+        <BrandLogo class="text-primary h-auto w-8 md:w-12" />
+      <!-- <span class="hidden lg:block text-3xl font-montserrat">LBDtw</span> -->
+      <span class="text-gray-800 text-[10px] uppercase border px-1.5 py-0.5 rounded-full dark:text-gray-300 leading-none">Beta</span>
 
+    </a>
     </div>
-    <div
-      id="navbar-collapse-with-animation"
-      class="grow basis-full overflow-hidden transition-all duration-300 md:block"
-    >
-      <div
-        class="px-4 flex justify-between gap-x-2 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7"
-      >
-      {pages.map(link => (
-        <NavLink
-          url={link.url}
-          name={link.name}
-          icon={link.icon}
-          class:list={[
-							{ "current-page active": link.active },
-							{ "text-white": !link.active },
-						]}
-        />
-      ))}
-
-      </div>
-
-    </div>
+    
+    <nav id="header-navbar" class="col-span-full overflow-x-auto row-[2/3] grid grid-rows-[0fr] transition-[grid-template-rows] data-[open]:grid-rows-[1fr] md:justify-center md:flex group/nav">
+      <ul class="flex flex-col items-center overflow-x-hidden overflow-y-hidden md:flex-row gap-x-2">
+        {pages.map(link => (
+            <li class="flex justify-center w-full first:mt-5 md:first:mt-0 md:block md:w-auto">
+            <NavLink
+              url={link.url}
+              name={link.name}
+              icon={link.icon}
+              class:list={[
+                  { "current-page active": link.active },
+                  { "text-white": !link.active },
+                ]}
+            />
+        </li>
+          ))}
+      </ul>
+    </nav>  
     <ThemeToggle/>
-    </nav>
-</header>
+  </div>
+  </header>
 
+
+<style>
+  .header-animate{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    animation: reduce-header linear both;
+    animation-timeline: scroll();
+    animation-range: 0 150px;
+    }
+
+    @keyframes reduce-header{
+
+      100% {
+      box-shadow: 0 5px 50px -5px #ffffff1a, 0 0 0 1px #ffffff1a;
+      background: #0000004d;
+      padding-block: 1rem;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+  }
+    }
+</style>
