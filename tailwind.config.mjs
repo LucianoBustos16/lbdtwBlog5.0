@@ -1,4 +1,5 @@
 import typography from '@tailwindcss/typography'
+import animations from '@midudev/tailwind-animations'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,5 +13,6 @@ export default {
 			},
 		},
 	},
-	plugins: [typography],
+	plugins: 
+	[typography, animations]
 }

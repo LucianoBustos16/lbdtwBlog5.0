@@ -37,7 +37,7 @@ const pages = navBarLinks.map((page) => ({
     <nav id="header-navbar" class=" col-span-full overflow-x-auto row-[2/3] grid grid-rows-[0fr] transition-[grid-template-rows] data-[open]:grid-rows-[1fr] md:justify-center md:flex group/nav">
       <ul class="flex flex-col items-center overflow-x-hidden overflow-y-hidden md:flex-row gap-x-2">
         {pages.map(link => (
-            <li class="flex justify-center w-full first:mt-5 md:first:mt-0 md:block md:w-auto">
+            <li class="flex justify-center w-full font-bold first:mt-5 md:first:mt-0 md:block md:w-auto">
             <NavLink
               url={link.url}
               name={link.name}
@@ -75,5 +75,6 @@ const pages = navBarLinks.map((page) => ({
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
   }
+  
     }
 </style>
