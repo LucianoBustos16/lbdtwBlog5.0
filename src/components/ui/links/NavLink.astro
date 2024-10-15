@@ -21,7 +21,7 @@ interface Props {
   id={url === "/" ? "home" : url.replace("/", "")}
   href={url}
   data-astro-prefetch
-  class=`${className} flex items-center md:w-auto justify-center gap-2 md:px-4 md:py-2 hover:bg-primary/5 md:rounded-2xl border border-transparent hover:border-brand-gray/10 transition-all min-h-[50px] md:text-base px-5 py-4 text-xl duration-300 w-full text-textDark`
+  class=`${className} flex items-center md:w-auto justify-center gap-2 md:px-4 md:py-2 hover:bg-primary/5 md:rounded-2xl border border-transparent hover:border-brand-gray/10 transition-all min-h-[50px] md:text-base px-5 py-4 text-xl duration-300 w-full text-textDark dark:text-white`
 >
 <div class:list={['md:hidden', className]}>
 { icon && <Icon icon={icon} />}
