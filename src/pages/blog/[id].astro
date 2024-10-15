@@ -25,19 +25,19 @@ const { Content } = await render(post)
 
 <Layout title={`${title}`}>
 
-    <section class="mx-auto md:max-w-3xl space-y-8 px-4 m-24 sm:px-6 lg:px-8 max-w-full text-slate-900 dark:text-neutral-200 ">
+    <section class="mx-auto md:max-w-3xl space-y-8 px-4 m-24 sm:px-6 lg:px-8 max-w-full text-textDark dark:text-neutral-200 ">
         <main class="space-y-4">
 
-            <h1 class="block text-balance text-4xl font-bold tracking-tight text-slate-900 dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0">
+            <h1 class="block text-balance text-4xl font-bold tracking-tight text-textDark dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0">
                 <Fragment set:html={title} />
             </h1>		
             
             <div class="text-sm">
-                <h4 class="font-bold text-slate-900 dark:text-neutral-200">
+                <h4 class="font-bold text-textLight dark:text-neutral-200">
                 {author}
                 </h4>
 
-                <p class="text-xs text-slate-900 dark:text-neutral-50/[.8]">
+                <p class="text-xs text-textLight dark:text-neutral-50/[.8]">
                 {formatDate(pubDate)}
                 </p>
             </div>
@@ -58,7 +58,7 @@ const { Content } = await render(post)
         <div class="mt-2">
             {
                 tags.map( (tag) => 
-                <span class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{tag}</span>
+                <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{tag}</span>
     
                 )
             }

@@ -1,0 +1,48 @@
+---
+---
+
+<header id="header">
+    <h1>Mi Header</h1>
+</header>
+
+<style>
+    /* Estilos básicos */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  transition: top 0.30s ease; /* Suaviza la transición */
+  z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+}
+
+main {
+  margin-top: 100px; /* Para que el contenido no se solape con el header */
+}
+
+.hidden {
+  top: -100px; /* Oculta el header subiéndolo fuera de la pantalla */
+}
+</style>
+
+<script>
+    const header = document.getElementById('header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > lastScrollY) {
+    // Si estamos haciendo scroll hacia abajo
+    header.classList.add('hidden');
+  } else {
+    // Si estamos haciendo scroll hacia arriba
+    header.classList.remove('hidden');
+  }
+  lastScrollY = window.scrollY;
+});
+
+</script>

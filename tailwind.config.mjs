@@ -9,7 +9,8 @@ export default {
 		extend: {
 			colors: {
 				'primary': 'var(--color-primary)',
-				'textDark': '#4b5563'
+				'textDark': '#4b5563',
+				'textLight':  '#525252',
 			},
 		},
 	},
