@@ -2,6 +2,7 @@
 import FooterSection from '@/components/sections/navbar&footer/FooterSection.astro';
 import Header from '../components/sections/navbar&footer/Header.astro';
 import { ClientRouter } from 'astro:transitions';
+import MobileMenu from '@/components/ui/buttons/MobileMenu.astro';
 
 interface Props {
 	title: string;
@@ -37,7 +38,8 @@ const { title } = Astro.props;
 	</head>
 	<body class="bg-neutral-50 selection:bg-primary selection:text-neutral-200 dark:bg-[#000214]">
 		<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-			<Header />
+			<!-- <Header /> -->
+			<MobileMenu />
 			<slot />
 		</div>
 		<FooterSection />
@@ -47,6 +49,7 @@ const { title } = Astro.props;
 	:root {
 	--color-primary	: #0598D1;
 	--bg-color: #ffffff80;
+	--background-color: #00000028;
 	}
 
   .dark {

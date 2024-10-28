@@ -1,0 +1,218 @@
+---
+// import FooterContent from "@/components/FooterContent.astro"
+import HamburgerButton from "@/components/ui/buttons/HamburgerButton.astro"
+import HeroLogo from "@/components/sections/landing/HeroLogo.astro"
+// import SocialButtons from "@/components/SocialButtons.astro"
+import { MOBILE_MENU_CONTENT_ID } from "@/consts/mobile-menu"
+import BrandLogo from "@/components/BrandLogo.astro"
+import ThemeToggle from "./ThemeToggle.astro"
+
+// remote last slash from pathname
+const { pathname } = Astro.url
+const normalizedPathName =
+	pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
+
+	type Page = {
+  name: string;
+  href: string;
+  active: boolean;
+  icon: string;
+  target?: string;  // Hacer que `target` sea opcional
+};
+
+const pages: Page[] = [
+{ name: "Inicio", href: "/", icon: "home",  },
+    { name: "Blog", href: "/blog", icon: `noticias`, active: normalizedPathName.startsWith("/blog") },
+    { name: "Estadisticas", href: "/statistics", icon: `trofeo`, },
+    {name: "LBDTw Tv", href: "/lbdtwtv", icon: `youtube`, }
+].map((page) => ({
+	...page,
+	active: page.active ?? normalizedPathName === page.href,
+}))
+
+const isCombatIntern = normalizedPathName.startsWith("/blog/")
+---
+
+<header class="h-16 lg:h-24 w-full mb-10 py-6 text-textDark dark:text-white ">
+	<div class="max-w-[1200px] flex justify-between mx-auto items-center">
+	
+	<a href="/" class="flex items-center gap-2.5 font-bold transition-transform duration-300 hover:scale-110"
+        title="Ir a la página principal"
+        aria-label="Ir a la página principal">
+        <BrandLogo class="text-primary h-auto w-8 md:w-12" />
+
+      <span class=" border-gray-800 text-[10px] uppercase border px-1.5 py-0.5 rounded-full dark:border-gray-300 leading-none">Beta</span>
+
+    </a>
+	<nav class="flex h-full w-full items-center justify-end lg:justify-end">
+		{
+			pages.map(({ name, href, active, target }, key) => (
+				<>
+					<a
+						href={href}
+						target={target}
+						rel={target === "_blank" ? "noopener noreferrer" : undefined}
+						class:list={[
+							"nav-item group relative hidden h-full select-none flex-row-reverse items-center justify-center gap-1 text-center font-bold lg:flex lg:px-6",
+							{ "current-page text-primary": active }
+						]}
+						id={`nav-link-${key}`}
+					>
+						<span class="z-10">{name}</span>
+
+						<div
+        class="mt-1 h-1 absolute -bottom-2 rounded-full w-4/5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+					</a>
+				</>
+			))
+		}
+		<!-- <a href="/" class="block lg:hidden">LOGO</a> -->
+
+		<ThemeToggle/>
+
+		<HamburgerButton class:list={"block lg:hidden"} id="menuButton" />
+
+		<div
+			class="fixed inset-0 z-[888] flex w-screen flex-col items-center py-6 overflow-x-auto bg-[var(--background-color)] backdrop-blur-md px-4 lg:hidden"
+			id={MOBILE_MENU_CONTENT_ID}
+		>
+			<aside class="flex h-12 w-full items-center justify-between">
+				<span class="text-xl font-semibold uppercase text-white">Menú</span>
+				<HamburgerButton id="innerMenuButton" />
+			</aside>
+			<div class="flex min-h-2 w-full items-center">
+				
+			</div>
+			<nav class="navContent flex w-full flex-col items-center gap-5">
+				<!-- <img
+					src="https://cdn.lavelada.dev/lvda.webp"
+					alt="lvda logo"
+					class="primary-drop-shadow my-4 max-w-60 drop-shadow-lg"
+					loading="lazy"
+				/> -->
+
+				{
+					pages.map(({ name, href, active }, key) => (
+						<>
+							<a
+								href={href}
+								class:list={[
+									"relative flex flex-row-reverse items-center justify-center gap-2 text-l capitalize w-full h-9",
+									{ "current-page-mob": active },
+									
+								]}
+								id={`navmob-link-${key}`}
+							>
+								<span class="z-10 text-white">{name}</span>
+								<div class:list={["size-2 rounded-full opacity-0 bg-primary", { "opacity-100": active }]} />
+							</a>
+							<hr
+								class="h-[2px] w-full border-t-0"
+								style="background:linear-gradient(to right, transparent 0%, white 50%, transparent 100%)"
+							/>
+						</>
+					))
+				}
+				<nav class="my-4 flex flex-col gap-10">
+					<!-- <FooterContent /> -->
+					<!-- <SocialButtons class="flex items-center justify-center" /> -->
+				</nav>
+			</nav>
+		</div>
+	</nav>
+
+	
+	</div>
+</header>
+
+<style>
+
+	.focus-within-ring {
+		@apply focus-within:ring-1 focus-within:ring-white focus-within:ring-offset-1;
+	}
+
+	#menuMobileContent {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s;
+		scrollbar-gutter: stable;
+	}
+
+	#menuMobileContent.open {
+		opacity: 1 !important;
+		pointer-events: all;
+	}
+
+	.primary-drop-shadow {
+		filter: drop-shadow(0px 0px 25px rgba(var(--color-primary-rgb), 0.25));
+	}
+
+	.gridBottomBarContainer {
+		grid-template-columns: 1fr 6rem 1fr;
+		grid-template-rows: 4px;
+	}
+
+	.gridBottomBarContainerLineLeft {
+		background: linear-gradient(to right, transparent 3%, white 35%, white 100%);
+	}
+
+	.gridBottomBarContainerLineRight {
+		background: linear-gradient(to left, transparent 3%, white 35%, white 100%);
+	}
+
+	@media (min-width: 1024px) {
+		.gridBottomBarContainer {
+			grid-template-columns: 1fr 9rem 1fr;
+		}
+	}
+	@media (prefers-reduced-motion) {
+		.nav-item .background {
+			transition: opacity 0s;
+		}
+
+		.nav-item:hover .background,
+		.nav-item:focus .background {
+			opacity: 1;
+		}
+
+		#menuMobileContent {
+			transition: opacity 0s;
+		}
+	}
+</style>
+
+<script>
+	import { $ } from "@/lib/dom-selector"
+
+	function toggleMenu(
+		nav: HTMLElement | null,
+		menuMobileContent: HTMLElement | null,
+		navContent: HTMLElement | null
+	) {
+		menuMobileContent?.classList.toggle("open")
+		nav?.classList.toggle("open")
+		navContent?.classList.toggle("animate-bounce-fade-in")
+		document.body.classList.toggle("overflow-hidden")
+		document.body.classList.toggle("lg:overflow-auto")
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		const nav = $("nav")
+		const menuButton = $("#menuButton")
+		const innerMenuButton = $("#innerMenuButton")
+		const menuMobileContext = $("#menuMobileContent")
+		const navContent = $(".navContent")
+
+		menuButton?.addEventListener("hamburgerButtonClicked", () =>
+			toggleMenu(nav, menuMobileContext, navContent)
+		)
+		innerMenuButton?.addEventListener("hamburgerButtonClicked", () =>
+			toggleMenu(nav, menuMobileContext, navContent)
+		)
+
+		if (menuMobileContext?.classList.contains("open")) {
+			toggleMenu(nav, menuMobileContext, navContent)
+		}
+	})
+</script>

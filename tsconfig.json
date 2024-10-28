@@ -6,6 +6,7 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@content/*": ["src/content/*"],
+      "@consts/*": ["src/consts/*"],
       "@data/*": ["src/data_files/*"],
       "@images/*": ["src/images/*"],
       "@scripts/*": ["src/assets/scripts/*"],
