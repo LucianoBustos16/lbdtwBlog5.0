@@ -6,6 +6,7 @@ import HeroLogo from "@/components/sections/landing/HeroLogo.astro"
 import { MOBILE_MENU_CONTENT_ID } from "@/consts/mobile-menu"
 import BrandLogo from "@/components/BrandLogo.astro"
 import ThemeToggle from "./ThemeToggle.astro"
+import FooterSection from "@/components/sections/navbar&footer/FooterSection.astro"
 
 // remote last slash from pathname
 const { pathname } = Astro.url
@@ -17,7 +18,7 @@ const normalizedPathName =
   href: string;
   active: boolean;
   icon: string;
-  target?: string;  // Hacer que `target` sea opcional
+  target?: string; 
 };
 
 const pages: Page[] = [
@@ -73,18 +74,16 @@ const isCombatIntern = normalizedPathName.startsWith("/blog/")
 
 		<HamburgerButton class:list={"block lg:hidden"} id="menuButton" />
 
-		<div
-			class="fixed inset-0 z-[888] flex w-screen flex-col items-center py-6 overflow-x-auto bg-[var(--background-color)] backdrop-blur-md px-4 lg:hidden"
+		<div 
+			class="fixed inset-0 z-[888] flex w-screen flex-col items-center py-6 overflow-x-auto bg-[var(--background-color)]  backdrop-blur-md px-4 lg:hidden"
 			id={MOBILE_MENU_CONTENT_ID}
 		>
 			<aside class="flex h-12 w-full items-center justify-between">
-				<span class="text-xl font-semibold uppercase text-white">Menú</span>
+				<span class="text-xl font-semibold uppercase ">Menú</span>
 				<HamburgerButton id="innerMenuButton" />
 			</aside>
-			<div class="flex min-h-2 w-full items-center">
-				
-			</div>
-			<nav class="navContent flex w-full flex-col items-center gap-5">
+
+			<nav class="navContent flex w-full h-full py-4 flex-col items-center gap-5">
 				<!-- <img
 					src="https://cdn.lavelada.dev/lvda.webp"
 					alt="lvda logo"
@@ -104,12 +103,12 @@ const isCombatIntern = normalizedPathName.startsWith("/blog/")
 								]}
 								id={`navmob-link-${key}`}
 							>
-								<span class="z-10 text-white">{name}</span>
+								<span class="z-10 font-bold">{name}</span>
 								<div class:list={["size-2 rounded-full opacity-0 bg-primary", { "opacity-100": active }]} />
 							</a>
 							<hr
 								class="h-[2px] w-full border-t-0"
-								style="background:linear-gradient(to right, transparent 0%, white 50%, transparent 100%)"
+								style="background:linear-gradient(to right, transparent 0%, var(--color-textDark) 50%, transparent 100%)"
 							/>
 						</>
 					))
