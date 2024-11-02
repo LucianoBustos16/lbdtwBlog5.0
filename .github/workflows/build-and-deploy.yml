@@ -1,14 +1,22 @@
 name: Build and Deploy
 
 on:
+    workflow_dispatch:
+    
+    repository_dispatch:
+      type:
+        - webhook
+
     schedule:
-      - cron: '*/15 * * * *'
+        - cron: "0 */1 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          node-version: 20
       - name: Build
         run: npm run build
             git config user.name lbdtw-bot
