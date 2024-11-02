@@ -1,0 +1,13 @@
+name: Build and Deploy
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Ejecutar cada 15 minutos
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: npm run build
