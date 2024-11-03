@@ -20,4 +20,4 @@ jobs:
       - name: Commit
         run: |
             git diff --quiet && git diff --staged --quiet || git commit -am "[bot] Update LBDTw Blog"
-            git push origin main
+            git push origin master
