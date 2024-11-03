@@ -62,6 +62,8 @@ interface Props {
 								<div class="flex gap-2 mb-4">
 										<Icon icon="calendario" size="24" />
 										<span>{format(new Date(match.timestamp), "EEE dd/M", { locale: es })}</span>
+										<span>{format(new Date(), "HH:mm", { locale: es })}</span>
+
 									</div>
 				
 									<div class="flex gap-2">
