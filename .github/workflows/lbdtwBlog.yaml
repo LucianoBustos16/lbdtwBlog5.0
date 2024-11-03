@@ -19,7 +19,5 @@ jobs:
         run: npm run build
       - name: Commit
         run: |
-            git config --global user.email "bustosluciano89@gmail.com"
-            git config --global user.name "Luchito"
             git diff --quiet && git diff --staged --quiet || git commit -am "[bot] Update LBDTw Blog"
             git push origin main
