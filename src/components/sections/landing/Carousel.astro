@@ -1,6 +1,6 @@
 ---
 import Icon from "@/components/ui/icons/Icon.astro";
-import TiktokVideo from "@/components/TiktokVideo.astro"
+import CarouselItem from "@/components/CarouselItem.astro"
 // import Subtitle from "./Subtitle.astro"
 import { getCollection } from 'astro:content';
 
@@ -13,41 +13,19 @@ posts.sort((a, b) => {
   return dateB.getTime() - dateA.getTime();   
 });
 
-const latesPosts =posts.slice(0,5);
+const latesPosts =posts.slice(0,10);
 
-const VIDEOS = [
-  {
-    videoId: "7222709244125007109",
-    thumbnailUrl: "/img/thumbnails/ibai.webp",
-    title: "La relación de Ibai con Marcos",
-  },
-  {
-    videoId: "7258016065563807003",
-    thumbnailUrl: "/img/thumbnails/jijantes.webp",
-    title: "Fichaje del nuevo reportero de Jijantes",
-  },
-  {
-    videoId: "7343332399662533920",
-    thumbnailUrl: "/img/thumbnails/midudev.webp",
-    title: "Fichajes de la web de La Velada junto a Midudev",
-  },
-  {
-    videoId: "7265231719068880160",
-    thumbnailUrl: "/img/thumbnails/cristinini.webp",
-    title: "Ganadora de la Beca Infojobs Cristinini",
-  },
-  {
-    videoId: "7285448407756393761",
-    thumbnailUrl: "/img/thumbnails/marcos.webp",
-    title: "Entrevista a Marcos de Olañeta",
-  },
-] as const
+const title: string = `Últimas <span class="text-primary">Noticias</span>`;
 ---
 
 <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
 
   <div class="flex items-center justify-between pb-6 md:pb-12">
-    <h2 class="!pb-0">Trabaja con los mejores</h2>
+    <div class="mx-auto mb-6 w-full space-y-1 text-center sm:w-1/2 lg:w-1/3">
+      <h2 class="text-balance text-2xl font-bold leading-tight text-textDark dark:text-neutral-200 sm:text-3xl">
+          <Fragment set:html={title}/>
+      <h2/>
+  </div>
 
     <div class="hidden md:flex items-center gap-x-4">
       <button
@@ -56,14 +34,14 @@ const VIDEOS = [
         disabled="true"
         aria-label="Ir al elemento anterior"
       >
-      <Icon icon="calendario" size="24" />
+      <Icon icon="chevronLeft" size="24" />
       </button>
       <button
         class="bg-[#E2E2E5] text-[#636365] p-1 rounded-full enabled:hover:scale-110 transition-all enabled:active:scale-100"
         id="right-button"
         aria-label="Ir al siguiente elemento"
       >
-      <Icon icon="calendario" size="24" />
+      <Icon icon="chevronRight" size="24" />
       </button>
     </div>
   </div>
@@ -85,10 +63,14 @@ const VIDEOS = [
             console.log(image)
 
             return(
-                <TiktokVideo
+                <CarouselItem
                   videoId={image}
-                  thumbnailUrl={image}
+                  image={image.url}
                   title={title}
+                  alt={image.alt}
+                  url={slug}
+                  date={pubDate}
+                  author={author}
                 />
             )
         }
@@ -99,7 +81,8 @@ const VIDEOS = [
 </section>
 
 <style>
-  .custom-scrollbar::-webkit-scrollbar {
+
+.custom-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
@@ -109,7 +92,7 @@ const VIDEOS = [
   }
 
   .carousel-container:before {
-    background-image: linear-gradient(to left, transparent, #fff);
+    background-image: linear-gradient(to left, transparent, var(--bg-web));
     content: "";
     height: 570px;
     left: 0;
@@ -123,7 +106,7 @@ const VIDEOS = [
   }
 
   .carousel-container:after {
-    background-image: linear-gradient(to right, transparent, #fff);
+    background-image: linear-gradient(to right, transparent, var(--bg-web));
     content: "";
     height: 570px;
     opacity: var(--right-opacity);
