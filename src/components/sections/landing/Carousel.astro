@@ -60,11 +60,8 @@ const title: string = `Últimas <span class="text-primary">Noticias</span>`;
             const { slug, data} = post
             const { title, image, author, pubDate} = data
 
-            console.log(image)
-
             return(
                 <CarouselItem
-                  videoId={image}
                   image={image.url}
                   title={title}
                   alt={image.alt}
@@ -76,6 +73,10 @@ const title: string = `Últimas <span class="text-primary">Noticias</span>`;
         }
         )
       }
+
+    <CarouselItem
+    title="Ver todas"
+    />
     </div>
   </div>
 </section>
