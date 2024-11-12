@@ -47,14 +47,15 @@ const { title } = Astro.props;
 
 		<script>
 			let previousTitle = document.title;
+			let blurTitle = '¡Volvé virgo...!';
 			let intervalId;
 
 			function cambiarTitulo() {
-			document.title = document.title === 'Volvé virgo...' ? previousTitle : 'Volvé virgo...';
+			document.title = document.title === blurTitle ? previousTitle : blurTitle;
 			}
 
 			window.addEventListener('blur', () => {
-			intervalId = setInterval(cambiarTitulo, 1000);
+			intervalId = setInterval(cambiarTitulo, 900);
 			});
 
 			window.addEventListener('focus', () => {
