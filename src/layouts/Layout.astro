@@ -44,6 +44,26 @@ const { title } = Astro.props;
 		
 		  gtag('config', 'G-3FN59ZC3N5');
 		</script>
+
+		<script>
+			let previousTitle = document.title;
+			let intervalId;
+
+			function cambiarTitulo() {
+			document.title = document.title === 'Volvé virgo...' ? previousTitle : 'Volvé virgo...';
+			}
+
+			window.addEventListener('blur', () => {
+			intervalId = setInterval(cambiarTitulo, 1000);
+			});
+
+			window.addEventListener('focus', () => {
+			clearInterval(intervalId);
+			document.title = previousTitle;
+			});
+
+		</script>
+
 	</head>
 	<body class="selection:bg-primary selection:text-neutral-200 bg-[var(--bg-web)]">
 		<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
