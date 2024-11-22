@@ -1,7 +1,7 @@
 ---
 import Icon from "../../ui/icons/Icon.astro";
 import { format } from 'date-fns';
-import { ar } from 'date-fns/locale'; 
+import { es } from 'date-fns/locale'; 
 
 const response = await fetch(`https://api.lbdtwplus.com.ar/scheduleLPF`)
 const schedule = await response.json()
@@ -61,7 +61,7 @@ interface Props {
 							<div class="">
 								<div class="flex gap-2 mb-4">
 										<Icon icon="calendario" size="24" />
-										<span>{format(new Date(match.timestamp), "EEE dd/M", { locale: ar })}</span>
+										<span>{format(new Date(match.timestamp), "EEE dd/M", { locale: es })}</span>
 
 									</div>
 				
