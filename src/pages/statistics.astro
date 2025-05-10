@@ -1,4 +1,5 @@
 ---
+import Assists from "@/components/Assists.astro";
 import Leaderboard from "@/components/Leaderboard.astro";
 import TopScorer from "@/components/TopScorer.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -33,7 +34,11 @@ const group = data?.league;
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Leaderboard/>
-                <TopScorer/>                
+                <div>
+                     <h2 class="text-textDark dark:text-gray-400 font-bold text-xl mb-8">Estadísticas personales</h2>
+                    <TopScorer/>
+                    <Assists/>                
+                </div>
             </div>
 
 
