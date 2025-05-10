@@ -14,7 +14,7 @@ const group = data?.league;
 <Layout title={pageTitle}>
 
     <!--Page header-->
-	<main class="mx-auto max-w-[85rem] space-y-8 px-4 mt-24 sm:px-6 lg:px-8 2xl:max-w-full">
+	<main class="mx-auto max-w-[85rem] space-y-8 mt-24 sm:px-6 lg:px-8 2xl:max-w-full">
         <div class="mx-auto max-w-3xl text-center">
             <h1
                 class="block text-balance text-4xl font-bold tracking-tight text-textDark dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0"
@@ -25,9 +25,9 @@ const group = data?.league;
 
         <section class="mx-auto max-w-[85rem] py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
 
-            <div class="flex mb-8 gap-4">
+            <div class="flex mb-8 gap-4 items-start">
                 <img src={`/images/logos/${group.url_name}.svg`} alt={`Logo de ${group.name}`} width="64" height="64">
-                <h2 class="text-textDark dark:text-gray-400 font-bold text-2xl mb-8">{group.name}</h2>
+                <h2 class="text-textDark dark:text-gray-400 font-bold text-xl md:text-2xl mb-8">{group.name}</h2>
             </div>
             
             <Leaderboard/>
