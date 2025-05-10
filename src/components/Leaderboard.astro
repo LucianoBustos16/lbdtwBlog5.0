@@ -5,11 +5,12 @@ const data = await response.json();
 const group = data?.tables_groups?.[0]; // Ej: Apertura
 const zonas = group?.tables || [];
 
+const headerTdClasses = "px-2 py-3 text-center"
 const bodyTdClasses = "px-2 py-3"
 ---
 
 <section>
-  <h2>Tabla de posiciones - {group?.name}</h2>
+  <h2 class="text-textDark dark:text-gray-400 font-bold text-xl mb-8">Tabla de posiciones - {group?.name}</h2>
 
   {zonas.map((zona) => {
     const tableData = zona?.table;
@@ -18,28 +19,70 @@ const bodyTdClasses = "px-2 py-3"
 
     return (
       <>
-        <h3>{zona.name}</h3>
+        <h3 class="text-textDark dark:text-gray-400">{zona.name}</h3>
 
-        <div class="relative overflow-x-auto shadow-md rounded-lg">
+        <div class="relative overflow-x-auto shadow-md rounded-lg mb-6">
             <table class="w-full text-sm text-left rtl:text-right text-textDark dark:text-gray-400">
-          <thead class="text-xs text-textDark uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th>#</th>
-              <th>Equipo</th>
-              {columns.map(col => (
-                <th>{col.title}</th>
-              ))}
+                <th scope="col" class={`${headerTdClasses}`}>
+                    #
+                </th>
+                <th scope="col" class={`px-2 py-3`}>
+                    Equipo
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    J
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    G
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    E
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    P
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    Goles
+                </th>
+                <th scope="col" class={`${headerTdClasses}`}>
+                    Pts.
+                </th>
             </tr>
-          </thead>
+        </thead>
           <tbody>
             {rows.map((row) => (
               <tr>
 
                 <td class={`${bodyTdClasses} text-center font-bold`}>{row.num}</td>
 
-                <td class={`${bodyTdClasses} font-bold `}>{row.entity?.object?.name}</td>
+                <td class={`${bodyTdClasses} font-bold flex flex-center items-center gap-2`}>                 
+                  <img src={`/images/teams/${row.entity?.object?.url_name}.svg`} alt={`Escudo de ${row.entity?.object?.name}`} width="24" height="24">
+                  {row.entity?.object?.short_name}
+                  </td>
 
-                {columns.map(col => {
+                <td class={`${bodyTdClasses} text-center`}> {row.values.find(item => item.key === 'GamePlayed')?.value}</td>
+                <td class={`${bodyTdClasses} text-center`}> {row.values.find(item => item.key === 'GamesWon')?.value}</td>
+                <td class={`${bodyTdClasses} text-center`}> {row.values.find(item => item.key === 'GamesEven')?.value}</td>
+                <td class={`${bodyTdClasses} text-center`}> {row.values.find(item => item.key === 'GamesLost')?.value}</td>
+                <td class={`${bodyTdClasses} text-center`}> {row.values.find(item => item.key === 'Goals')?.value}</td>
+                <td class={`${bodyTdClasses} font-bold text-center`}> {row.values.find(item => item.key === 'Points')?.value}</td>
+
+                
+              </tr>
+            ))}
+          </tbody>
+        </table>
+    </div>
+      </>
+    );
+  })}
+</section>
+
+
+
+{/* {columns.map(col => {
                   const valueObj = row.values.find(v => v.key === col.key);
                   let value = valueObj?.value;
 
@@ -57,13 +100,4 @@ const bodyTdClasses = "px-2 py-3"
 
                   return  <td class={isPointsColumn ? "font-bold" : ""}>
                     {value}</td>;
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-    </div>
-      </>
-    );
-  })}
-</section>
+                })} */}
