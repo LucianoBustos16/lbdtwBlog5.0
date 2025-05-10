@@ -23,9 +23,9 @@ const bodyTdClasses = "px-2 py-3"
       <>
         <h3 class="text-textDark dark:text-gray-400 mb-2">{zona.name}</h3>
 
-        <div class="relative overflow-x-auto shadow-md rounded-lg mb-6">
+        <div class="relative overflow-x-auto shadow-md rounded-lg mb-6 border border-gray-200 dark:border-gray-900">
             <table class="w-full text-sm text-left rtl:text-right text-textDark dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
             <tr>
                 <th scope="col" class={`${headerTdClasses}`}>
                     #
@@ -55,14 +55,14 @@ const bodyTdClasses = "px-2 py-3"
         </thead>
           <tbody>
             {rows.map((row: { destination_color: any; num: unknown; entity: { object: { url_name: any; name: any; short_name: unknown; }; }; values: any[]; }) => (
-              <tr class="relative border-b dark:border-gray-700 border-gray-200">
-                <td class={`${bodyTdClasses} text-center font-bold`}>
+              <tr class="relative border-b dark:border-gray-900 border-gray-200">
+                <td class={`${bodyTdClasses} text-center`}>
                   <div class="w-[2px] h-12 top-0 left-0 rounded absolute" style={`background: ${row.destination_color};`}>
                   </div>
                   {row.num}
                   </td>
 
-                <td class={`${bodyTdClasses} font-bold flex flex-center items-center gap-2`}>                 
+                <td class={`${bodyTdClasses} flex flex-center items-center gap-2 truncate`}>                 
                   <img src={`/images/teams/${row.entity?.object?.url_name}.svg`} alt={`Escudo de ${row.entity?.object?.name}`} width="24" height="24">
                   {row.entity?.object?.short_name}
                   </td>
