@@ -35,7 +35,7 @@ const bodyTdClasses = "px-2 py-3"
                         <th scope="col" class={`px-2 py-3`}>
                             Jugador
                         </th>
-                        <th scope="col" class={`${headerTdClasses}`}>
+                        <th scope="col" class={`${headerTdClasses} text-right`}>
                             {columnTitle}
                         </th>
                     </tr>
@@ -50,7 +50,7 @@ const bodyTdClasses = "px-2 py-3"
                         <td class={`${bodyTdClasses}`}>
                             {row.entity.object.name}
                         </td>
-                        <td class={`${bodyTdClasses} text-center`}>
+                        <td class={`${bodyTdClasses} font-bold text-right dark:text-gray-200`}>
                             {row.values.find(item => item.key === statsName)?.value}
                         </td>
                     </tr>
