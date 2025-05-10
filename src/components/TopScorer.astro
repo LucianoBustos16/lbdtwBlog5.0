@@ -1,0 +1,50 @@
+---
+const response = await fetch("https://api.promiedos.com.ar/league/tables_and_fixtures/hc");
+const data = await response.json();
+
+const group = data?.players_statistics; // Ej: Apertura
+const scorers = group?.tables?.[0] || [];
+
+const headerTdClasses = "px-2 py-3 text-center"
+const bodyTdClasses = "px-2 py-3"
+---
+
+<section>
+    <h2 class="text-textDark dark:text-gray-400 font-bold text-xl mb-8">Estadísticas personales</h2>
+
+    <h3 class="text-textDark dark:text-gray-400 mb-2">{scorers.name}</h3>
+    <div class="relative overflow-x-auto shadow-md rounded-lg mb-6 border border-gray-200 dark:border-gray-900">
+        <table class="w-full text-sm text-left rtl:text-right text-textDark dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class={`${headerTdClasses}`}>
+                            #
+                        </th>
+                        <th scope="col" class={`px-2 py-3`}>
+                            Jugador
+                        </th>
+                        <th scope="col" class={`${headerTdClasses}`}>
+                            Goles
+                        </th>
+                    </tr>
+                </thead>
+                
+    {scorers?.rows?.slice(0, 5).map((row: {num: unknown; entity, values: any[];}) => (
+                <tbody>
+                    <tr class="relative border-b dark:border-gray-900 border-gray-200">
+                        <td class={`${bodyTdClasses} text-center`}>
+                            {row.num}
+                        </td>
+                        <td class={`${bodyTdClasses}`}>
+                            {row.entity.object.name}
+                        </td>
+                        <td class={`${bodyTdClasses} text-center`}>
+                            {row.values.find(item => item.key === 'Goals')?.value}
+                        </td>
+                    </tr>
+                </tbody>
+    ))}
+    </table>
+    </div>
+
+</section>
