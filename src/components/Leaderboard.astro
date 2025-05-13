@@ -1,8 +1,9 @@
 ---
-const response = await fetch("https://api.promiedos.com.ar/league/tables_and_fixtures/hc");
-const data = await response.json();
 
-const group = data?.tables_groups?.[0]; // Ej: Apertura
+const { statistics } = Astro.props;
+
+
+const group = statistics?.tables_groups?.[0]; // Ej: Apertura
 const zonas = group?.tables || [];
 
 const headerTdClasses = "px-2 py-3 text-center"
@@ -61,7 +62,7 @@ const bodyTdClasses = "px-2 py-3"
                   </td>
 
                 <td class={`${bodyTdClasses} flex flex-center items-center gap-2 truncate`}>                 
-                  <img src={`/images/teams/${row.entity?.object?.url_name}.svg`} alt={`Escudo de ${row.entity?.object?.name}`} width="24" height="24">
+                  <img src={`/images/teams/${row.entity?.object?.url_name}.svg`} alt={`Escudo de ${row.entity?.object?.name}`} width="24" height="24" />
                   {row.entity?.object?.short_name}
                   </td>
 

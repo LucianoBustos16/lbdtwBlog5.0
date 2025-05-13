@@ -1,13 +1,14 @@
 ---
+// Importa el JSON con los datos de los equipos
+import teams from '../data/teams.json';
 
 const { statsName, statistics } = Astro.props;
-
-const group = statistics?.players_statistics;
 
 // Encuentra la tabla que contiene la columna con key igual al valor de statKey
 const targetTable = statistics.players_statistics.tables.find(table =>
   table.columns.some(col => col.key === statsName)
 );
+
 
 if (!targetTable) {
   throw new Error(`No se encontró ninguna tabla con la clave '${statsName}'`);
@@ -16,6 +17,11 @@ if (!targetTable) {
 // Encuentra el índice de la columna que tiene la key deseada
 const columnIndex = targetTable.columns.findIndex(col => col.key === statsName);
 const columnTitle = targetTable.columns[columnIndex].title;
+
+// Función auxiliar para encontrar el equipo por ID
+function getTeamById(teamId) {
+  return teams.find(team => team.id === teamId);
+}
 
 const headerTdClasses = "px-2 py-3 text-center"
 const bodyTdClasses = "px-2 py-3"
@@ -41,21 +47,27 @@ const bodyTdClasses = "px-2 py-3"
                     </tr>
                 </thead>
                 
-    {targetTable?.rows?.slice(0, 5).map((row: {num: unknown; entity, values: any[];}) => (
-                <tbody>
-                    <tr class="relative border-b dark:border-gray-900 border-gray-200">
-                        <td class={`${bodyTdClasses} text-center`}>
-                            {row.num}
-                        </td>
-                        <td class={`${bodyTdClasses}`}>
-                            {row.entity.object.name}
-                        </td>
-                        <td class={`${bodyTdClasses} font-bold text-right dark:text-gray-200`}>
-                            {row.values.find(item => item.key === statsName)?.value}
-                        </td>
-                    </tr>
-                </tbody>
-    ))}
+{targetTable?.rows?.slice(0, 5).map((row: {num: unknown; entity; values: any[];}) => {
+    const teamId = row.entity?.object?.team_id;
+    const team = getTeamById(teamId);
+    return (
+        <tbody>
+            <tr class="relative border-b dark:border-gray-900 border-gray-200">
+                <td class={`${bodyTdClasses} text-center`}>
+                    {row.num}
+                </td>
+                <td class={`${bodyTdClasses} flex items-center gap-2`}>
+                    <img src={`/images/teams/${team.url_name}.svg`} alt={`Escudo de ${team.name}`} class="w-6 h-6" />
+                    {row.entity.object.name}
+                </td>
+                <td class={`${bodyTdClasses} font-bold text-right dark:text-gray-200`}>
+                    {row.values.find(item => item.key === statsName)?.value}
+                    
+                </td>
+            </tr>
+        </tbody>
+    );
+})}
     </table>
     </div>
 

@@ -3,6 +3,7 @@ import StatsPlayersTable  from "@/components/StatsPlayersTable .astro";
 import Leaderboard from "@/components/Leaderboard.astro";
 import Layout from "@/layouts/Layout.astro";
 
+
 const pageTitle = "Estadísticas";
 const title: string = `<span class="text-sky-500">${pageTitle}</span>`;
 
@@ -34,7 +35,7 @@ const group = data?.league;
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Leaderboard/>
+                <Leaderboard statistics={data}/>
                 <div>
                      <h2 class="text-textDark dark:text-gray-400 font-bold text-xl mb-8">Estadísticas personales</h2>
                     <StatsPlayersTable statsName="Goals" statistics={data}/>

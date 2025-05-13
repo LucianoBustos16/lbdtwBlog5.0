@@ -33,8 +33,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Banfield",
+      "id": "ihi",
+      "url_name": "banfield",
       "color": "#007934",
       "colorSecondary": "#B49759",
       "name": "Banfield",
@@ -44,8 +44,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Barracas-Central",
+      "id": "jafb",
+      "url_name": "barracas-central",
       "color": "#ec1c24",
       "colorSecondary": "#FFF",
       "name": "Barracas Central",
@@ -55,8 +55,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Belgrano",
+      "id": "fhid",
+      "url_name": "belgrano",
       "color": "#3A9CD0",
       "colorSecondary": "#1D1D1B",
       "name": "Belgrano",
@@ -66,8 +66,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Boca",
+      "id": "igg",
+      "url_name": "boca-juniors",
       "color": "#023F86",
       "colorSecondary": "#F7A600",
       "name": "Boca Juniors",
@@ -77,19 +77,19 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Central-Cordoba",
+      "id": "beafh",
+      "url_name": "central-cordoba-sde",
       "color": "#000",
       "colorSecondary": "#FFF",
-      "name": "Central Cba (SdE)",
+      "name": "Central Córdoba SdE",
       "shortName": "CSE",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Central-Cordoba.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Central-Cordoba-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Colon",
+      "id": "iha",
+      "url_name": "colon",
       "color": "#C80000",
       "colorSecondary": "#000",
       "name": "Colon",
@@ -99,41 +99,41 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Defensa-y-Justicia",
+      "id": "hcbh",
+      "url_name": "defensa-y-justicia",
       "color": "#ffdd00",
       "colorSecondary": "#007A3F",
-      "name": "Def y Justicia",
+      "name": "Defensa y Justicia",
       "shortName": "DYJ",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Defensa-y-Justicia.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Defensa-y-Justicia-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Estudiantes",
+      "id": "igh",
+      "url_name": "estudiantes-de-la-plata",
       "color": "#E41815",
       "colorSecondary": "#FFF",
-      "name": "Estudiantes (LP)",
+      "name": "Estudiantes de La Plata",
       "shortName": "EST",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Estudiantes.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Estudiantes-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Gimnasia",
+      "id": "iia",
+      "url_name": "gimnasia-y-esgrima-la-plata",
       "color": "#121731",
       "colorSecondary": "#00AFEF",
-      "name": "Gimnasia (LP)",
+      "name": "Gimnasia La Plata",
       "shortName": "GLP",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Gimnasia.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Gimnasia-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Godoy-Cruz",
+      "id": "ihd",
+      "url_name": "godoy-cruz",
       "color": "#2670CA",
       "colorSecondary": "#FFFFFF",
       "name": "Godoy Cruz",
@@ -143,19 +143,19 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Huracan",
+      "id": "iie",
+      "url_name": "huracan",
       "color": "#FF0000",
       "colorSecondary": "#FFFFFF",
-      "name": "Huracan",
+      "name": "Huracán",
       "shortName": "HUR",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Huracan.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Huracan-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Independiente",
+      "id": "ihe",
+      "url_name": "independiente",
       "color": "#EC1C24",
       "colorSecondary": "#FFFFFF",
       "name": "Independiente",
@@ -165,19 +165,19 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Independiente-rivadavia",
+      "id": "hcch",
+      "url_name": "independiente-rivadavia",
       "color": "#EC1C24",
       "colorSecondary": "#FFFFFF",
-      "name": "Ind Rivadavia",
+      "name": "Independiente Rivadavia",
       "shortName": "IND",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Independiente-rivadavia.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Independiente-rivadavia-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Instituto",
+      "id": "hchc",
+      "url_name": "instituto-ac-cordoba",
       "color": "#E0312B",
       "colorSecondary": "#FFFFFF",
       "name": "Instituto",
@@ -187,30 +187,30 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Lanus",
+      "id": "igj",
+      "url_name": "lanus",
       "color": "#7A1D2D",
       "colorSecondary": "#FFFFFF",
-      "name": "Lanus",
+      "name": "Lanús",
       "shortName": "LAN",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Lanus.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Lanus-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Newells",
+      "id": "ihh",
+      "url_name": "newell's-old-boys",
       "color": "#ED1C24",
       "colorSecondary": "#000000",
-      "name": "Newells",
+      "name": "Newell's Old Boys",
       "shortName": "NOB",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Newells.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Newells-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Platense",
+      "id": "hcah",
+      "url_name": "platense",
       "color": "#633B1B",
       "colorSecondary": "#FFFFFF",
       "name": "Platense",
@@ -220,8 +220,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Racing-Club",
+      "id": "ihg",
+      "url_name": "racing-club",
       "color": "#009DDB",
       "colorSecondary": "#FFFFFF",
       "name": "Racing Club",
@@ -231,8 +231,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "River",
+      "id": "igi",
+      "url_name": "river-plate",
       "color": "#E30520",
       "colorSecondary": "#FFFFFF",
       "name": "River Plate",
@@ -242,19 +242,19 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Riestra",
+      "id": "bbjea",
+      "url_name": "riestra",
       "color": "#262526",
       "colorSecondary": "#FFFFFF",
-      "name": "Riestra",
+      "name": "Deportivo Riestra",
       "shortName": "RIE",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Riestra.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Riestra-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Rosario-Central",
+      "id": "ihf",
+      "url_name": "rosario-central",
       "color": "#F9DF34",
       "colorSecondary": "#173B6A",
       "name": "Rosario Central",
@@ -264,8 +264,8 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "San-Lorenzo",
+      "id": "igf",
+      "url_name": "san-lorenzo",
       "color": "#BF1B27",
       "colorSecondary": "#263D54",
       "name": "San Lorenzo",
@@ -275,30 +275,41 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Sarmiento",
+      "id": "hcai",
+      "url_name": "san-martin",
+      "color": "#BF1B27",
+      "colorSecondary": "#263D54",
+      "name": "San Martín San Juan",
+      "shortName": "SMSJ",
+      "image": "https://api.lbdtwplus.com.ar/static/logos/san-martin.svg",
+      "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/san-martin-white.svg",
+      "league": "LPF"
+    },
+    {
+      "id": "hbbh",
+      "url_name": "sarmiento-junin",
       "color": "#008349",
       "colorSecondary": "#FFFFFF",
-      "name": "Sarmiento (J)",
+      "name": "Sarmiento Junín",
       "shortName": "SARM",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Sarmiento.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Sarmiento-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Talleres",
+      "id": "jche",
+      "url_name": "talleres-cordoba",
       "color": "#00184C",
       "colorSecondary": "#FFFFFF",
-      "name": "Talleres (C)",
+      "name": "Talleres de Córdoba",
       "shortName": "CAT",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Talleres.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Talleres-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Tigre",
+      "id": "iid",
+      "url_name": "tigre",
       "color": "#1E448D",
       "colorSecondary": "#ED2A3C",
       "name": "Tigre",
@@ -308,22 +319,22 @@
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Union",
+      "id": "hcag",
+      "url_name": "union-santa-fe",
       "color": "#DA251D",
       "colorSecondary": "#FFFFFF",
-      "name": "Union",
+      "name": "Unión de Santa Fe",
       "shortName": "USF",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Union.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Union-white.svg",
       "league": "LPF"
     },
     {
-      "id": "",
-      "url_name": "Velez",
+      "id": "ihc",
+      "url_name": "velez-sarsfield",
       "color": "#0063A8",
       "colorSecondary": "#FFFFFF",
-      "name": "Velez",
+      "name": "Vélez Sarsfield",
       "shortName": "VEL",
       "image": "https://api.lbdtwplus.com.ar/static/logos/Velez.svg",
       "imageWhite": "https://api.lbdtwplus.com.ar/static/logos/Velez-white.svg",
