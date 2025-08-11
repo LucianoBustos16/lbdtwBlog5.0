@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+const SUPPORT_EMAIL = "hola@lbdtw.com.ar";
+const APP_NAME = "LBDTw";
+---
+
+<Layout title="Eliminar cuenta – LBDTw">
+  <section class="mx-auto md:max-w-3xl space-y-8 px-4 mt-24 sm:px-6 lg:px-8 max-w-full text-textDark dark:text-neutral-200">
+    <header class="space-y-2">
+      <h1 class="text-4xl font-bold">Eliminar cuenta y datos</h1>
+      <p class="text-textLight dark:text-neutral-300">
+        Esta página explica cómo solicitar la eliminación de tu cuenta de <strong>{APP_NAME}</strong> y de los datos asociados.
+      </p>
+    </header>
+
+    <div class="space-y-6">
+      <section class="space-y-3">
+        <h2 class="text-2xl font-semibold">Cómo solicitar la eliminación</h2>
+        <ol class="list-decimal ml-5 space-y-2">
+          <li>Escribinos desde el <strong>mismo correo</strong> con el que iniciaste sesión.</li>
+          <li>Indicá en el asunto: <em>“Eliminar cuenta {APP_NAME}”</em>.</li>
+          <li>Opcional: incluí comentarios si querés.</li>
+        </ol>
+
+        <div class="flex gap-3 flex-wrap">
+          <a
+            href={`mailto:${SUPPORT_EMAIL}?subject=Eliminar%20cuenta%20${APP_NAME}`}
+            class="inline-flex items-center rounded-xl bg-emerald-500 px-4 py-2 font-semibold text-black hover:bg-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+          >Enviar correo</a>
+
+          <!-- FORM opcional: conéctalo a tu backend/Netlify si querés procesar desde web -->
+          <!-- <form
+            action="https://formspree.io/f/your-id" method="POST"
+            class="grid gap-2 max-w-md"
+            aria-label="Formulario de solicitud de eliminación"
+          >
+            <input type="hidden" name="subject" value={`Eliminar cuenta ${APP_NAME}`} />
+            <label class="text-sm" for="email">Tu email (de la cuenta)</label>
+            <input id="email" name="email" type="email" required
+              class="rounded-lg border bg-white/70 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 px-3 py-2"
+              placeholder="tu@email.com" />
+            <label class="text-sm" for="message">Comentarios (opcional)</label>
+            <textarea id="message" name="message" rows={3}
+              class="rounded-lg border bg-white/70 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 px-3 py-2"
+              placeholder="Comentarios"></textarea>
+            <button
+              class="mt-1 inline-flex items-center rounded-xl bg-emerald-500 px-4 py-2 font-semibold text-black hover:bg-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+              type="submit"
+            >Enviar solicitud</button>
+            <p class="text-xs text-textLight dark:text-neutral-400">También podés usar el botón “Enviar correo”.</p>
+          </form> -->
+        </div>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-2xl font-semibold">Qué datos se eliminan</h2>
+        <ul class="list-disc ml-5 space-y-1">
+          <li>Perfil (nombre/apodo), email asociado y club favorito.</li>
+          <li>Identificador de notificaciones push.</li>
+          <li>Cualquier preferencia guardada en la app.</li>
+        </ul>
+        <p class="text-sm text-textLight dark:text-neutral-400">
+          Datos técnicos agregados (logs anonimizados/telemetría) pueden conservarse en forma estadística sin identificar al usuario.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-2xl font-semibold">Plazos y verificación</h2>
+        <p>Procesamos la solicitud en un máximo de <strong>30 días</strong> desde su recepción.</p>
+        <p>Para proteger tu cuenta, verificaremos que el pedido provenga del <strong>mismo email</strong> registrado.</p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="text-2xl font-semibold">Contacto</h2>
+        <p>Soporte: <a class="underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
+      </section>
+    </div>
+  </section>
+</Layout>
