@@ -65,9 +65,9 @@ const { title } = Astro.props;
 
 	</head>
 	<body class="selection:bg-primary selection:text-neutral-200 bg-[var(--bg-web)]">
+		<MobileMenu />
 		<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
 			<!-- <Header /> -->
-			<MobileMenu />
 			<slot />
 		</div>
 		<FooterSection />

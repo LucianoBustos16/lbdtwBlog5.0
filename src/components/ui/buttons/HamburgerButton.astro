@@ -29,32 +29,27 @@ const genericHamburgerLine = `h-[2px] ${width} bg-textDark dark:bg-white transit
 </button>
 
 <script>
-	import { $, $$ } from "@/lib/dom-selector"
+    document.addEventListener("astro:page-load", () => {
+        console.log("!!! SCRIPT BOTÓN RECARGADO !!!");
+        
+        const buttons = document.querySelectorAll(".hamburgerButton");
 
-	const DISPLAY = {
-		hamburgerMenuClass: ".hamburgerButton",
-		open: "open",
-		hamburgerButtonClicked: "hamburgerButtonClicked",
-	} as const
+        buttons.forEach((btn) => {
+            // Quitamos el borde rojo si ya funciona
+            btn.style.border = "none"; 
+            
+            btn.onclick = () => {
+                console.log("CLICK DETECTADO");
+                
+                // Toggle local de la clase 'open' para la animación de la X
+                btn.classList.toggle("open");
 
-	document.addEventListener("astro:page-load", () => {
-		const hamburgerButton = $(DISPLAY.hamburgerMenuClass)
-
-		$$(DISPLAY.hamburgerMenuClass).forEach((button) => {
-			button.addEventListener("click", () => {
-				const hamburgerButton = $(DISPLAY.hamburgerMenuClass)!
-				hamburgerButton.classList.toggle(DISPLAY.open)
-				const isMenuOpen = hamburgerButton.classList.contains(DISPLAY.open)
-				hamburgerButton.setAttribute("aria-expanded", String(isMenuOpen))
-				hamburgerButton.setAttribute(
-					"aria-label",
-					isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
-				)
-				const hamburgerButtonClick = new CustomEvent(DISPLAY.hamburgerButtonClicked)
-				hamburgerButton.dispatchEvent(hamburgerButtonClick)
-			})
-		})
-		if (hamburgerButton?.classList?.contains(DISPLAY.open))
-			hamburgerButton?.classList?.remove(DISPLAY.open)
-	})
+                const event = new CustomEvent("hamburgerButtonClicked", { 
+                    bubbles: true,
+                    composed: true 
+                });
+                window.dispatchEvent(event); 
+            };
+        });
+    });
 </script>
