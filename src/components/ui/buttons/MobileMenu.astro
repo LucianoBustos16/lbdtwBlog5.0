@@ -40,7 +40,7 @@ const pages = [
 
       <button 
         id="menu-button" 
-        class="relative z-[110] size-10 flex items-center justify-center lg:hidden bg-primary/10 rounded-full text-primary font-bold active:scale-95 transition-all"
+        class="relative z-[110] size-10 flex items-center justify-center lg:hidden bg-primary/10 rounded-full font-bold active:scale-95 transition-all"
         aria-expanded="false"
         aria-label="Menú"
       >
@@ -53,23 +53,24 @@ const pages = [
       </button>
     </nav>
 
-    <div 
-      id="mobile-menu" 
-      class="fixed text-textDark dark:text-white inset-0 h-dvh w-full z-[100] hidden flex-col items-center justify-center bg-[var(--background-color)] opacity-0 transition-all duration-300 lg:hidden"
-    >
-      <ul class="flex flex-col items-center gap-8">
-        {pages.map(({ name, href }) => (
-          <li class="overflow-hidden">
-            <a 
-              href={href} 
-              class="nav-link block  text-4xl font-black translate-y-full opacity-0 transition-all duration-500 ease-out uppercase hover:text-primary"
-            >
-              {name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+<div 
+  id="mobile-menu" 
+  class="fixed inset-0 h-dvh w-full z-[100] hidden flex-col items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-md opacity-0 transition-all duration-300 lg:hidden"
+  style="-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);"
+>
+  <ul id="menu-list" class="flex flex-col items-center gap-8 relative z-[120]">
+    {pages.map(({ name, href }) => (
+      <li class="overflow-hidden">
+        <a 
+          href={href} 
+          class="nav-link block text-4xl font-black translate-y-full opacity-0 transition-all duration-500 ease-out uppercase hover:text-primary"
+        >
+          {name}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
   </div>
 </header>
 
@@ -89,13 +90,13 @@ const pages = [
   function setupMenu() {
     const btn = document.getElementById('menu-button');
     const menu = document.getElementById('mobile-menu');
+    const menuList = document.getElementById('menu-list'); // La lista de enlaces
     const iconOpen = document.getElementById('icon-open');
     const iconClose = document.getElementById('icon-close');
     const links = document.querySelectorAll('.nav-link');
 
     if (!btn || !menu) return;
 
-    // Limpiar estado por si acaso (evita bugs al navegar)
     const closeMenu = () => {
       btn.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('overflow-hidden');
@@ -120,7 +121,6 @@ const pages = [
       iconOpen.classList.add('hidden');
       iconClose.classList.remove('hidden');
 
-      // Pequeño delay para que el navegador procese el display: flex antes de la opacidad
       setTimeout(() => {
         menu.style.opacity = '1';
         links.forEach((link, i) => {
@@ -132,12 +132,20 @@ const pages = [
       }, 10);
     };
 
-    btn.onclick = () => {
+    btn.onclick = (e) => {
+      e.stopPropagation(); // Evita que el clic en el botón se propague al fondo
       const isExpanded = btn.getAttribute('aria-expanded') === 'true';
       isExpanded ? closeMenu() : openMenu();
     };
 
-    // Cerrar menú al clickear cualquier link
+    // LÓGICA PARA CERRAR AL CLICKEAR FUERA
+    menu.onclick = (e) => {
+      // Si el clic fue en el overlay (fondo) y no en la lista de links
+      if (menuList && !menuList.contains(e.target)) {
+        closeMenu();
+      }
+    };
+
     links.forEach(link => {
       link.onclick = () => {
         if (window.innerWidth < 1024) closeMenu();
@@ -145,8 +153,6 @@ const pages = [
     });
   }
 
-  // Inicializar
   setupMenu();
-  // Reinicializar cuando Astro cambie de página (View Transitions)
   document.addEventListener('astro:page-load', setupMenu);
 </script>
