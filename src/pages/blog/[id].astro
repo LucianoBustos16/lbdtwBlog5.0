@@ -25,7 +25,7 @@ const { Content } = await render(post)
 
 <Layout title={`${title}`}>
 
-    <section class="mx-auto md:max-w-3xl space-y-8 px-4 m-24 sm:px-6 lg:px-8 max-w-full text-textDark dark:text-neutral-200 ">
+    <section class="mx-auto md:max-w-3xl space-y-8 px-4 m-16 sm:px-6 lg:px-8 max-w-full text-textDark dark:text-neutral-200 ">
         <main class="space-y-4">
 
             <h1 class="block text-balance text-4xl font-bold tracking-tight text-textDark dark:text-neutral-200 md:text-5xl lg:text-6xl mb-0">
@@ -68,3 +68,21 @@ const { Content } = await render(post)
 </section>
 
 </Layout>
+
+<style>
+  /* Usamos :global para alcanzar los elementos generados por <Content /> */
+  .prose-base :global(iframe[src*="youtube.com"]) {
+    width: 100% !important;
+    aspect-ratio: 16 / 9; 
+    height: auto !important;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: none;
+  }
+
+  /* Opcional: Si quieres que otros iframes (no solo youtube) sean responsivos */
+  .prose-base :global(iframe) {
+    max-width: 100%;
+  }
+</style>
