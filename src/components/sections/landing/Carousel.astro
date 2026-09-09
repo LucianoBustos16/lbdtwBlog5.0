@@ -18,7 +18,7 @@ const title: string = `Últimas <span class="text-primary">Noticias</span>`;
 ---
 
 <section
-  class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+  class="mx-auto max-w-340 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
 >
   <div class="flex items-center justify-between pb-6 md:pb-12">
     <div class="mx-auto mb-6 w-full space-y-1 text-center sm:w-1/2 lg:w-1/3">
@@ -57,8 +57,8 @@ const title: string = `Últimas <span class="text-primary">Noticias</span>`;
       id="carousel"
     >
       {
-        latesPosts.map((post: { slug: any; data: any }) => {
-          const { slug, data } = post;
+        latesPosts.map((post: { id: any; data: any }) => {
+          const { id, data } = post;
           const { title, image, author, pubDate } = data;
 
           return (
@@ -66,7 +66,7 @@ const title: string = `Últimas <span class="text-primary">Noticias</span>`;
               image={image.url}
               title={title}
               alt={image.alt}
-              url={slug}
+              url={id}
               date={pubDate}
               author={author}
             />

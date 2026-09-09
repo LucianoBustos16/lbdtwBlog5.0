@@ -8,14 +8,14 @@ export async function getStaticPaths () {
     const posts = await getCollection("posts");
 
     return posts.map((post) => ({
-        params: { id: post.slug},
+        params: { id: post.id },
         props: { post }
 
     }))
 }
 
 const {post} = Astro.props
-const { data, slug } = post
+const { data, id } = post
 const { title, author, image, pubDate, tags } = data
 
 const { Content } = await render(post)
@@ -37,7 +37,7 @@ const { Content } = await render(post)
                 {author}
                 </h4>
 
-                <p class="text-xs text-textLight dark:text-neutral-50/[.8]">
+                <p class="text-xs text-textLight dark:text-neutral-50/80">
                 {formatDate(pubDate)}
                 </p>
             </div>
@@ -45,7 +45,7 @@ const { Content } = await render(post)
         </main>
         
         <img 
-            transition:name={`img-${slug}`}
+            transition:name={`img-${id}`}
             class="rounded-2xl w-full"
             src={`/images/blog/${image.url}`}
             alt={image.alt || title} >

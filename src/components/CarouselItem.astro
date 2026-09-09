@@ -15,17 +15,17 @@ const { url, image, title, alt, author, date } = Astro.props;
 
 <a
   href={`/blog/${url || ""}`}
-  class="rounded-[16px] h-[570px] w-80 snap-center bg-primary relative shrink-0 cursor-pointer bg-center bg-[length:100%] hover:bg-[length:105%] transition-[background-size]"
+  class="rounded-2xl h-142.5 w-80 snap-center bg-primary relative shrink-0 cursor-pointer bg-center bg-size-[100%] hover:bg-size-[105%] transition-[background-size]"
   role="button"
   tabindex="0"
 >
   <div
-    class="relative h-full w-full flex-shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-neutral-900/[.7]"
+    class="relative h-full w-full shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-1 before:size-full before:bg-linear-to-t before:from-neutral-900/70"
   >
     {
       image && (
         <img
-          class="absolute start-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
+          class="absolute inset-s-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
           src={`/images/blog/${image}`}
           alt={alt}
           draggable={"false"}
@@ -38,7 +38,7 @@ const { url, image, title, alt, author, date } = Astro.props;
   <div class="absolute inset-x-0 bottom-0 z-10">
     <div class="flex h-full flex-col gap-4 p-4 sm:p-6">
       <h3
-        class="text-balance text-xl font-bold text-neutral-50 group-hover:text-neutral-50/[.8] md:text-2xl"
+        class="text-balance text-xl font-bold text-neutral-50 group-hover:text-neutral-50/80 md:text-2xl"
       >
         {title}
       </h3>
@@ -47,7 +47,7 @@ const { url, image, title, alt, author, date } = Astro.props;
         author && (
           <div class="itext-sm">
             <h4 class="font-bold text-neutral-50">{author}</h4>
-            <p class="text-xs text-neutral-50/[.8]">{formatDate(date)}</p>
+            <p class="text-xs text-neutral-50/80">{formatDate(date)}</p>
           </div>
         )
       }
