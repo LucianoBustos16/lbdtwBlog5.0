@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LBDTw - Propuesta v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+
+  /* ===== THEME LAYER (light/dark) ===== */
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    padding-bottom:5rem;
+    transition:background .2s ease,color .2s ease;
+  }
+  body.theme-dark{
+    --bg:#05070D; --surface:#12141B; --surface-2:#1A1D26;
+    --text:#F2F5F9; --text-muted:#9AA5B4; --border:#262A36; --line:#000;
+  }
+  body.theme-light{
+    --bg:#F4F5F7; --surface:#FFFFFF; --surface-2:#ECEEF2;
+    --text:#12141B; --text-muted:#5B6472; --border:#DCE0E6; --line:#000;
+  }
+  body{background:var(--bg);color:var(--text);}
+
+  /* ===== PALETTE LAYER (A: celeste principal / B: verde protagonista) ===== */
+  body.palette-a{ --primary:#0EA5E9; --primary-ink:#05070D; --accent:#C9F31D; --accent-ink:#0A0F02; }
+  body.palette-b{ --primary:#C9F31D; --primary-ink:#0A0F02; --accent:#0EA5E9; --accent-ink:#05070D; }
+
+  /* ===== Controles de la demo (no van al proyecto real) ===== */
+  .controls{
+    position:sticky;top:0;z-index:50;
+    display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;
+    padding:.9rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border);
+  }
+  .controls b{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-right:.3rem;}
+  .ctl-btn{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:.8rem;
+    padding:.4rem .8rem;border-radius:999px;border:1.5px solid var(--border);
+    background:transparent;color:var(--text);cursor:pointer;
+  }
+  .ctl-btn.active{background:var(--primary);color:var(--primary-ink);border-color:var(--primary);}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 1.5rem;}
+
+  .ticker{
+    background:var(--accent);color:var(--accent-ink);
+    overflow:hidden;white-space:nowrap;border-bottom:3px solid var(--line);
+  }
+  .ticker-track{
+    display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:800;
+    text-transform:uppercase;letter-spacing:1px;font-size:.85rem;padding:.5rem 0;
+    animation:scroll 18s linear infinite;
+  }
+  .ticker-track span{margin:0 1.5rem;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .hero-zone{padding:3rem 1.5rem 0;max-width:1000px;margin:0 auto;}
+  .stamp{
+    display:inline-flex;align-items:center;gap:.4rem;transform:rotate(-4deg);
+    border:3px solid var(--accent);color:var(--accent);
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+    letter-spacing:1.5px;font-size:.85rem;padding:.35rem .8rem;border-radius:999px;margin-bottom:1.5rem;
+  }
+  h1.hero{
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;
+    font-size:clamp(2.6rem,7.5vw,4.8rem);line-height:0.92;letter-spacing:0.5px;margin:0 0 .8rem;
+  }
+  h1.hero .hl{color:var(--primary-ink);background:var(--primary);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  h1.hero .hl2{color:var(--accent-ink);background:var(--accent);padding:0 .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .subtitle{color:var(--text-muted);font-size:1.05rem;max-width:44ch;margin-bottom:2.5rem;}
+
+  section{margin-bottom:3.5rem;padding:0 1.5rem;max-width:1000px;margin-left:auto;margin-right:auto;}
+  .label{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:1.5px;font-size:.8rem;color:var(--text-muted);margin-bottom:1rem;display:block;}
+
+  .swatches{display:flex;gap:1rem;flex-wrap:wrap;}
+  .swatch{width:150px;}
+  .swatch .chip{height:80px;border-radius:12px;margin-bottom:.5rem;border:1px solid var(--border);}
+  .swatch .name{font-weight:600;font-size:.85rem;}
+  .swatch .hex{color:var(--text-muted);font-size:.75rem;font-family:monospace;}
+
+  .cards-row{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .card{
+    background:var(--surface);border:2.5px solid var(--line);outline:1px solid var(--border);
+    border-radius:14px;overflow:hidden;max-width:320px;
+    box-shadow:6px 6px 0 var(--primary);transform:rotate(-1.2deg);
+  }
+  .card.alt{box-shadow:6px 6px 0 var(--accent);transform:rotate(1.4deg);}
+  .card .img{
+    height:170px;
+    background:radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%),
+               linear-gradient(135deg,var(--primary),color-mix(in srgb, var(--primary) 70%, #000 30%));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Barlow Condensed',sans-serif;color:var(--primary-ink);font-weight:800;
+    text-transform:uppercase;font-size:1.05rem;
+  }
+  .card .body{padding:1.1rem;}
+  .card h3{font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:1.35rem;line-height:1.05;margin:0 0 .6rem;color:var(--text);}
+  .card .meta{color:var(--text-muted);font-size:.8rem;}
+  .tag{
+    display:inline-block;background:var(--accent);color:var(--accent-ink);
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;
+    font-size:.7rem;padding:.2rem .5rem;border-radius:4px;margin-right:.35rem;margin-bottom:.5rem;transform:rotate(-2deg);
+  }
+  .tag.blue{background:var(--primary);color:var(--primary-ink);}
+
+  .stat-row{display:flex;gap:1.2rem;flex-wrap:wrap;}
+  .stat{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    padding:1.2rem 1.4rem;min-width:150px;
+  }
+  .stat .num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:2.2rem;color:var(--primary);line-height:1;}
+  .stat .num.accent{color:var(--accent);}
+  .stat .lbl{color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-top:.3rem;}
+
+  .quote{
+    position:relative;background:var(--surface-2);border:2px dashed var(--accent);border-radius:16px;
+    padding:2rem 2rem 1.5rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.5rem;
+    line-height:1.15;text-transform:uppercase;max-width:600px;color:var(--text);
+  }
+  .quote .mark{position:absolute;top:-1.2rem;left:1.5rem;font-size:4rem;color:var(--accent);font-family:Georgia,serif;font-weight:900;}
+  .quote cite{display:block;margin-top:1rem;font-family:'Inter',sans-serif;font-weight:600;font-size:.8rem;text-transform:none;color:var(--text-muted);}
+
+  .btn-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+  .btn{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+    padding:.7rem 1.5rem;border-radius:10px;font-size:1rem;border:2.5px solid var(--line);cursor:pointer;
+  }
+  .btn-primary{background:var(--primary);color:var(--primary-ink);box-shadow:4px 4px 0 var(--line);}
+  .btn-accent{background:var(--accent);color:var(--accent-ink);box-shadow:4px 4px 0 var(--line);}
+  .btn-outline{background:transparent;color:var(--text);border:2.5px solid var(--border);}
+  .note{font-size:.85rem;color:var(--text-muted);border-left:3px solid var(--accent);padding-left:1rem;margin-top:1.2rem;}
+</style>
+</head>
+<body class="theme-dark palette-a">
+
+<div class="controls">
+  <b>Modo</b>
+  <button class="ctl-btn active" data-theme="theme-dark">Oscuro</button>
+  <button class="ctl-btn" data-theme="theme-light">Claro</button>
+  <b style="margin-left:1rem;">Paleta</b>
+  <button class="ctl-btn active" data-palette="palette-a">A · Celeste principal</button>
+  <button class="ctl-btn" data-palette="palette-b">B · Verde protagonista</button>
+</div>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>★ SIN FILTRO</span><span>★ POLÍTICAMENTE INCORRECTOS</span><span>★ 100% PIRATA</span>
+    <span>★ SIN FILTRO</span><span>★ POLÍTICAMENTE INCORRECTOS</span><span>★ 100% PIRATA</span>
+  </div>
+</div>
+
+<div class="hero-zone">
+  <span class="stamp">★ LBDTw presenta</span>
+  <h1 class="hero"><span class="hl">Hinchas</span> de <span class="hl2">Belgrano</span><br>Políticamente Incorrectos</h1>
+  <p class="subtitle">Movés los toggles de arriba para comparar oscuro/claro y las dos paletas en vivo, sobre los mismos componentes.</p>
+</div>
+
+<section>
+  <span class="label">Paleta activa</span>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:var(--primary)"></div><div class="name">Primary</div><div class="hex" id="hex-primary"></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--accent)"></div><div class="name">Accent</div><div class="hex" id="hex-accent"></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--bg);border:1px solid var(--border)"></div><div class="name">Fondo</div><div class="hex" id="hex-bg"></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--surface);border:1px solid var(--border)"></div><div class="name">Surface</div><div class="hex" id="hex-surface"></div></div>
+  </div>
+</section>
+
+<section>
+  <span class="label">Stats (pensando en la tabla de posiciones / datos de partido)</span>
+  <div class="stat-row">
+    <div class="stat"><div class="num">78</div><div class="lbl">Puntos</div></div>
+    <div class="stat"><div class="num accent">3</div><div class="lbl">Racha ganadora</div></div>
+    <div class="stat"><div class="num">2°</div><div class="lbl">Posición</div></div>
+  </div>
+</section>
+
+<section>
+  <span class="label">Cards de post</span>
+  <div class="cards-row">
+    <div class="card">
+      <div class="img">Imagen del post</div>
+      <div class="body">
+        <span class="tag">Belgrano</span><span class="tag blue">Copa Argentina</span>
+        <h3>27, el número maldito</h3>
+        <p class="meta">LBDTw • 2 feb 2016</p>
+      </div>
+    </div>
+    <div class="card alt">
+      <div class="img">Imagen del post</div>
+      <div class="body">
+        <span class="tag blue">Opinión</span><span class="tag">Sin filtro</span>
+        <h3>Gracias, Belgrano</h3>
+        <p class="meta">LBDTw • 14 nov 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="label">Pull-quote</span>
+  <div class="quote">
+    <span class="mark">"</span>
+    Si el jueves vas en auto, llevá un pirata a la cancha.
+    <cite>— nota del blog</cite>
+  </div>
+</section>
+
+<section>
+  <span class="label">Botones</span>
+  <div class="btn-row">
+    <button class="btn btn-primary">Leer más</button>
+    <button class="btn btn-accent">En vivo ★</button>
+    <button class="btn btn-outline">Ver todas</button>
+  </div>
+  <p class="note" id="note-text"></p>
+</section>
+
+<script>
+  const body = document.body;
+  const hexes = {
+    'theme-dark palette-a': {primary:'#0EA5E9', accent:'#C9F31D', bg:'#05070D', surface:'#12141B'},
+    'theme-dark palette-b': {primary:'#C9F31D', accent:'#0EA5E9', bg:'#05070D', surface:'#12141B'},
+    'theme-light palette-a': {primary:'#0EA5E9', accent:'#C9F31D', bg:'#F4F5F7', surface:'#FFFFFF'},
+    'theme-light palette-b': {primary:'#C9F31D', accent:'#0EA5E9', bg:'#F4F5F7', surface:'#FFFFFF'},
+  };
+  const notes = {
+    'palette-a': 'Opción A: el celeste sigue siendo el color de marca (Belgrano), el verde neón entra fuerte como acento en botones, stats y detalles — no compite, resalta.',
+    'palette-b': 'Opción B: el verde neón pasa a ser el color dominante como en la referencia, y el celeste queda como toque puntual (un tag, un detalle) para no perder la identidad del club del todo.',
+  };
+
+  let theme = 'theme-dark', palette = 'palette-a';
+
+  function render(){
+    body.className = theme + ' ' + palette;
+    const h = hexes[theme + ' ' + palette];
+    document.getElementById('hex-primary').textContent = h.primary;
+    document.getElementById('hex-accent').textContent = h.accent;
+    document.getElementById('hex-bg').textContent = h.bg;
+    document.getElementById('hex-surface').textContent = h.surface;
+    document.getElementById('note-text').textContent = notes[palette];
+
+    document.querySelectorAll('[data-theme]').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    document.querySelectorAll('[data-palette]').forEach(b => b.classList.toggle('active', b.dataset.palette === palette));
+  }
+
+  document.querySelectorAll('[data-theme]').forEach(btn => btn.addEventListener('click', () => { theme = btn.dataset.theme; render(); }));
+  document.querySelectorAll('[data-palette]').forEach(btn => btn.addEventListener('click', () => { palette = btn.dataset.palette; render(); }));
+
+  render();
+</script>
+</body>
+</html>

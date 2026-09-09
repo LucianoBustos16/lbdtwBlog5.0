@@ -1,81 +1,61 @@
 ---
-import BrandLogo from '@components/BrandLogo.astro';
-import NavLink from '../../ui/links/NavLink.astro';
-import ThemeToggle from '@/components/ui/buttons/ThemeToggle.astro';
-import { iconPaths } from '@components/ui/icons/icons';
+import BrandLogo from "@/components/BrandLogo.astro";
+import ThemeToggle from "@/components/ui/buttons/ThemeToggle.astro";
+import Icon from "@/components/ui/icons/Icon.astro";
+import MobileNavOverlay from "./MobileNavOverlay.astro";
+import { NAV_LINKS, isActivePath } from "@consts/nav";
 
-const { pathname } = Astro.url
-const normalizedPathName = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname
-
-const navBarLinks: { name: string; url: string; icon: keyof typeof iconPaths; active?: boolean }[] = [
-    { name: "Inicio", url: "/", icon: "home",  },
-    { name: "Blog", url: "/blog", icon: `noticias`, active: normalizedPathName.startsWith("/blog") },
-    { name: "Estadisticas", url: "/statistics", icon: `trofeo`, },
-    {name: "LBDTw Tv", url: "/lbdtwtv", icon: `youtube`,}
-  ];
-
-const pages = navBarLinks.map((page) => ({
+const { pathname } = Astro.url;
+const pages = NAV_LINKS.map((page) => ({
 	...page,
-	active: page.active ?? (normalizedPathName === page.url)
-}))
-
+	active: isActivePath(pathname, page.href),
+}));
 ---
 
-<header class="header-animate md:backdrop-blur-0 w-full mb-10 overflow-visible z-[99999] py-6 text-textDark dark:text-white ">
-  <div class="grid items-center justify-center md:justify-normal w-full grid-cols-[auto_1fr] mx-auto 	gap-x-10 md:flex max-w-[1200px]">
-    <div class="md:flex-grow md:basis-0 flex justify-start">
-      <a href="/" class="ml-4 flex items-center gap-2.5 font-bold transition-transform duration-300 hover:scale-110"
-        title="Ir a la página principal"
-        aria-label="Ir a la página principal">
-        <BrandLogo class="text-primary h-auto w-8 md:w-12" />
-      <!-- <span class="hidden lg:block text-3xl font-montserrat">LBDtw</span> -->
-      <span class="text-textDark border-gray-800 text-[10px] uppercase border px-1.5 py-0.5 rounded-full dark:text-gray-300 dark:border-gray-300 leading-none">Beta</span>
+<div class="sticky top-0 z-[100] flex justify-center px-4 pt-4">
+	<div
+		class="flex items-center gap-3 sm:gap-5 rounded-full border border-black/10 dark:border-white/10 bg-[var(--color-pill)] pl-3 pr-2 py-2 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.5),0_0_40px_-10px_var(--color-primary-glow)] backdrop-blur-md"
+	>
+		<a href="/" class="flex shrink-0 items-center" aria-label="Ir al inicio">
+			<BrandLogo class="text-primary h-7 w-7" />
+		</a>
 
-    </a>
-    </div>
-    
-    <nav id="header-navbar" class=" col-span-full overflow-x-auto row-[2/3] grid grid-rows-[0fr] transition-[grid-template-rows] data-[open]:grid-rows-[1fr] md:justify-center md:flex group/nav">
-      <ul class="flex flex-col items-center overflow-x-hidden overflow-y-hidden md:flex-row gap-x-2">
-        {pages.map(link => (
-            <li class="flex justify-center w-full font-bold first:mt-5 md:first:mt-0 md:block md:w-auto">
-            <NavLink
-              url={link.url}
-              name={link.name}
-              icon={link.icon}
-              class:list={[
-                  { "current-page active": link.active },
-                ]}
-            />
-        </li>
-          ))}
-      </ul>
-    </nav>  
-    <ThemeToggle/>
-  </div>
-  </header>
+		<nav class="hidden lg:flex items-center gap-4">
+			{pages.map(({ name, href, active }) => (
+				<a href={href}
+					class:list={[
+						"font-display font-bold uppercase tracking-wide text-sm transition-colors hover:text-primary before:content-['•'] before:mr-4 before:font-normal before:text-textLight/40 first:before:content-none",
+						active ? "text-primary" : "text-textDark dark:text-neutral-300",
+					]}
+				>
+					{name}
+				</a>
+			))}
+		</nav>
 
+		<a href="/lbdtwtv"
+			class="hidden lg:inline-flex items-center gap-1 rounded-full bg-primary px-4 py-1.5 font-display text-sm font-extrabold uppercase tracking-wide text-primary-ink hover:brightness-110 transition"
+		>
+			★ En vivo
+		</a>
 
-<style>
+		<ThemeToggle />
 
-  .header-animate{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    animation: reduce-header linear both;
-    animation-timeline: scroll();
-    animation-range: 0 150px;
-    }
+		<button
+			id="menu-button"
+			class="relative z-[110] size-9 flex items-center justify-center lg:hidden bg-primary/10 rounded-full font-bold active:scale-95 transition-all"
+			aria-expanded="false"
+			aria-controls="mobile-menu"
+			aria-label="Abrir menú"
+		>
+			<span id="icon-open" class="text-xl">
+				<Icon icon="menu" size="22" />
+			</span>
+			<span id="icon-close" class="hidden text-xl">
+				<Icon icon="close" size="22" />
+			</span>
+		</button>
+	</div>
+</div>
 
-    @keyframes reduce-header{
-
-      100% {
-      box-shadow: 0 5px 50px -5px #ffffff1a, 0 0 0 1px #ffffff1a2);
-      background: var(--bg-color);
-      padding-block: 1rem;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-  }
-  
-    }
-</style>
+<MobileNavOverlay />

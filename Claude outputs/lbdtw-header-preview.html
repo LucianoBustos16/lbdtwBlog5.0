@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LBDTw - Header pill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  :root{
+    --primary:#C9F31D; --primary-ink:#0A0F02;
+    --accent:#0EA5E9;
+  }
+  body{
+    margin:0;font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(600px 300px at 50% 0%, rgba(14,165,233,.20), transparent 70%),
+      #05070D;
+    color:#F2F5F9;
+    min-height:100vh;
+    padding-bottom:3rem;
+  }
+  .page-top{height:1px;}
+
+  /* ---- Pill nav ---- */
+  .nav-wrap{
+    display:flex;justify-content:center;
+    padding:2rem 1rem 1rem;
+  }
+  .pill{
+    display:flex;align-items:center;gap:1.6rem;
+    background:rgba(18,20,27,.75);
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 0 0 1px rgba(255,255,255,.02), 0 8px 30px -6px rgba(0,0,0,.6), 0 0 40px -10px rgba(201,243,29,.15);
+    backdrop-filter:blur(14px);
+    border-radius:999px;
+    padding:.55rem .7rem .55rem 1rem;
+  }
+  .pill .mark{
+    width:30px;height:30px;border-radius:50%;background:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--primary-ink);font-size:1rem;
+    flex-shrink:0;
+  }
+  .pill nav{display:flex;align-items:center;gap:.9rem;}
+  .pill nav a{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+    font-size:.88rem;color:#C7CDD8;text-decoration:none;white-space:nowrap;
+    transition:color .15s ease;
+  }
+  .pill nav a:hover{color:#fff;}
+  .pill nav a.active{color:var(--primary);}
+  .dot{color:#4A5064;font-size:.7rem;}
+  .pill .cta{
+    margin-left:.3rem;
+    background:var(--primary);color:var(--primary-ink);
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.4px;
+    font-size:.82rem;padding:.45rem 1rem;border-radius:999px;text-decoration:none;white-space:nowrap;
+  }
+
+  /* Pill compacta para mobile */
+  @media (max-width:760px){
+    .pill nav{display:none;}
+    .pill .cta{display:none;}
+    .pill{gap:.8rem;padding:.5rem;}
+    .pill .burger{
+      width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);
+      display:flex;align-items:center;justify-content:center;color:#F2F5F9;border:none;font-size:1rem;
+    }
+  }
+  .burger{display:none;}
+  @media (max-width:760px){.burger{display:flex;}}
+
+  .hero-mock{max-width:700px;margin:2rem auto 0;text-align:center;padding:0 1.5rem;}
+  .hero-mock h1{
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;
+    font-size:clamp(2.2rem,6vw,3.6rem);line-height:0.95;margin:0 0 .8rem;
+  }
+  .hero-mock h1 span{color:var(--primary);}
+  .hero-mock p{color:#9AA5B4;}
+
+  .note{max-width:700px;margin:3rem auto 0;padding:0 1.5rem;font-size:.85rem;color:#9AA5B4;border-left:3px solid var(--accent);padding-left:1rem;}
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <div class="pill">
+    <span class="mark">B</span>
+    <nav>
+      <a href="#" class="active">Inicio</a>
+      <span class="dot">•</span>
+      <a href="#">Blog</a>
+      <span class="dot">•</span>
+      <a href="#">LBDTw Tv</a>
+    </nav>
+    <a href="#" class="cta">★ En vivo</a>
+    <button class="burger">☰</button>
+  </div>
+</div>
+
+<div class="hero-mock">
+  <h1>Hinchas de <span>Belgrano</span><br>Políticamente Incorrectos</h1>
+  <p>Así quedaría flotando sobre el contenido, centrado, sin ocupar todo el ancho como el header actual.</p>
+</div>
+
+<p class="note">
+  Achicá la ventana para ver cómo se comprime en mobile: el nav y el botón "En vivo" se esconden y queda solo el isotipo + un botón de hamburguesa dentro de la misma píldora, en vez de saltar a una barra ancha distinta.
+</p>
+
+</body>
+</html>
