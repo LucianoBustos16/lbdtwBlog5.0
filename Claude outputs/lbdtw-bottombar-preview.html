@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LBDTw - Bottom bar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;font-family:'Inter',sans-serif;
+    background:#05070D;color:#F2F5F9;
+    min-height:100vh;
+  }
+  .phone{
+    max-width:390px;margin:2rem auto;
+    background:#05070D;
+    border:1px solid #232A3A;
+    border-radius:36px;
+    overflow:hidden;
+    position:relative;
+    height:720px;
+  }
+  .content{padding:1.5rem 1.2rem 6rem;}
+  .content h1{
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;
+    font-size:2.2rem;line-height:0.95;margin:1rem 0 .6rem;
+  }
+  .content h1 span{color:#C9F31D;}
+  .content p{color:#9AA5B4;font-size:.9rem;}
+  .card{
+    margin-top:1.2rem;background:#12141B;border:1px solid #232A3A;border-radius:14px;
+    height:140px;display:flex;align-items:center;justify-content:center;color:#5B6472;font-size:.8rem;
+  }
+
+  /* ---- Bottom bar ---- */
+  .tabbar-wrap{
+    position:absolute;left:0;right:0;bottom:0;
+    display:flex;justify-content:center;
+    padding:0 1rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
+  }
+  .tabbar{
+    display:flex;align-items:center;gap:.4rem;
+    background:rgba(18,20,27,.82);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 10px 30px -8px rgba(0,0,0,.6);
+    backdrop-filter:blur(14px);
+    border-radius:24px;
+    padding:.5rem;
+    width:100%;
+  }
+  .tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:.2rem;
+    padding:.5rem .5rem;border-radius:16px;color:#7D869A;
+    text-decoration:none;transition:color .15s ease, background .15s ease;
+  }
+  .tab svg{width:22px;height:22px;}
+  .tab .lbl{
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+    font-size:.68rem;
+  }
+  .tab.active{color:#C9F31D;background:rgba(201,243,29,.10);}
+
+  .note{max-width:390px;margin:0 auto 2rem;font-size:.85rem;color:#9AA5B4;border-left:3px solid #0EA5E9;padding-left:1rem;}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="content">
+    <span style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:.7rem;color:#9AA5B4;">Vista mobile</span>
+    <h1>Hinchas de <span>Belgrano</span></h1>
+    <p>Así se vería con la barra inferior fija en vez del botón hamburguesa. El header de arriba (la píldora con el logo y el toggle de tema) queda igual.</p>
+    <div class="card">card / contenido de la página</div>
+    <div class="card">card / contenido de la página</div>
+  </div>
+
+  <div class="tabbar-wrap">
+    <div class="tabbar">
+      <a href="#" class="tab active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+        <span class="lbl">Inicio</span>
+      </a>
+      <a href="#" class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <span class="lbl">Blog</span>
+      </a>
+      <a href="#" class="tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3H3v14h5v4l4-4h9z"/><path d="M13 8l3 2-3 2z"/></svg>
+        <span class="lbl">LBDTw Tv</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<p class="note">
+  Los 3 íconos son placeholders rápidos para la demo — en el código real uso los íconos que ya tenés en <code>icons.ts</code> (<code>home</code>, <code>noticias</code>, <code>twitch</code>), no estos genéricos. El activo se resalta en verde con un fondo sutil, como hace Instagram con el ícono de la sección en la que estás.
+</p>
+
+</body>
+</html>

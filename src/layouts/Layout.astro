@@ -1,6 +1,8 @@
 ---
 import FooterSection from '@/components/sections/navbar&footer/FooterSection.astro';
 import Header from '@/components/sections/navbar&footer/Header.astro';
+import MobileTabBar from '@/components/sections/navbar&footer/MobileTabBar.astro';
+import '../styles/global.css';
 
 interface Props {
 	title: string;
@@ -66,49 +68,12 @@ const { title } = Astro.props;
 		</script>
 
 	</head>
-	<body class="selection:bg-primary selection:text-neutral-200 bg-[var(--bg-web)]">
+		<body class="selection:bg-primary selection:text-neutral-200 bg-(--bg-web) pb-28 lg:pb-0">
 		<Header />
 		<div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
 			<slot />
 		</div>
 		<FooterSection />
+		<MobileTabBar />
 	</body>
 </html>
-<style >
-	:root {
-	--color-primary: #C9F31D;
-	--color-primary-ink: #0A0F02;
-	--color-accent: #0598D1;
-	--color-accent-ink: #ffffff;
-
-	--color-surface: #ffffff;
-	--color-surface-2: #f2f3f5;
-	--color-border: #dce0e6;
-
-	--color-textDark: #12141b;
-	--color-textLight: #5b6472;
-
-	--color-pill: #ffffffcc;
-	--color-primary-glow: transparent;
-
-	--bg-color: #ffffff80;
-	--background-color: #ffffffc5;
-	--bg-web: #f4f5f7;
-	}
- 
-  .dark {
-	--color-surface: #12141b;
-	--color-surface-2: #1a1d26;
-	--color-border: #262a36;
-
-	--color-textDark: #f2f5f9;
-	--color-textLight: #9aa5b4;
-
-	--color-pill: #12141bcc;
-	--color-primary-glow: rgba(201,243,29,0.35);
-
-    --bg-color: #00000028;
-	--background-color: #00021479;
-	--bg-web: #05070d;
-  }
-</style>

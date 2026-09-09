@@ -16,16 +16,16 @@ interface Props {
 ---
 
 <a
-  class="group relative block rounded-xl outline-none ring-zinc-500 transition duration-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
+  class="group relative block rounded-xl outline-none ring-zinc-500 transition duration-500 focus-visible:ring dark:ring-neutral-900 dark:focus:outline-none"
   href={`/blog/${url}`}
   data-astro-prefetch
 >
   <!-- The container for the blog post's cover image. Uses astro:assets' Image for image source -->
   <div
-    class="relative h-[350px] w-full flex-shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-neutral-900/[.7]"
+    class="relative h-87.5 w-full shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-1 before:size-full before:bg-linear-to-t before:from-neutral-900/70"
   >
     <img
-      class="absolute start-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
+      class="absolute inset-s-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
       src={`/images/blog/${image}`}
       alt={alt}
       draggable={"false"}
@@ -42,7 +42,7 @@ interface Props {
           <h4 class="font-bold text-neutral-50">
             {author}
           </h4>
-          <p class="text-xs text-neutral-50/[.8]">
+          <p class="text-xs text-neutral-50/80">
             {formatDate(date)}
           </p>
         </div>
@@ -53,7 +53,7 @@ interface Props {
   <div class="absolute inset-x-0 bottom-0 z-10">
     <div class="flex h-full flex-col p-4 sm:p-6">
       <h3
-        class="text-balance text-2xl font-bold text-neutral-50 group-hover:text-neutral-50/[.8] md:text-3xl"
+        class="text-balance text-2xl font-bold text-neutral-50 group-hover:text-neutral-50/80 md:text-3xl"
       >
         {title}
       </h3>

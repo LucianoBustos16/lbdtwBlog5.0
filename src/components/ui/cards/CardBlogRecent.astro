@@ -27,7 +27,7 @@ const { title, author, image, pubDate } = data
     >
       <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">      
         <img
-          class="absolute start-0 top-0 size-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
+          class="absolute inset-s-0 top-0 size-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
           src={`/images/blog/${image.url}`}
           alt={image.alt}
           draggable={"false"}
@@ -54,7 +54,7 @@ const { title, author, image, pubDate } = data
 
       <div class="ms-3 sm:ms-4">
         <p class="font-bold text-textDark dark:text-neutral-200 sm:mb-1">
-          {author} • <span class="text-xs text-textLight dark:text-neutral-50/[.8]">{formatDate(pubDate)}</span> 
+          {author} • <span class="text-xs text-textLight dark:text-neutral-50/80">{formatDate(pubDate)}</span> 
         </p>
       </div>
     </div>
