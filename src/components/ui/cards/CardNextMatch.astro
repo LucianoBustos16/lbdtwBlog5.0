@@ -1,0 +1,91 @@
+---
+import { getNextMatch } from '@/lib/nextmatch.js'
+
+let match = null
+try {
+  match = await getNextMatch()
+} catch (e) {
+  console.error('[CardNextMatch] Error al obtener el próximo partido:', e)
+}
+---
+
+{
+  match && (
+    <section class="mx-auto max-w-340 px-4 sm:px-6 lg:px-8" id="next-match-card">
+      <div class="rounded-2xl border border-border bg-surface-2 p-5 sm:p-6 shadow-sm">
+        <span
+          id="nm-badge"
+          class:list={[
+            "inline-block rounded-full px-3 py-1 text-xs font-bold",
+            match.isLive ? "bg-red-500 text-white animate-pulse" : "bg-accent text-accent-ink"
+          ]}
+        >
+          {match.isLive ? `🔴 EN VIVO · ${match.statusDescription}` : '⚽ Próximo partido'}
+        </span>
+
+        <p class="mt-3 text-sm text-textLight">{match.competition}</p>
+
+        <div class="mt-4 grid items-center gap-3" style="grid-template-columns: 1fr auto 1fr;">
+          <div class="flex flex-col items-center gap-2 text-center">
+            {match.localTeam.image && (
+              <img class="h-16 w-16 object-contain sm:h-20 sm:w-20" src={match.localTeam.image} alt={`Escudo de ${match.localTeam.name}`} />
+            )}
+            <p class="font-display text-lg font-bold text-textDark sm:text-xl">{match.localTeam.name}</p>
+          </div>
+
+          <div class="text-center" id="nm-center">
+            {match.isLive ? (
+              <p class="font-display text-3xl font-black text-textDark sm:text-4xl" id="nm-score">
+                {match.localTeam.score} - {match.visitantTeam.score}
+              </p>
+            ) : (
+              <Fragment>
+                <p class="font-display text-2xl font-black text-textDark sm:text-3xl" id="nm-hour">{match.hourMatch}</p>
+                <p class="text-sm text-textLight">{match.formattedDate}</p>
+              </Fragment>
+            )}
+          </div>
+
+          <div class="flex flex-col items-center gap-2 text-center">
+            {match.visitantTeam.image && (
+              <img class="h-16 w-16 object-contain sm:h-20 sm:w-20" src={match.visitantTeam.image} alt={`Escudo de ${match.visitantTeam.name}`} />
+            )}
+            <p class="font-display text-lg font-bold text-textDark sm:text-xl">{match.visitantTeam.name}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const POLL_INTERVAL_MS = 60_000
+
+  async function refreshNextMatch () {
+    try {
+      const res = await fetch('/api/nextmatch.json')
+      if (!res.ok) return
+      const match = await res.json()
+      if (!match) return
+
+      const badge = document.getElementById('nm-badge')
+      const center = document.getElementById('nm-center')
+
+      if (match.isLive) {
+        badge.textContent = `🔴 EN VIVO · ${match.statusDescription}`
+        badge.className = 'inline-block rounded-full px-3 py-1 text-xs font-bold bg-red-500 text-white animate-pulse'
+
+        center.innerHTML = `<p class="font-display text-3xl font-black text-textDark sm:text-4xl" id="nm-score">${match.localTeam.score} - ${match.visitantTeam.score}</p>`
+      } else {
+        badge.textContent = '⚽ Próximo partido'
+        badge.className = 'inline-block rounded-full px-3 py-1 text-xs font-bold bg-accent text-accent-ink'
+      }
+    } catch (e) {
+      console.error('[CardNextMatch] Error actualizando el partido:', e)
+    }
+  }
+
+  if (document.getElementById('next-match-card')) {
+    setInterval(refreshNextMatch, POLL_INTERVAL_MS)
+  }
+</script>

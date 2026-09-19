@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSection from "../components/sections/landing/HeroSection.astro";
+import CardNextMatch from "@/components/ui/cards/CardNextMatch.astro";
 import LastPosts from '@/components/sections/landing/LastPosts.astro';
 import Carousel from '@/components/sections/landing/Carousel.astro';
 
@@ -12,6 +13,8 @@ const pageTitle = "Página de inicio";
     title=`Hinchas de <span class="text-sky-500">Belgrano</span>`
     subTitle="Políticamente Incorrectos"
 	/>
+
+	<CardNextMatch />
 
 	<!-- <LastPosts/> -->
 	<Carousel/>
