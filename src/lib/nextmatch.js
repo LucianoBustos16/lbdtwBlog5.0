@@ -8,7 +8,7 @@ const LIVE_STATUSES = ['inprogress', 'halftime']
 function mapTeam (apiTeam) {
   return {
     name: apiTeam.shortName,
-    image: `https://img.sofascore.com/api/v1/team/${apiTeam.id}/image`
+    image: `/api/team-image/${apiTeam.id}`
   }
 }
 
@@ -26,7 +26,6 @@ function formatMatchDate (startTimestamp) {
   return { hourMatch, formattedDate }
 }
 
-// Recibe el featuredEvent crudo de la API y lo transforma a lo que usa la card
 export function parseFeaturedEvent (featuredEvent) {
   if (!featuredEvent) return null
 

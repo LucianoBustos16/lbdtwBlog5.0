@@ -70,6 +70,7 @@ try {
 
       const badge = document.getElementById('nm-badge')
       const center = document.getElementById('nm-center')
+      if (!badge || !center) return
 
       if (match.isLive) {
         badge.textContent = `🔴 EN VIVO · ${match.statusDescription}`
@@ -88,4 +89,4 @@ try {
   if (document.getElementById('next-match-card')) {
     setInterval(refreshNextMatch, POLL_INTERVAL_MS)
   }
-</script> 
+</script>
