@@ -11,29 +11,73 @@ try {
 
 const recentOrLive = status?.recentOrLive ?? null
 const upcoming = status?.upcoming ?? null
-const hasContent = Boolean(recentOrLive || upcoming)
+
+const isLive = Boolean(recentOrLive?.isLive)
+
+const recentCard = recentOrLive && {
+  key: 'recent',
+  title: isLive ? '🔴 En vivo' : 'Partido anterior',
+  variant: isLive ? 'live' : 'neutral',
+  match: recentOrLive
+}
+
+const upcomingCard = upcoming && {
+  key: 'upcoming',
+  title: 'Próximo partido',
+  variant: 'accent',
+  match: upcoming
+}
+
+// La card más importante va primero: en vivo > próximo partido > último jugado
+const important = isLive ? recentCard : (upcomingCard ?? recentCard)
+const other = important === recentCard ? upcomingCard : recentCard
+
+const cards = [important, other].filter(Boolean)
+
+const title: string = `Próximo <span class="text-primary">Partido</span>`
 ---
 
-{hasContent && (
-  <section class="mx-auto max-w-340 px-4 sm:px-6 lg:px-8" id="next-match-card">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <MatchMiniCard
-        title={recentOrLive?.isLive ? '🔴 En vivo' : 'Partido anterior'}
-        variant={recentOrLive?.isLive ? 'live' : 'neutral'}
-        match={recentOrLive}
-        badgeId="nm-recent-badge"
-        scoreLocalId="nm-recent-local-score"
-        scoreVisitantId="nm-recent-visitant-score"
-        statusId="nm-recent-status"
-      />
-      <MatchMiniCard
-        title="Partido siguiente"
-        variant="accent"
-        match={upcoming}
-      />
+{cards.length > 0 && (
+  <section
+    class="mx-auto max-w-340 px-4 py-10 sm:px-6 lg:px-8 lg:py-14"
+    id="next-match-card"
+  >
+    <div class="mx-auto mb-6 w-full space-y-1 text-center sm:w-1/2 lg:w-1/3">
+      <h2 class="text-balance text-2xl font-bold leading-tight text-textDark dark:text-neutral-200 sm:text-3xl">
+        <Fragment set:html={title} />
+      </h2>
+    </div>
+
+    <div
+      class="match-carousel flex gap-4 overflow-x-auto custom-scrollbar snap-x snap-mandatory -mr-4 pr-4 sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:overflow-visible"
+    >
+      {cards.map((card) => (
+        <div class="w-[85%] shrink-0 snap-center sm:w-auto sm:shrink">
+          <MatchMiniCard
+            title={card.title}
+            variant={card.variant}
+            match={card.match}
+            badgeId={card.key === 'recent' ? 'nm-recent-badge' : undefined}
+            scoreLocalId={card.key === 'recent' ? 'nm-recent-local-score' : undefined}
+            scoreVisitantId={card.key === 'recent' ? 'nm-recent-visitant-score' : undefined}
+            statusId={card.key === 'recent' ? 'nm-recent-status' : undefined}
+          />
+        </div>
+      ))}
     </div>
   </section>
 )}
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
 
 <script>
   const POLL_INTERVAL_MS = 60_000
@@ -52,10 +96,9 @@ const hasContent = Boolean(recentOrLive || upcoming)
       const statusEl = document.getElementById('nm-recent-status')
       if (!badge || !scoreLocal || !scoreVisitant) return
 
-      badge.textContent = '🔴 En vivo'
       scoreLocal.textContent = String(recent.localTeam.score)
       scoreVisitant.textContent = String(recent.visitantTeam.score)
-      if (statusEl) statusEl.textContent = recent.statusDescription
+      if (statusEl) statusEl.textContent = `· ${recent.statusDescription}`
     } catch (e) {
       console.error('[CardNextMatch] Error actualizando el partido:', e)
     }
