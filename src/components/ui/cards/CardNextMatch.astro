@@ -17,10 +17,14 @@ try {
           id="nm-badge"
           class:list={[
             "inline-block rounded-full px-3 py-1 text-xs font-bold",
-            match.isLive ? "bg-red-500 text-white animate-pulse" : "bg-accent text-accent-ink"
+            match.isLive && "bg-red-500 text-white animate-pulse",
+            match.isFinished && "bg-surface text-textDark border border-border",
+            !match.isLive && !match.isFinished && "bg-accent text-accent-ink"
           ]}
         >
-          {match.isLive ? `🔴 EN VIVO · ${match.statusDescription}` : '⚽ Próximo partido'}
+          {match.isLive && `🔴 EN VIVO · ${match.statusDescription}`}
+          {match.isFinished && `🏁 Resultado final`}
+          {!match.isLive && !match.isFinished && '⚽ Próximo partido'}
         </span>
 
         <p class="mt-3 text-sm text-textLight">{match.competition}</p>
@@ -34,7 +38,7 @@ try {
           </div>
 
           <div class="text-center" id="nm-center">
-            {match.isLive ? (
+            {(match.isLive || match.isFinished) ? (
               <p class="font-display text-3xl font-black text-textDark sm:text-4xl" id="nm-score">
                 {match.localTeam.score} - {match.visitantTeam.score}
               </p>
@@ -72,9 +76,11 @@ try {
       const center = document.getElementById('nm-center')
       if (!badge || !center) return
 
-      if (match.isLive) {
-        badge.textContent = `🔴 EN VIVO · ${match.statusDescription}`
-        badge.className = 'inline-block rounded-full px-3 py-1 text-xs font-bold bg-red-500 text-white animate-pulse'
+      if (match.isLive || match.isFinished) {
+        badge.textContent = match.isLive ? `🔴 EN VIVO · ${match.statusDescription}` : '🏁 Resultado final'
+        badge.className = match.isLive
+          ? 'inline-block rounded-full px-3 py-1 text-xs font-bold bg-red-500 text-white animate-pulse'
+          : 'inline-block rounded-full px-3 py-1 text-xs font-bold bg-surface text-textDark border border-border'
 
         center.innerHTML = `<p class="font-display text-3xl font-black text-textDark sm:text-4xl" id="nm-score">${match.localTeam.score} - ${match.visitantTeam.score}</p>`
       } else {

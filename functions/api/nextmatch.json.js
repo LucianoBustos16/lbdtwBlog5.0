@@ -1,4 +1,4 @@
-import { fetchFeaturedEvent, parseFeaturedEvent } from '../../src/lib/nextmatch.js'
+import { fetchCurrentOrNextEvent, parseEvent } from '../../src/lib/nextmatch.js'
 
 export async function onRequestGet (context) {
   const cache = caches.default
@@ -9,8 +9,8 @@ export async function onRequestGet (context) {
 
   try {
     const apiKey = context.env.RAPIDAPI_KEY
-    const featuredEvent = await fetchFeaturedEvent(apiKey)
-    const match = parseFeaturedEvent(featuredEvent)
+    const event = await fetchCurrentOrNextEvent(apiKey)
+    const match = parseEvent(event)
 
     const response = new Response(JSON.stringify(match), {
       headers: {
