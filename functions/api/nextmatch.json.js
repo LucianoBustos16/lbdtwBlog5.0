@@ -1,4 +1,4 @@
-import { fetchCurrentOrNextEvent, parseEvent } from '../../src/lib/nextmatch.js'
+import { fetchMatchStatus } from '../../src/lib/nextmatch.js'
 
 export async function onRequestGet (context) {
   const cache = caches.default
@@ -8,11 +8,9 @@ export async function onRequestGet (context) {
   if (cached) return cached
 
   try {
-    const apiKey = context.env.RAPIDAPI_KEY
-    const event = await fetchCurrentOrNextEvent(apiKey)
-    const match = parseEvent(event)
+    const status = await fetchMatchStatus(context.env.RAPIDAPI_KEY)
 
-    const response = new Response(JSON.stringify(match), {
+    const response = new Response(JSON.stringify(status), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=30'

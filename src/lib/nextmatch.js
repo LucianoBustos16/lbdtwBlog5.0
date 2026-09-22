@@ -1,5 +1,5 @@
 const RAPIDAPI_HOST = 'footapi7.p.rapidapi.com'
-const BELGRANO_TEAM_ID = 3218
+const BELGRANO_TEAM_ID = 3203
 
 const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
@@ -50,48 +50,57 @@ export function parseEvent (event) {
 
 async function fetchFeaturedEvent (apiKey) {
   const res = await fetch(`https://footapi7.p.rapidapi.com/api/team/${BELGRANO_TEAM_ID}/featured-event`, {
-    headers: {
-      'x-rapidapi-host': RAPIDAPI_HOST,
-      'x-rapidapi-key': apiKey
-    }
+    headers: { 'x-rapidapi-host': RAPIDAPI_HOST, 'x-rapidapi-key': apiKey }
   })
   if (!res.ok) throw new Error(`RapidAPI featured-event respondió ${res.status}`)
   const { featuredEvent } = await res.json()
   return featuredEvent
 }
 
+async function fetchPreviousEvents (apiKey) {
+  const res = await fetch(`https://footapi7.p.rapidapi.com/api/team/${BELGRANO_TEAM_ID}/matches/previous/0`, {
+    headers: { 'x-rapidapi-host': RAPIDAPI_HOST, 'x-rapidapi-key': apiKey }
+  })
+  if (!res.ok) throw new Error(`RapidAPI matches/previous respondió ${res.status}`)
+  const { events } = await res.json()
+  return events ?? []
+}
+
 async function fetchNextEvents (apiKey) {
   const res = await fetch(`https://footapi7.p.rapidapi.com/api/team/${BELGRANO_TEAM_ID}/matches/next/0`, {
-    headers: {
-      'x-rapidapi-host': RAPIDAPI_HOST,
-      'x-rapidapi-key': apiKey
-    }
+    headers: { 'x-rapidapi-host': RAPIDAPI_HOST, 'x-rapidapi-key': apiKey }
   })
   if (!res.ok) throw new Error(`RapidAPI matches/next respondió ${res.status}`)
   const { events } = await res.json()
   return events ?? []
 }
 
-// Si hay un partido de Belgrano en vivo ahora mismo, lo devuelve.
-// Si no, devuelve el próximo partido confirmado (nunca uno ya finalizado).
-export async function fetchCurrentOrNextEvent (apiKey) {
-  const [featuredResult, nextResult] = await Promise.allSettled([
+// Devuelve { recentOrLive, upcoming } — como la sección de SofaScore:
+// - recentOrLive: el partido en vivo si hay uno jugándose ahora, si no el último jugado
+// - upcoming: el próximo partido confirmado
+export async function fetchMatchStatus (apiKey) {
+  const [featuredResult, previousResult, nextResult] = await Promise.allSettled([
     fetchFeaturedEvent(apiKey),
+    fetchPreviousEvents(apiKey),
     fetchNextEvents(apiKey)
   ])
 
   const featured = featuredResult.status === 'fulfilled' ? featuredResult.value : null
+  const previous = previousResult.status === 'fulfilled' ? previousResult.value : []
   const next = nextResult.status === 'fulfilled' ? nextResult.value : []
 
-  if (featured && LIVE_STATUSES.includes(featured.status.type)) {
-    return featured
+  const isFeaturedLive = featured && LIVE_STATUSES.includes(featured.status.type)
+
+  // El más reciente = el de mayor startTimestamp (no asumo el orden del array)
+  const mostRecentPrevious = previous.reduce((latest, event) => {
+    if (!latest || event.startTimestamp > latest.startTimestamp) return event
+    return latest
+  }, null)
+
+  const recentOrLiveEvent = isFeaturedLive ? featured : mostRecentPrevious
+
+  return {
+    recentOrLive: parseEvent(recentOrLiveEvent),
+    upcoming: parseEvent(next[0] ?? null)
   }
-
-  return next[0] ?? null
-}
-
-// Usado en build time (SSG) para el primer render de la card
-export async function getNextMatch () {
-  const event = await fetchCurrentOrNextEvent(import.meta.env.RAPIDAPI_KEY)
-  return parseEvent(event)
 }
