@@ -32,7 +32,9 @@ const upcomingCard = upcoming && {
 const important = isLive ? recentCard : (upcomingCard ?? recentCard)
 const other = important === recentCard ? upcomingCard : recentCard
 
-const cards = [important, other].filter(Boolean)
+const cards = [important, other].filter(
+  (card): card is NonNullable<typeof card> => card !== null
+)
 
 const title: string = `Próximo <span class="text-primary">Partido</span>`
 ---
