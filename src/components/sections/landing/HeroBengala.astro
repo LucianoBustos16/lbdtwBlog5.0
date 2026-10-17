@@ -164,6 +164,33 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
     .hb-hint { bottom: calc(7.5rem + env(safe-area-inset-bottom)); }
   }
 
+  /* ---------- Modo claro: versión "de día" ---------- */
+  :global(html:not(.dark)) .hb { color: var(--color-textDark); }
+  :global(html:not(.dark)) .hb-scene { background: #f4f5f7; }
+  :global(html:not(.dark)) .hb-sub {
+    color: var(--color-textDark);
+    opacity: .7;
+    text-shadow: 0 0 12px rgb(255 255 255 / .9);
+  }
+  :global(html:not(.dark)) .hb-hint { color: rgb(0 0 0 / .4); }
+  :global(html:not(.dark)) .hb-title :global(.hb-ch) {
+    /* de día la bengala no "blanquea" las letras: las tiñe del color del humo */
+    color: color-mix(in oklab, currentColor, rgb(var(--ink)) calc(var(--k) * 70%));
+    text-shadow:
+      0 0 calc(var(--k) * 22px) rgb(var(--glow) / calc(var(--k) * .55)),
+      0 0 22px rgb(255 255 255 / .75),
+      var(--sx) var(--sy) calc(4px + var(--k) * 8px) rgb(10 30 50 / calc(.07 + var(--k) * .2));
+  }
+  :global(html:not(.dark)) .hb-content :global(svg) {
+    color: var(--color-accent); /* logo celeste de día (el lima no contrasta) */
+    filter: drop-shadow(0 4px 14px rgb(0 0 0 / .12));
+  }
+  :global(html:not(.dark) .hb-no-gl) .hb-scene {
+    background:
+      radial-gradient(circle 380px at var(--fx, 50%) var(--fy, 70%), rgb(var(--glow) / .35), transparent 70%),
+      #f4f5f7;
+  }
+
   @keyframes hb-in { from { opacity: 0; } }
   @keyframes hb-up { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } }
   @keyframes hb-hint { 0%, 100% { opacity: 0; } 15%, 75% { opacity: 1; } }

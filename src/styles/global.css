@@ -25,12 +25,19 @@
 }
 
 :root {
+	/* Modo claro: el color principal es celeste (en oscuro vuelve al lima, ver .dark) */
+	--color-primary: #0598D1;
+	--color-primary-ink: #ffffff;
+
 	--bg-color: #ffffff80;
 	--background-color: #ffffffc5;
 	--bg-web: #f4f5f7;
 }
 
 .dark {
+	--color-primary: #C9F31D;
+	--color-primary-ink: #0A0F02;
+
 	--color-surface: #12141b;
 	--color-surface-2: #1a1d26;
 	--color-border: #262a36;

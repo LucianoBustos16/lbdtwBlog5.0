@@ -3,10 +3,11 @@
 
 type RGB = [number, number, number];
 
-const PALETTES: Record<string, { flare: RGB; smoke: RGB; glow: string }> = {
-	celeste: { flare: [0.38, 0.82, 1.0], smoke: [0.02, 0.6, 0.82], glow: "110 205 255" },
-	lima: { flare: [0.85, 1.0, 0.3], smoke: [0.45, 0.6, 0.12], glow: "201 243 29" },
-	roja: { flare: [1.0, 0.32, 0.18], smoke: [0.55, 0.12, 0.08], glow: "255 110 80" },
+// smokeDay: color del humo en modo claro (bomba de humo de color, de día)
+const PALETTES: Record<string, { flare: RGB; smoke: RGB; smokeDay: RGB; glow: string; ink: string }> = {
+	celeste: { flare: [0.38, 0.82, 1.0], smoke: [0.02, 0.6, 0.82], smokeDay: [0.18, 0.62, 0.88], glow: "110 205 255", ink: "3 116 168" },
+	lima: { flare: [0.85, 1.0, 0.3], smoke: [0.45, 0.6, 0.12], smokeDay: [0.62, 0.8, 0.12], glow: "201 243 29", ink: "92 120 6" },
+	roja: { flare: [1.0, 0.32, 0.18], smoke: [0.55, 0.12, 0.08], smokeDay: [0.9, 0.35, 0.28], glow: "255 110 80", ink: "180 40 20" },
 };
 
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
@@ -18,6 +19,8 @@ uniform vec2 uFlare;   // 0..1, origen abajo-izquierda
 uniform float uPower;
 uniform vec3 uFlareCol;
 uniform vec3 uSmokeCol;
+uniform vec3 uSmokeDay;
+uniform float uLight;  // 0 = noche (modo oscuro), 1 = día (modo claro)
 
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);
@@ -50,15 +53,31 @@ void main(){
   float dist=length(rel);
   float light=uPower*.03/(dist*dist+.006);
 
-  vec3 col=vec3(.012,.016,.03);
-  col+=uSmokeCol*dens*.38;                                  // ambiente
-  col+=uSmokeCol*.22*smoothstep(.6,0.,uv.y)*d*d;            // luces del estadio desde abajo
-  col+=uFlareCol*dens*light*1.25;                           // humo iluminado
-  col+=uFlareCol*.5*exp(-dist*5.5)*uPower;                  // halo en el aire
-  col+=vec3(1.)*smoothstep(.022,.0,dist)*uPower;            // núcleo
-  col*=1.-.55*pow(length(uv-.5)*1.25,2.2);                  // viñeta
-  col=1.-exp(-col*1.25);                                    // tonemap
-  col+=(hash(gl_FragCoord.xy+fract(t)*100.)-.5)*.025;       // grano
+  vec3 col;
+  if(uLight<.5){
+    col=vec3(.012,.016,.03);
+    col+=uSmokeCol*dens*.38;                                  // ambiente
+    col+=uSmokeCol*.22*smoothstep(.6,0.,uv.y)*d*d;           // luces del estadio desde abajo
+    col+=uFlareCol*dens*light*1.25;                           // humo iluminado
+    col+=uFlareCol*.5*exp(-dist*5.5)*uPower;                  // halo en el aire
+    col+=vec3(1.)*smoothstep(.022,.0,dist)*uPower;            // núcleo
+    col*=1.-.55*pow(length(uv-.5)*1.25,2.2);                  // viñeta
+    col=1.-exp(-col*1.25);                                    // tonemap
+  } else {
+    // De día la luz no se ve: lo que se ve es el humo de color que larga la bengala
+    col=vec3(.957,.961,.969);
+    col*=1.-dens*.05;                                         // humo gris suave
+    float near=clamp(min(light,3.)*.35,0.,1.);                // más color cerca de la bengala
+    float floor_=smoothstep(.7,0.,uv.y)*d*.9;                // humo que sube desde la tribuna
+    float tint=clamp(dens*(.75+near)+plume*d*1.3+floor_,0.,1.);
+    tint=smoothstep(0.,.85,tint);                             // más contraste entre nube y aire
+    col=mix(col,uSmokeDay,tint*.92);                          // humo de color
+    col=mix(col,uSmokeDay*.7,smoothstep(.5,1.,tint)*.45);     // zonas densas, más saturadas
+    col=mix(col,uFlareCol*.55+.45,exp(-dist*8.)*.5*uPower);   // resplandor
+    col=mix(col,vec3(1.),smoothstep(.03,.0,dist)*uPower);     // núcleo
+    col*=1.-.08*pow(length(uv-.5)*1.25,2.2);
+  }
+  col+=(hash(gl_FragCoord.xy+fract(t)*100.)-.5)*.022;      // grano
   gl_FragColor=vec4(col,1.);
 }`;
 
@@ -73,6 +92,10 @@ export function initHeroBengala(section: HTMLElement) {
 	const title = section.querySelector<HTMLElement>("[data-title]");
 	const pal = PALETTES[section.dataset.color ?? "celeste"] ?? PALETTES.celeste;
 	section.style.setProperty("--glow", pal.glow);
+	section.style.setProperty("--ink", pal.ink);
+
+	// Modo claro/oscuro: se lee del <html class="dark"> y se sigue si el usuario lo cambia
+	let isLight = !document.documentElement.classList.contains("dark");
 
 	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -111,7 +134,7 @@ export function initHeroBengala(section: HTMLElement) {
 	// ---------- WebGL ----------
 	const gl = smoke.getContext("webgl", { antialias: false, premultipliedAlpha: false, powerPreference: "low-power" });
 	let uRes: WebGLUniformLocation | null = null, uTime: WebGLUniformLocation | null = null,
-		uFlare: WebGLUniformLocation | null = null, uPower: WebGLUniformLocation | null = null;
+		uFlare: WebGLUniformLocation | null = null, uPower: WebGLUniformLocation | null = null, uLight: WebGLUniformLocation | null = null;
 
 	if (gl) {
 		const sh = (type: number, src: string) => {
@@ -138,6 +161,8 @@ export function initHeroBengala(section: HTMLElement) {
 		uPower = gl.getUniformLocation(prog, "uPower");
 		gl.uniform3fv(gl.getUniformLocation(prog, "uFlareCol"), pal.flare);
 		gl.uniform3fv(gl.getUniformLocation(prog, "uSmokeCol"), pal.smoke);
+		gl.uniform3fv(gl.getUniformLocation(prog, "uSmokeDay"), pal.smokeDay);
+		uLight = gl.getUniformLocation(prog, "uLight");
 	} else {
 		section.classList.add("hb-no-gl");
 	}
@@ -194,6 +219,7 @@ export function initHeroBengala(section: HTMLElement) {
 	// ---------- Chispas ----------
 	const sparks: Spark[] = [];
 	const [fr, fg, fb] = pal.flare.map((v) => Math.round(150 + v * 105));
+	const [dr, dg, db] = pal.smoke.map((v) => Math.round(v * 200));
 
 	// ---------- Loop ----------
 	let raf = 0, last = performance.now(), visible = true, power = 0;
@@ -225,6 +251,7 @@ export function initHeroBengala(section: HTMLElement) {
 			gl.uniform1f(uTime, t / 1000);
 			gl.uniform2f(uFlare, fx / W, 1 - fy / H);
 			gl.uniform1f(uPower, power);
+			gl.uniform1f(uLight, isLight ? 1 : 0);
 			gl.drawArrays(gl.TRIANGLES, 0, 3);
 		} else {
 			section.style.setProperty("--fx", `${fx}px`);
@@ -242,7 +269,7 @@ export function initHeroBengala(section: HTMLElement) {
 				const max = 0.35 + Math.random() * 0.7;
 				sparks.push({ x: fx, y: fy, vx: Math.cos(a) * v + (tx - fx) * 0.8, vy: Math.sin(a) * v, life: max, max });
 			}
-			sctx.globalCompositeOperation = "lighter";
+			sctx.globalCompositeOperation = isLight ? "source-over" : "lighter";
 			sctx.lineCap = "round";
 			for (let i = sparks.length - 1; i >= 0; i--) {
 				const p = sparks[i];
@@ -253,7 +280,9 @@ export function initHeroBengala(section: HTMLElement) {
 				const px = p.x, py = p.y;
 				p.x += p.vx * dt; p.y += p.vy * dt;
 				const life = p.life / p.max;
-				sctx.strokeStyle = `rgba(${life > 0.6 ? "255,255,240" : `${fr},${fg},${fb}`},${life})`;
+				sctx.strokeStyle = isLight
+					? `rgba(${life > 0.6 ? "90,190,240" : `${dr},${dg},${db}`},${life * 0.9})`
+					: `rgba(${life > 0.6 ? "255,255,240" : `${fr},${fg},${fb}`},${life})`;
 				sctx.lineWidth = 0.6 + life * 1.4;
 				sctx.beginPath();
 				sctx.moveTo(px, py);
@@ -289,6 +318,11 @@ export function initHeroBengala(section: HTMLElement) {
 		last = performance.now();
 		raf = requestAnimationFrame(frame);
 	};
+
+	new MutationObserver(() => {
+		isLight = !document.documentElement.classList.contains("dark");
+		if (reduced) frame(performance.now());
+	}).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
 	new ResizeObserver(resize).observe(smoke);
 	new IntersectionObserver(([e]) => { visible = e.isIntersecting; start(); }).observe(section);
