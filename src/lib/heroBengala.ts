@@ -180,7 +180,16 @@ export function initHeroBengala(section: HTMLElement) {
 	window.addEventListener("pointermove", (e) => {
 		if (e.pointerType === "mouse" || e.pointerType === "pen") setFromEvent(e, 2500);
 	}, { passive: true });
-	section.addEventListener("pointerdown", (e) => setFromEvent(e, 3500), { passive: true });
+	// En pantallas táctiles solo un toque corto mueve la bengala; arrastrar para scrollear no.
+	let downX = 0, downY = 0, downT = 0;
+	section.addEventListener("pointerdown", (e) => {
+		downX = e.clientX; downY = e.clientY; downT = performance.now();
+	}, { passive: true });
+	section.addEventListener("pointerup", (e) => {
+		if (e.pointerType === "mouse") return;
+		const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
+		if (moved < 10 && performance.now() - downT < 350) setFromEvent(e, 3500);
+	}, { passive: true });
 
 	// ---------- Chispas ----------
 	const sparks: Spark[] = [];

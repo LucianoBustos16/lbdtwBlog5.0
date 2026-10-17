@@ -24,7 +24,10 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
     {subTitle && <p class="hb-sub font-display">{subTitle}</p>}
   </div>
 
-  <span class="hb-hint font-display" aria-hidden="true">Mové la bengala</span>
+  <span class="hb-hint font-display" aria-hidden="true">
+    <span class="hb-hint-mouse">Mové la bengala</span>
+    <span class="hb-hint-touch">Tocá para mover la bengala</span>
+  </span>
 </section>
 
 <script>
@@ -149,6 +152,16 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
     white-space: nowrap;
     animation: hb-hint 6s 2s ease-in-out both;
     pointer-events: none;
+  }
+
+  .hb-hint-touch { display: none; }
+  @media (hover: none) {
+    .hb-hint-mouse { display: none; }
+    .hb-hint-touch { display: inline; }
+  }
+  /* En mobile, por encima de la barra de navegación fija de abajo */
+  @media (max-width: 1023px) {
+    .hb-hint { bottom: calc(7.5rem + env(safe-area-inset-bottom)); }
   }
 
   @keyframes hb-in { from { opacity: 0; } }

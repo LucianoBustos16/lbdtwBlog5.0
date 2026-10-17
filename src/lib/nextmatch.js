@@ -13,18 +13,25 @@ function mapTeam (apiTeam) {
   }
 }
 
+// Día, mes y hora siempre en hora de Argentina (antes el mes salía en la
+// zona horaria del servidor y podía no coincidir con el día).
+const AR_DATE_FORMAT = new Intl.DateTimeFormat('es-AR', {
+  timeZone: 'America/Argentina/Buenos_Aires',
+  day: 'numeric',
+  month: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23'
+})
+
 function formatMatchDate (startTimestamp) {
-  const date = new Date(startTimestamp * 1000)
-  const optionsHours = { timeZone: 'America/Argentina/Buenos_Aires', hour12: false }
-  const hourAr = date.toLocaleString('es-AR', optionsHours)
-  const [fecha, horaCompleta] = hourAr.split(' ')
-  const [hora, minutos] = horaCompleta.split(':')
-  const hourMatch = `${hora}:${minutos}`
-
-  const [day] = fecha.split('/')
-  const formattedDate = `${day} ${MESES[date.getMonth()]}`
-
-  return { hourMatch, formattedDate }
+  const parts = Object.fromEntries(
+    AR_DATE_FORMAT.formatToParts(new Date(startTimestamp * 1000)).map(({ type, value }) => [type, value])
+  )
+  return {
+    hourMatch: `${parts.hour}:${parts.minute}`,
+    formattedDate: `${parts.day} ${MESES[Number(parts.month) - 1]}`
+  }
 }
 
 export function parseEvent (event) {
@@ -40,6 +47,7 @@ export function parseEvent (event) {
     competition: `${tournament.name}${roundInfo?.round ? ' - Fecha ' + roundInfo.round : ''}`,
     formattedDate,
     hourMatch,
+    startTimestamp,
     isLive,
     isFinished,
     statusDescription: status.description,

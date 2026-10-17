@@ -1,7 +1,9 @@
 ---
 import { fetchMatchStatus } from '@/lib/nextmatch.js'
-import MatchMiniCard from './MatchMiniCard.astro'
+import { buildCards, renderMatchCards } from '@/lib/matchCards.js'
 
+// Datos al momento de compilar: se muestran de entrada y el navegador
+// los reemplaza enseguida con los actuales (ver script de abajo).
 let status = null
 try {
   status = await fetchMatchStatus(import.meta.env.RAPIDAPI_KEY)
@@ -9,60 +11,22 @@ try {
   console.error('[CardNextMatch] Error al obtener el estado del partido:', e)
 }
 
-const recentOrLive = status?.recentOrLive ?? null
-const upcoming = status?.upcoming ?? null
-
-const isLive = Boolean(recentOrLive?.isLive)
-
-const recentCard = recentOrLive && {
-  key: 'recent',
-  title: isLive ? '🔴 En vivo' : 'Partido anterior',
-  variant: isLive ? 'live' : 'neutral',
-  match: recentOrLive
-}
-
-const upcomingCard = upcoming && {
-  key: 'upcoming',
-  title: 'Próximo partido',
-  variant: 'accent',
-  match: upcoming
-}
-
-// La card más importante va primero: en vivo > próximo partido > último jugado
-const important = isLive ? recentCard : (upcomingCard ?? recentCard)
-const other = important === recentCard ? upcomingCard : recentCard
-
-const cards = [important, other].filter(
-  (card): card is NonNullable<typeof card> => card !== null
-)
-
+const cards = buildCards(status)
 ---
 
-{
-  cards.length > 0 && (
-    <section class="mx-auto max-w-340 px-4 sm:px-6 lg:px-8" id="next-match-card">
-      <div class="rounded-2xl bg-surface-2 p-5 sm:p-6 shadow-sm">
+<section
+  class="mx-auto max-w-340 px-4 sm:px-6 lg:px-8"
+  id="next-match-card"
+  hidden={cards.length === 0}
+>
+  <div class="rounded-2xl bg-surface-2 p-5 sm:p-6 shadow-sm">
     <div
+      data-match-cards
       class="match-carousel flex gap-4 overflow-x-auto custom-scrollbar snap-x snap-mandatory -mr-4 pr-4 sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:overflow-visible"
-    >
-      {cards.map((card) => (
-        <div class="w-[85%] shrink-0 snap-center sm:w-auto sm:shrink">
-          <MatchMiniCard
-            title={card.title}
-            variant={card.variant}
-            match={card.match}
-            badgeId={card.key === 'recent' ? 'nm-recent-badge' : undefined}
-            scoreLocalId={card.key === 'recent' ? 'nm-recent-local-score' : undefined}
-            scoreVisitantId={card.key === 'recent' ? 'nm-recent-visitant-score' : undefined}
-            statusId={card.key === 'recent' ? 'nm-recent-status' : undefined}
-          />
-        </div>
-      ))}
-    </div>
-      </div>
-    </section>
-  )
-}
+      set:html={renderMatchCards(cards)}
+    />
+  </div>
+</section>
 
 <style>
   .custom-scrollbar::-webkit-scrollbar {
@@ -76,31 +40,60 @@ const cards = [important, other].filter(
 </style>
 
 <script>
-  const POLL_INTERVAL_MS = 60_000
+  import { buildCards, renderMatchCards } from '@/lib/matchCards.js'
 
-  async function refreshMatchStatus () {
+  const FAST_MS = 60_000 // en vivo o cerca del partido
+  const SLOW_MS = 5 * 60_000 // el resto del tiempo
+
+  let timer: ReturnType<typeof setTimeout> | undefined
+  let lastJson = ''
+
+  // Refresca seguido si hay partido en vivo o si el próximo empieza
+  // en menos de 2 h (o empezó hace menos de 3 h y la API todavía no lo marcó en vivo).
+  function nextDelay (status: any) {
+    if (status?.recentOrLive?.isLive) return FAST_MS
+    const start = status?.upcoming?.startTimestamp
+    if (start) {
+      const diff = start - Date.now() / 1000
+      if (diff < 2 * 3600 && diff > -3 * 3600) return FAST_MS
+    }
+    return SLOW_MS
+  }
+
+  async function refresh () {
+    const section = document.getElementById('next-match-card')
+    const container = section?.querySelector<HTMLElement>('[data-match-cards]')
+    if (!section || !container) return
+    clearTimeout(timer)
+
+    let status = null
     try {
       const res = await fetch('/api/nextmatch.json')
-      if (!res.ok) return
-      const status = await res.json()
-      const recent = status?.recentOrLive
-      if (!recent || !recent.isLive) return // solo actualizamos en caliente mientras está en vivo
-
-      const badge = document.getElementById('nm-recent-badge')
-      const scoreLocal = document.getElementById('nm-recent-local-score')
-      const scoreVisitant = document.getElementById('nm-recent-visitant-score')
-      const statusEl = document.getElementById('nm-recent-status')
-      if (!badge || !scoreLocal || !scoreVisitant) return
-
-      scoreLocal.textContent = String(recent.localTeam.score)
-      scoreVisitant.textContent = String(recent.visitantTeam.score)
-      if (statusEl) statusEl.textContent = `· ${recent.statusDescription}`
+      if (res.ok) status = await res.json()
     } catch (e) {
       console.error('[CardNextMatch] Error actualizando el partido:', e)
     }
+
+    if (status && !status.error) {
+      const json = JSON.stringify(status)
+      if (json !== lastJson) {
+        lastJson = json
+        const cards = buildCards(status)
+        if (cards.length > 0) {
+          container.innerHTML = renderMatchCards(cards)
+          section.hidden = false
+        }
+      }
+    }
+
+    if (!document.hidden) timer = setTimeout(refresh, nextDelay(status))
   }
 
-  if (document.getElementById('next-match-card')) {
-    setInterval(refreshMatchStatus, POLL_INTERVAL_MS)
-  }
+  // No consulta mientras la pestaña está en segundo plano; al volver, refresca al toque.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearTimeout(timer)
+    else refresh()
+  })
+
+  refresh()
 </script>
