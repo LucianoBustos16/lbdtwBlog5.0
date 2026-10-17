@@ -25,7 +25,7 @@ const cards = buildCards(status)
       class="match-carousel flex gap-4 overflow-x-auto custom-scrollbar snap-x snap-mandatory -mr-4 pr-4 sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:overflow-visible"
       set:html={renderMatchCards(cards)}
     />
-  
+
 </section>
 
 <style>
@@ -37,16 +37,132 @@ const cards = buildCards(status)
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* ---------- Festejo de gol ---------- */
+  /* El HTML de las cards se inserta con innerHTML, por eso estas clases son :global */
+  :global(.nm-goal-score) {
+    animation: nm-goal-pop .7s cubic-bezier(.2, .9, .3, 1.4) 3;
+  }
+  :global(.nm-goal-shake) {
+    animation: nm-shake .55s cubic-bezier(.36, .07, .19, .97) 2;
+  }
+  :global(.nm-goal-banner) {
+    position: fixed;
+    inset: 0;
+    z-index: 201;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: .9;
+    font-size: clamp(3rem, 14vw, 9rem);
+    color: var(--color-primary);
+    text-shadow: 0 6px 30px rgb(0 0 0 / .35);
+    animation: nm-banner 3.2s cubic-bezier(.2, .8, .2, 1) forwards;
+  }
+  :global(.nm-goal-banner small) {
+    display: block;
+    font-size: .35em;
+    letter-spacing: .2em;
+    color: var(--color-textDark);
+  }
+
+  @keyframes nm-goal-pop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.6); }
+    100% { transform: scale(1); }
+  }
+  @keyframes nm-shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(3px); }
+    30%, 50%, 70% { transform: translateX(-6px); }
+    40%, 60% { transform: translateX(6px); }
+  }
+  @keyframes nm-banner {
+    0% { opacity: 0; transform: scale(.4) rotate(-6deg); }
+    18% { opacity: 1; transform: scale(1.08) rotate(-3deg); }
+    28% { transform: scale(1) rotate(-3deg); }
+    80% { opacity: 1; transform: scale(1) rotate(-3deg); }
+    100% { opacity: 0; transform: scale(1.1) rotate(-3deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.nm-goal-shake), :global(.nm-goal-score) { animation: none; }
+    :global(.nm-goal-banner) { animation-duration: .01s; animation-delay: 2.5s; animation-fill-mode: both; }
+  }
 </style>
 
 <script>
-  import { buildCards, renderMatchCards } from '@/lib/matchCards.js'
+  import { buildCards, renderMatchCards, belgranoScore, countdownText } from '@/lib/matchCards.js'
 
   const FAST_MS = 60_000 // en vivo o cerca del partido
   const SLOW_MS = 5 * 60_000 // el resto del tiempo
+  const COUNTDOWN_MS = 15_000
 
   let timer: ReturnType<typeof setTimeout> | undefined
   let lastJson = ''
+  // Goles de Belgrano vistos por partido (id del partido -> goles)
+  const lastBelgranoGoals = new Map<string, number>()
+
+  // ---------- Cuenta regresiva ----------
+  function updateCountdowns () {
+    document.querySelectorAll<HTMLElement>('[data-countdown]').forEach((el) => {
+      el.textContent = countdownText(Number(el.dataset.countdown))
+    })
+  }
+
+  // ---------- Festejo de gol ----------
+  async function celebrateGoal () {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    document.querySelectorAll<HTMLElement>('[data-belgrano-score]').forEach((el) => {
+      el.classList.remove('nm-goal-score'); void el.offsetWidth; el.classList.add('nm-goal-score')
+    })
+    const liveCard = document.querySelector<HTMLElement>('[data-belgrano-score]')?.closest<HTMLElement>('[data-match-card]')
+    if (liveCard) {
+      liveCard.classList.remove('nm-goal-shake'); void liveCard.offsetWidth; liveCard.classList.add('nm-goal-shake')
+    }
+
+    const banner = document.createElement('div')
+    banner.className = 'nm-goal-banner'
+    banner.setAttribute('role', 'status')
+    banner.innerHTML = '<div>¡Gooool!<small>de Belgrano</small></div>'
+    document.body.append(banner)
+    setTimeout(() => banner.remove(), 3400)
+
+    if (reduced) return
+
+    const layer = document.createElement('div')
+    layer.style.cssText = 'position:fixed;inset:0;z-index:200;pointer-events:none'
+    document.body.append(layer)
+    try {
+      const { createFireworks } = await import('@/lib/fireworks')
+      const fireworks = await createFireworks(layer)
+      fireworks.start()
+      setTimeout(async () => {
+        await fireworks.waitStop(true)
+        layer.remove()
+      }, 4500)
+    } catch (e) {
+      layer.remove()
+      console.error('[CardNextMatch] No se pudieron lanzar los fuegos artificiales:', e)
+    }
+  }
+
+  // Devuelve true si desde la última consulta Belgrano hizo un gol en el partido en vivo
+  function detectGoal (status: any) {
+    const live = status?.recentOrLive
+    if (!live?.isLive) return false
+    const goals = belgranoScore(live)
+    if (goals === null || goals === undefined) return false
+    const key = String(live.id ?? 'live')
+    const before = lastBelgranoGoals.get(key)
+    lastBelgranoGoals.set(key, goals)
+    return before !== undefined && goals > before // la primera consulta solo toma referencia
+  }
 
   // Refresca seguido si hay partido en vivo o si el próximo empieza
   // en menos de 2 h (o empezó hace menos de 3 h y la API todavía no lo marcó en vivo).
@@ -75,6 +191,7 @@ const cards = buildCards(status)
     }
 
     if (status && !status.error) {
+      const goal = detectGoal(status)
       const json = JSON.stringify(status)
       if (json !== lastJson) {
         lastJson = json
@@ -82,8 +199,10 @@ const cards = buildCards(status)
         if (cards.length > 0) {
           container.innerHTML = renderMatchCards(cards)
           section.hidden = false
+          updateCountdowns()
         }
       }
+      if (goal) celebrateGoal()
     }
 
     if (!document.hidden) timer = setTimeout(refresh, nextDelay(status))
@@ -95,5 +214,12 @@ const cards = buildCards(status)
     else refresh()
   })
 
+  updateCountdowns()
+  setInterval(updateCountdowns, COUNTDOWN_MS)
   refresh()
+
+  // Para probar el festejo sin esperar un gol: entrar a la página con ?probar-gol
+  if (new URLSearchParams(location.search).has('probar-gol')) {
+    setTimeout(celebrateGoal, 1500)
+  }
 </script>

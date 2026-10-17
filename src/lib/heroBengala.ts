@@ -1,4 +1,5 @@
-// Hero "Bengala": humo en WebGL + chispas en canvas 2D + título iluminado por letra.
+// Hero "Bengala": humo en WebGL + chispas en canvas 2D + título iluminado por letra
+// + fuegos artificiales al hacer click.
 // Sin dependencias. Se inicializa sobre cualquier <section data-hero-bengala>.
 
 type RGB = [number, number, number];
@@ -215,6 +216,31 @@ export function initHeroBengala(section: HTMLElement) {
 		const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
 		if (moved < 10 && performance.now() - downT < 350) setFromEvent(e, 3500);
 	}, { passive: true });
+
+	// ---------- Fuegos artificiales al hacer click ----------
+	const fwLayer = section.querySelector<HTMLElement>("[data-fireworks]");
+	let fireworksReady: Promise<import("fireworks-js").Fireworks> | null = null;
+	const burst = async (clientX: number, clientY: number) => {
+		if (reduced || !fwLayer) return;
+		try {
+			const mod = await import("./fireworks");
+			fireworksReady ??= mod.createFireworks(fwLayer, { autoresize: true });
+			const fw = await fireworksReady;
+			const r = fwLayer.getBoundingClientRect();
+			const cx = clientX - r.left, cy = clientY - r.top;
+			const s = 70; // radio de la zona de explosión
+			fw.updateOptions(mod.themeColors(isLight));
+			fw.updateSize();
+			const pct = (cx / r.width) * 100;
+			fw.updateOptions({ rocketsPoint: { min: Math.max(0, pct - 4), max: Math.min(100, pct + 4) } });
+			// fireworks-js elige el destino entre [x, width - 2x] y [y, height / 2]
+			fw.updateBoundaries({ x: cx - s, y: cy - s, width: 3 * cx - s, height: 2 * (cy + s), debug: false });
+			fw.launch(3);
+		} catch (e) {
+			console.error("[HeroBengala] No se pudieron lanzar los fuegos artificiales:", e);
+		}
+	};
+	section.addEventListener("click", (e) => burst(e.clientX, e.clientY));
 
 	// ---------- Chispas ----------
 	const sparks: Spark[] = [];

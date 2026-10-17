@@ -9,7 +9,8 @@ const FINISHED_STATUSES = ['finished']
 function mapTeam (apiTeam) {
   return {
     name: apiTeam.shortName,
-    image: `/api/team-image/${apiTeam.id}`
+    image: `/api/team-image/${apiTeam.id}`,
+    isBelgrano: apiTeam.id === BELGRANO_TEAM_ID
   }
 }
 
@@ -44,6 +45,7 @@ export function parseEvent (event) {
   const isFinished = FINISHED_STATUSES.includes(status.type)
 
   return {
+    id: event.id,
     competition: `${tournament.name}${roundInfo?.round ? ' - Fecha ' + roundInfo.round : ''}`,
     formattedDate,
     hourMatch,

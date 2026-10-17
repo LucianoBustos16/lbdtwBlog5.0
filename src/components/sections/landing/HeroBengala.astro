@@ -15,6 +15,7 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
   <div class="hb-scene" aria-hidden="true">
     <canvas class="hb-smoke" data-smoke></canvas>
     <canvas class="hb-sparks" data-sparks></canvas>
+    <div class="hb-fw" data-fireworks></div>
     <div class="hb-fade"></div>
   </div>
 
@@ -25,8 +26,8 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
   </div>
 
   <span class="hb-hint font-display" aria-hidden="true">
-    <span class="hb-hint-mouse">Mové la bengala</span>
-    <span class="hb-hint-touch">Tocá para mover la bengala</span>
+    <span class="hb-hint-mouse">Mové la bengala · Click para festejar</span>
+    <span class="hb-hint-touch">Tocá para festejar</span>
   </span>
 </section>
 
@@ -80,6 +81,8 @@ const { title, subTitle, color = 'celeste' } = Astro.props;
     display: block;
   }
   .hb-smoke { animation: hb-in 1.6s ease-out both; }
+  .hb-fw { position: absolute; inset: 0; pointer-events: none; }
+  .hb-fw :global(canvas) { display: block; width: 100%; height: 100%; }
 
   /* Fundido hacia el fondo de la página (sirve en modo claro y oscuro) */
   .hb-fade {
