@@ -1,6 +1,7 @@
 ---
 import { NAV_LINKS, isActivePath } from "@consts/nav";
 import Icon from "@/components/ui/icons/Icon.astro";
+import ThemeToggle from "@/components/ui/buttons/ThemeToggle.astro";
 
 const { pathname } = Astro.url;
 
@@ -30,5 +31,9 @@ const tabs = NAV_LINKS.map((page, i) => ({
 				<Icon icon={icon} size="22" />
 			</a>
 		))}
+		<ThemeToggle
+			size="22"
+			class="flex-1 rounded-full py-2 text-textLight dark:text-neutral-400 transition-colors"
+		/>
 	</nav>
 </div>

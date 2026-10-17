@@ -19,13 +19,13 @@ const cards = buildCards(status)
   id="next-match-card"
   hidden={cards.length === 0}
 >
-  <div class="rounded-2xl bg-surface-2 p-5 sm:p-6 shadow-sm">
+
     <div
       data-match-cards
       class="match-carousel flex gap-4 overflow-x-auto custom-scrollbar snap-x snap-mandatory -mr-4 pr-4 sm:mr-0 sm:pr-0 sm:grid sm:grid-cols-2 sm:overflow-visible"
       set:html={renderMatchCards(cards)}
     />
-  </div>
+  
 </section>
 
 <style>

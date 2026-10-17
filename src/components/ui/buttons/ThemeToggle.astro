@@ -1,33 +1,44 @@
 ---
 import Icon from "../icons/Icon.astro";
+
+interface Props {
+	/** Reemplaza el tamaño por defecto (w-12 h-12), por ejemplo en la barra de mobile */
+	class?: string;
+	size?: string;
+}
+
+const { class: className, size = "24" } = Astro.props;
 ---
 
-<button id="mode_switcher" class="group w-12 h-12 flex justify-center items-center hover:text-primary" title="Cambiar el color del tema">
-	<span class="sr-only">Dark theme</span>
+<button
+	type="button"
+	data-theme-toggle
+	class:list={[className ?? "w-12 h-12 text-textDark dark:text-neutral-300", "group flex justify-center items-center hover:text-primary"]}
+	title="Cambiar el color del tema"
+>
+	<span class="sr-only">Cambiar entre modo claro y oscuro</span>
 	<span class="dark:hidden inset-0">
-		<Icon icon="sun" size="24"/>
+		<Icon icon="sun" size={size}/>
 	</span>
 	<span class="hidden dark:block inset-0">
-		<Icon icon="moon-stars" size="24" />
+		<Icon icon="moon-stars" size={size} />
 	</span>
+</button>
 
-  </button>
-  
-  <script>
-	const setDarkModeButton = () => {
-	  const button = document.querySelector("#mode_switcher");
-	  button.addEventListener('click', function(){
-		document.documentElement.classList.toggle('dark');
-  
-		if ( document.documentElement.classList.contains('dark') ) {
-		  localStorage.darkMode = 'true'
-		} else {
-		  localStorage.darkMode = 'false'
-		}
-	  });
-	}
-  
-	setDarkModeButton();
+<script>
+	// Puede haber más de un botón (menú de escritorio y barra de mobile): se enganchan todos.
+	const bindThemeToggles = () => {
+		document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((button) => {
+			if (button.dataset.bound) return;
+			button.dataset.bound = "1";
+			button.addEventListener("click", () => {
+				const isDark = document.documentElement.classList.toggle("dark");
+				localStorage.darkMode = isDark ? "true" : "false";
+			});
+		});
+	};
+
+	bindThemeToggles();
 	// Runs on view transitions navigation
-	document.addEventListener('astro:after-swap', setDarkModeButton);
-  </script>
+	document.addEventListener("astro:after-swap", bindThemeToggles);
+</script>
