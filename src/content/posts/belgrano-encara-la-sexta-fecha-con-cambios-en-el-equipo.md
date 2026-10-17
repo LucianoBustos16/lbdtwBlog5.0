@@ -2,7 +2,7 @@
 title: 'Belgrano encara la sexta fecha con cambios en el equipo'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/belgrano-encara-la-sexta-fecha-con-cambios-en-el-equipo.webp'
+    url: 'belgrano-encara-la-sexta-fecha-con-cambios-en-el-equipo.webp'
     alt: ''
 pubDate: 2023-03-06
 tags: ["Noticias"]

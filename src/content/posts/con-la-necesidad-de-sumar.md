@@ -2,7 +2,7 @@
 title: 'Con la necesidad de sumar'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/con-la-necesidad-de-sumar.webp'
+    url: 'con-la-necesidad-de-sumar.webp'
     alt: ''
 pubDate: 2023-04-08
 tags: ["Noticias"]

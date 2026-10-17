@@ -2,7 +2,7 @@
 title: 'Triunfazo en la vuelta a Alberdi'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/triunfazo-en-la-vuelta-a-alberdi.webp'
+    url: 'triunfazo-en-la-vuelta-a-alberdi.webp'
     alt: ''
 pubDate: 2023-04-13
 tags: ["Noticias"]

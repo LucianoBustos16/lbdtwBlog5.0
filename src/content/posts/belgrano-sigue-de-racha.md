@@ -2,7 +2,7 @@
 title: 'Belgrano sigue de racha'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/belgrano-sigue-de-racha.webp'
+    url: 'belgrano-sigue-de-racha.webp'
     alt: ''
 pubDate: 2023-02-11
 tags: ["Noticias"]

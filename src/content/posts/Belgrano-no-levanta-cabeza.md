@@ -2,7 +2,7 @@
 title: 'Belgrano no levanta cabeza'
 author: 'Mati Calandri'
 image:
-    url: '../../assets/blog/Belgrano-no-levanta-cabeza.webp'
+    url: 'Belgrano-no-levanta-cabeza.webp'
     alt: 'Los jugadores de Belgrano en la foto grupal previa al partido.'
 pubDate: 2024-02-15
 tags: ["Noticias"]

@@ -2,7 +2,7 @@
 title: 'Belgrano avanza en la Copa Argentina tras vencer a Real Pilar'
 author: 'LBDTw'
 image:
-    url: '../../assets/blog/uvita-el-goleador.webp'
+    url: 'uvita-el-goleador.webp'
     alt: ''
 pubDate: 2025-04-17
 tags: ["Noticias"]

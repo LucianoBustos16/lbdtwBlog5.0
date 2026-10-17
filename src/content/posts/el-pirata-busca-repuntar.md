@@ -2,7 +2,7 @@
 title: 'El Pirata busca repuntar'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/el-pirata-busca-repuntar.webp'
+    url: 'el-pirata-busca-repuntar.webp'
     alt: ''
 pubDate: 2023-02-24
 tags: ["Noticias"]

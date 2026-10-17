@@ -2,7 +2,7 @@
 title: 'Un punto que suma, pero no tranquiliza'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/un-punto-que-suma-pero-no-tranquiliza.webp'
+    url: 'un-punto-que-suma-pero-no-tranquiliza.webp'
     alt: ''
 pubDate: 2023-04-04
 tags: ["Noticias"]

@@ -2,7 +2,7 @@
 title: 'La vuelta a Primera'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/la-vuelta-a-primera.webp'
+    url: 'la-vuelta-a-primera.webp'
     alt: ''
 pubDate: 2023-01-28
 tags: ["Noticias"]

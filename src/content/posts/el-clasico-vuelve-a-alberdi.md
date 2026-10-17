@@ -2,7 +2,7 @@
 title: '¡El clásico vuelve a Alberdi!'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/el-clasico-vuelve-a-alberdi.webp'
+    url: 'el-clasico-vuelve-a-alberdi.webp'
     alt: ''
 pubDate: 2023-05-20
 tags: ["Noticias"]

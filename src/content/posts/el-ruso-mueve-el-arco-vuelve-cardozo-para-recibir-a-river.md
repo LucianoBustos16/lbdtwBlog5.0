@@ -2,7 +2,7 @@
 title: "El Ruso mueve el arco: vuelve Cardozo para recibir a River"
 author: "LBDTw"
 image:
-    url: "../../assets/blog/el-ruso-mueve-el-arco-vuelve-cardozo-para-recibir-a-river-g3td.webp"
+    url: "el-ruso-mueve-el-arco-vuelve-cardozo-para-recibir-a-river-g3td.webp"
     alt: "Thiago Cardozo entrenando"
 pubDate: 2026-10-17
 tags: ["Noticias"]

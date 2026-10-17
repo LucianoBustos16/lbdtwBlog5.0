@@ -2,7 +2,7 @@
 title: 'Punto inteligente'
 author: 'Mati Calandri'
 image:
-    url: '../../assets/blog/punto-inteligente.webp'
+    url: 'punto-inteligente.webp'
     alt: ''
 pubDate: 2023-01-30
 tags: ["Noticias"]

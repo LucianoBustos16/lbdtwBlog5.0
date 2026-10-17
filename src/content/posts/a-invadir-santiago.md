@@ -2,7 +2,7 @@
 title: 'A invadir Santiago'
 author: 'Mati Calandri'
 image:
-    url: '../../assets/blog/a-invadir-santiago.webp'
+    url: 'a-invadir-santiago.webp'
     alt: ''
 pubDate: 2023-02-09
 tags: ["Noticias"]

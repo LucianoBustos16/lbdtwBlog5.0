@@ -2,7 +2,7 @@
 title: 'Durísima derrota en La Paternal'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/durisima-derrota-en-la-paternal.webp'
+    url: 'durisima-derrota-en-la-paternal.webp'
     alt: ''
 pubDate: 2023-02-19
 tags: ["Noticias"]

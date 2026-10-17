@@ -2,7 +2,7 @@
 title: Sin rumbo
 author: Mati Calandri
 image:
-  url: "../../assets/blog/Rolon-gambeta-boca.webp"
+  url: "Rolon-gambeta-boca.webp"
   alt: "Rolón gambetea rodeado de jugadores de Boca"
 pubDate: 2024-03-03
 tags: ["Analisis"]

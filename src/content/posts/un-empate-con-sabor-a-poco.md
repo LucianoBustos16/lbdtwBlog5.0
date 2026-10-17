@@ -2,7 +2,7 @@
 title: 'Un empate con sabor a poco'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/un-empate-con-sabor-a-poco.webp'
+    url: 'un-empate-con-sabor-a-poco.webp'
     alt: ''
 pubDate: 2023-03-12
 tags: ["Noticias"]

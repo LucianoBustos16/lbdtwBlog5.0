@@ -2,7 +2,7 @@
 title: 'Ahora a por el «Bicho»'
 author: 'Mati Calandri'
 image:
-    url: '../../assets/blog/ahora-a-por-el-bicho.webp'
+    url: 'ahora-a-por-el-bicho.webp'
     alt: ''
 pubDate: 2023-02-17
 tags: ["Noticias"]

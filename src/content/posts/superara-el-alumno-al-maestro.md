@@ -2,7 +2,7 @@
 title: '¿Superará el alumno al maestro?'
 author: 'Bian Masuero'
 image:
-    url: '../../assets/blog/superara-el-alumno-al-maestro.webp'
+    url: 'superara-el-alumno-al-maestro.webp'
     alt: ''
 pubDate: 2023-04-30
 tags: ["Noticias"]

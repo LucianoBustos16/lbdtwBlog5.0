@@ -11,8 +11,12 @@ const posts = defineCollection({
 			title: z.string(),
 			author: z.string(),
 			image: z.object({
-				// Ruta relativa al .md, ej: '../../assets/blog/mi-foto.webp'
-				url: image(),
+				// Alcanza con el nombre del archivo que está en src/assets/blog/, ej: 'mi-foto.webp'
+				// (si ponés una ruta con "/", se usa tal cual)
+				url: z.preprocess(
+					(file) => (typeof file === "string" && !file.includes("/") ? `@blog/${file}` : file),
+					image(),
+				),
 				alt: z.string().optional(),
 			}),
 			pubDate: z.date(),

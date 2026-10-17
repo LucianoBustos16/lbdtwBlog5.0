@@ -2,7 +2,7 @@
 title: 'Belgrano y una prueba de carácter'
 author: 'Mati Calandri'
 image:
-    url: '../../assets/blog/belgrano-y-una-prueba-de-caracter.webp'
+    url: 'belgrano-y-una-prueba-de-caracter.webp'
     alt: ''
 pubDate: 2023-03-10
 tags: ["Noticias"]
@@ -24,4 +24,4 @@ Y la última vez que el Pirata venció al Granate fue en la ida de la primera fa
 
 Desde el pasado lunes, se comenzó a vender las ubicaciones para los socios sin ubicación y también para los no socios. A continuación, la foto con las ubicaciones y precios disponibles para el encuentro de mañana sábado, que ya tiene a más de 50.000 piratas asegurados.
 
-![Precios Belgrano vs Lanus](../../assets/blog/precios-belgrano-lanus.webp)
+![Precios Belgrano vs Lanus](@blog/precios-belgrano-lanus.webp)
