@@ -1,0 +1,71 @@
+---
+const { title, variant, match, badgeId, scoreLocalId, scoreVisitantId, statusId } = Astro.props
+// variant: 'live' | 'neutral' | 'accent'
+---
+
+{match && (
+  <div class="rounded-2xl border border-border bg-surface p-5 min-w-0">
+    <div class="flex items-center justify-center mb-4">
+      <span
+        id={badgeId}
+        class:list={[
+          "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold",
+          variant === 'live' && "bg-red-500/15 text-red-500",
+          variant === 'neutral' && "bg-surface-2 text-textLight",
+          variant === 'accent' && "bg-accent/15 text-accent"
+        ]}
+      >
+        {variant === 'live' && <span class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>}
+        <span>{title}</span>
+        {variant === 'live' && match.statusDescription && (
+          <span id={statusId}>· {match.statusDescription}</span>
+        )}
+      </span>
+    </div>
+
+    <p class="text-xs text-textLight text-center mb-4 truncate">{match.competition}</p>
+
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex flex-1 flex-col items-center gap-2 min-w-0">
+        {match.localTeam.image && (
+          <img
+            src={match.localTeam.image}
+            alt=""
+            class="h-12 w-12 rounded-full border border-border bg-surface-2 object-contain p-1"
+          />
+        )}
+        <span class="w-full truncate text-center text-sm font-semibold text-textDark">
+          {match.localTeam.name}
+        </span>
+      </div>
+
+      <div class="flex shrink-0 flex-col items-center px-2">
+        {(match.isLive || match.isFinished) ? (
+          <span class="text-2xl font-bold text-textDark">
+            <span id={scoreLocalId}>{match.localTeam.score}</span>
+            <span class="mx-1">-</span>
+            <span id={scoreVisitantId}>{match.visitantTeam.score}</span>
+          </span>
+        ) : (
+          <div class="text-center">
+            <p class="text-sm font-bold text-textDark">{match.hourMatch}</p>
+            <p class="text-xs text-textLight">{match.formattedDate}</p>
+          </div>
+        )}
+      </div>
+
+      <div class="flex flex-1 flex-col items-center gap-2 min-w-0">
+        {match.visitantTeam.image && (
+          <img
+            src={match.visitantTeam.image}
+            alt=""
+            class="h-12 w-12 rounded-full border border-border bg-surface-2 object-contain p-1"
+          />
+        )}
+        <span class="w-full truncate text-center text-sm font-semibold text-textDark">
+          {match.visitantTeam.name}
+        </span>
+      </div>
+    </div>
+  </div>
+)}
