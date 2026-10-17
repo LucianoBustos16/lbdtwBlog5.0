@@ -2,7 +2,7 @@
 title: 'Duro golpe'
 author: 'Mati Calandri'
 image:
-    url: 'duro-golpe.png'
+    url: '../../assets/blog/duro-golpe.webp'
     alt: ''
 pubDate: 2023-02-25
 tags: ["Noticias"]

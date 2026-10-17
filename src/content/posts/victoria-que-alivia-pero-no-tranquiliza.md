@@ -2,7 +2,7 @@
 title: 'Victoria que alivia pero no tranquiliza'
 author: 'Mati Calandri'
 image:
-    url: 'victoria-que-alivia-pero-no-tranquiliza.png'
+    url: '../../assets/blog/victoria-que-alivia-pero-no-tranquiliza.webp'
     alt: ''
 pubDate: 2023-03-06
 tags: ["Noticias"]

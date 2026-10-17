@@ -1,21 +1,16 @@
 ---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 import PrimaryCTA from "@components/ui/buttons/PrimaryCTA.astro";
-import { getCollection } from "astro:content";
 import { formatDate } from "@utils/utils";
 
-
-export async function getStaticPaths () {
-    const posts = await getCollection("posts");
-
-    return posts.map((post) => ({
-        params: { id: post.id },
-        props: { post }
-    }))
+interface Props {
+  post: CollectionEntry<"posts">;
 }
 
-const {post} = Astro.props
-const { data, id } = post
-const { title, author, image, pubDate } = data
+const { post } = Astro.props;
+const { data, id } = post;
+const { title, author, image, pubDate } = data;
 ---
 <div class="grid gap-8 sm:grid-cols-2 sm:items-center">
 
@@ -23,14 +18,22 @@ const { title, author, image, pubDate } = data
     <a class="group relative block rounded-xl outline-none transition duration-500 focus-visible:ring dark:focus:outline-none"
       href={`/blog/${id}`} transition:name={`title-${id}`}
       data-astro-prefetch
+      tabindex="-1"
+      aria-hidden="true"
     >
-      <div class="relative rounded-lg pt-[50%] sm:pt-[100%]">      
-        <img
-          class="absolute inset-s-0 top-0 size-full rounded-xl object-cover transition duration-500 group-hover:scale-105"
-          src={`/images/blog/${image.url}`}
-          alt={image.alt}
-          draggable={"false"}
-          loading={"eager"}
+      <div class="relative overflow-hidden rounded-xl bg-surface-2 pt-[50%] sm:pt-[100%]">
+        <!-- Es la imagen más grande de /blog (LCP): se carga con prioridad -->
+        <Image
+          src={image.url}
+          alt={image.alt || ""}
+          width={680}
+          height={680}
+          layout="constrained"
+          fit="cover"
+          sizes="(min-width: 640px) 50vw, 100vw"
+          priority
+          class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
+          draggable="false"
         />
       </div>
     </a>
@@ -48,11 +51,9 @@ const { title, author, image, pubDate } = data
     </h2>
 
     <div class="mt-6 flex items-center sm:mt-10">
-
-
       <div class="ms-3 sm:ms-4">
         <p class="font-bold text-textDark dark:text-neutral-200 sm:mb-1">
-          {author} • <span class="text-xs text-textLight dark:text-neutral-50/80">{formatDate(pubDate)}</span> 
+          {author} • <time class="text-xs text-textLight dark:text-neutral-50/80" datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         </p>
       </div>
     </div>

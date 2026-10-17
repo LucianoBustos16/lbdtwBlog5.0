@@ -2,7 +2,7 @@
 title: 'Bochornosa derrota'
 author: 'Mati Calandri'
 image:
-    url: 'Bochornosa-derrota.png'
+    url: '../../assets/blog/Bochornosa-derrota.webp'
     alt: 'Los jugadores de Belgrano en la foto grupal previa al partido.'
 pubDate: 2024-02-07
 tags: ["Noticias"]

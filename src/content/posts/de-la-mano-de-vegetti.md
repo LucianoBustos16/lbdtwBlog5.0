@@ -2,7 +2,7 @@
 title: 'De la mano de Vegetti'
 author: 'Mati Calandri'
 image:
-    url: 'de-la-mano-de-vegetti.png'
+    url: '../../assets/blog/de-la-mano-de-vegetti.webp'
     alt: ''
 pubDate: 2023-04-16
 tags: ["Noticias"]

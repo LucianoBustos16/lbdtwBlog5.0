@@ -2,7 +2,7 @@
 title: Un punto que suma poco
 author: Mati Calandri
 image:
-    url: "Passerini-DyJ.webp"
+    url: "../../assets/blog/Passerini-DyJ.webp"
     alt: "Passerini se acomoda para definir."
 pubDate: 2024-03-08
 tags: ["Analisis"]

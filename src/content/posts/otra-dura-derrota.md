@@ -2,7 +2,7 @@
 title: 'Otra dura derrota'
 author: 'Mati Calandri'
 image:
-    url: 'otra-dura-derrota.png'
+    url: '../../assets/blog/otra-dura-derrota.webp'
     alt: 'El colo Barinaga en plena acción'
 pubDate: 2024-02-11
 tags: ["Noticias"]

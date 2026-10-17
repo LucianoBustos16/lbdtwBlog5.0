@@ -2,7 +2,7 @@
 title: 'Belgrano recibe a River con la frente en alto'
 author: 'Bian Masuero'
 image:
-    url: 'belgrano-recibe-a-river-con-la-frente-en-alto.png'
+    url: '../../assets/blog/belgrano-recibe-a-river-con-la-frente-en-alto.webp'
     alt: ''
 pubDate: 2023-02-03
 tags: ["Noticias"]

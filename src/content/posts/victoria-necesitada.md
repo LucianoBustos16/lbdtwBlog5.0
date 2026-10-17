@@ -2,7 +2,7 @@
 title: 'Victoria necesitada'
 author: 'Mati Calandri'
 image:
-    url: 'victoria-necesitada.png'
+    url: '../../assets/blog/victoria-necesitada.webp'
     alt: ''
 pubDate: 2023-04-08
 tags: ["Noticias"]

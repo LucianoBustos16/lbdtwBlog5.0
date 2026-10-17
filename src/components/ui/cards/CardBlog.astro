@@ -1,18 +1,17 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { formatDate } from "@utils/utils";
-
-const { title, url, image, alt, author, date } = Astro.props;
-
 
 interface Props {
   title: string;
   url: string;
-  image: string;
-  alt: string;
+  image: ImageMetadata;
   author: string;
-  date: string;
+  date: Date | string;
 }
 
+const { title, url, image, author, date } = Astro.props;
 ---
 
 <a
@@ -20,36 +19,35 @@ interface Props {
   href={`/blog/${url}`}
   data-astro-prefetch
 >
-  <!-- The container for the blog post's cover image. Uses astro:assets' Image for image source -->
   <div
-    class="relative h-87.5 w-full shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-1 before:size-full before:bg-linear-to-t before:from-neutral-900/70"
+    class="relative h-87.5 w-full shrink-0 overflow-hidden rounded-xl bg-surface-2 before:absolute before:inset-x-0 before:z-1 before:size-full before:bg-linear-to-t before:from-neutral-900/70"
   >
-    <img
-      class="absolute inset-s-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
-      src={`/images/blog/${image}`}
-      alt={alt}
-      draggable={"false"}
-      loading={"eager"}
+    <!-- Decorativa: el título del link ya describe la nota -->
+    <Image
+      src={image}
+      alt=""
+      width={680}
+      height={350}
+      layout="constrained"
+      fit="cover"
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      loading="lazy"
+      class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-110"
+      draggable="false"
     />
   </div>
 
-  <!-- The container for the blog author's avatar and associated metadata (author name and publication date) -->
   <div class="absolute inset-x-0 top-0 z-10">
     <div class="flex h-full flex-col p-4 sm:p-6">
-      <div class="flex items-center">
-
-        <div class="ms-2.5 sm:ms-4 text-sm">
-          <h4 class="font-bold text-neutral-50">
-            {author}
-          </h4>
-          <p class="text-xs text-neutral-50/80">
-            {formatDate(date)}
-          </p>
-        </div>
+      <div class="ms-2.5 sm:ms-4 text-sm">
+        <p class="font-bold text-neutral-50">{author}</p>
+        <time class="text-xs text-neutral-50/80" datetime={new Date(date).toISOString()}>
+          {formatDate(date)}
+        </time>
       </div>
     </div>
   </div>
-  <!-- The container for the blog post's title and description -->
+
   <div class="absolute inset-x-0 bottom-0 z-10">
     <div class="flex h-full flex-col p-4 sm:p-6">
       <h3

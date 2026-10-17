@@ -1,18 +1,19 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { formatDate } from "@utils/utils";
 import Icon from "@/components/ui/icons/Icon.astro";
 
 interface Props {
-  image?: string;
+  image?: ImageMetadata;
   title: string;
-  alt?: string;
   url?: string;
   author?: string;
-  date?: string;
+  date?: Date | string;
   isViewAll?: boolean;
 }
 
-const { url, image, title, alt, author, date, isViewAll } = Astro.props;
+const { url, image, title, author, date, isViewAll } = Astro.props;
 ---
 
 {
@@ -20,8 +21,6 @@ const { url, image, title, alt, author, date, isViewAll } = Astro.props;
     <a
       href={url || "/blog"}
       class="group rounded-2xl h-142.5 w-80 snap-center relative shrink-0 cursor-pointer flex flex-col items-center justify-center gap-4 border-2 border-dashed border-border bg-surface-2 transition-all duration-300 hover:border-primary hover:bg-primary/10"
-      role="button"
-      tabindex="0"
     >
       <span class="flex size-16 items-center justify-center rounded-full bg-primary text-primary-ink shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
         <Icon icon="arrowRight" size="28" />
@@ -37,18 +36,21 @@ const { url, image, title, alt, author, date, isViewAll } = Astro.props;
   ) : (
     <a
       href={`/blog/${url || ""}`}
-      class="group rounded-2xl h-142.5 w-80 snap-center bg-primary relative shrink-0 cursor-pointer bg-center bg-size-[100%] hover:bg-size-[105%] transition-[background-size]"
-      role="button"
-      tabindex="0"
+      class="group rounded-2xl h-142.5 w-80 snap-center bg-surface-2 relative shrink-0 cursor-pointer"
+      data-astro-prefetch
     >
       <div class="relative h-full w-full shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-1 before:size-full before:bg-linear-to-t before:from-neutral-900/70">
         {image && (
-          <img
-            class="absolute inset-s-0 top-0 size-full object-cover transition duration-500 group-hover:scale-110"
-            src={`/images/blog/${image}`}
-            alt={alt}
-            draggable={"false"}
-            loading={"eager"}
+          <Image
+            src={image}
+            alt=""
+            width={320}
+            height={570}
+            layout="constrained"
+            fit="cover"
+            loading="lazy"
+            class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-110"
+            draggable="false"
           />
         )}
       </div>
@@ -60,9 +62,13 @@ const { url, image, title, alt, author, date, isViewAll } = Astro.props;
           </h3>
 
           {author && (
-            <div class="itext-sm">
-              <h4 class="font-bold text-neutral-50">{author}</h4>
-              <p class="text-xs text-neutral-50/80">{formatDate(date)}</p>
+            <div class="text-sm">
+              <p class="font-bold text-neutral-50">{author}</p>
+              {date && (
+                <time class="text-xs text-neutral-50/80" datetime={new Date(date).toISOString()}>
+                  {formatDate(date)}
+                </time>
+              )}
             </div>
           )}
         </div>

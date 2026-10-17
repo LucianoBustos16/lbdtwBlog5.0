@@ -2,7 +2,7 @@
 title: Desahogo
 author: Mati Calandri
 image:
-    url: "Desahogo.png"
+    url: "../../assets/blog/Desahogo.webp"
     alt: "Los jugadores hacen el historico festejo de Todos remando"
 pubDate: 2024-02-20
 tags: ["Analisis", "Noticias"]

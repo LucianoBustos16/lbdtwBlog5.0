@@ -2,7 +2,7 @@
 title: 'Si el jueves vas en auto ¡#LleváUnPirata a la cancha!'
 author: 'Mati Calandri'
 image:
-    url: 'belgrano-hinchas-kempes.webp'
+    url: '../../assets/blog/belgrano-hinchas-kempes.webp'
     alt: 'Estadio Kempes lleno por hinchas de Belgrano.'
 pubDate: 2024-05-07
 tags: ["Noticias"]

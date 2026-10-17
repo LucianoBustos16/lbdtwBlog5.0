@@ -2,7 +2,7 @@
 title: 'Gracias, Belgrano'
 author: 'Mati Calandri'
 image:
-    url: 'gracias-belgrano.png'
+    url: '../../assets/blog/gracias-belgrano.webp'
     alt: ''
 pubDate: 2022-09-27
 tags: ["Noticias"]

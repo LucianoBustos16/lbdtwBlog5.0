@@ -2,7 +2,7 @@
 title: Fin de ciclo
 author: Mati Calandri
 image:
-    url: "Guille-Farre.webp"
+    url: "../../assets/blog/Guille-Farre.webp"
     alt: "Guillermo Farre dando indicaciones"
 pubDate: 2024-03-13
 tags: ["Analisis", "Noticias"]

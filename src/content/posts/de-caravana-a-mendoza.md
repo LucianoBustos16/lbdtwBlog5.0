@@ -2,7 +2,7 @@
 title: 'De caravana a Mendoza'
 author: 'Bian Masuero'
 image:
-    url: 'de-caravana-a-mendoza.png'
+    url: '../../assets/blog/de-caravana-a-mendoza.webp'
     alt: ''
 pubDate: 2023-03-17
 tags: ["Noticias"]

@@ -2,7 +2,7 @@
 title: 'Empate con sabor amargo'
 author: 'Mati Calandri'
 image:
-    url: 'empate-con-sabor-amargo.png'
+    url: '../../assets/blog/empate-con-sabor-amargo.webp'
     alt: ''
 pubDate: 2024-02-01
 tags: ["Noticias"]

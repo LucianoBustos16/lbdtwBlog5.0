@@ -4,7 +4,7 @@ import { buildCards, renderMatchCards } from '@/lib/matchCards.js'
 
 // Datos al momento de compilar: se muestran de entrada y el navegador
 // los reemplaza enseguida con los actuales (ver script de abajo).
-let status = null
+let status: Awaited<ReturnType<typeof fetchMatchStatus>> | null = null
 try {
   status = await fetchMatchStatus(import.meta.env.RAPIDAPI_KEY)
 } catch (e) {
@@ -182,7 +182,7 @@ const cards = buildCards(status)
     if (!section || !container) return
     clearTimeout(timer)
 
-    let status = null
+    let status: any = null
     try {
       const res = await fetch('/api/nextmatch.json')
       if (res.ok) status = await res.json()

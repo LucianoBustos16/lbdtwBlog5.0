@@ -2,7 +2,7 @@
 title: Un clásico con todos los condimentos
 author: Mati Calandri
 image:
-    url: "resultado-final-Belgrano-Talleres.png"
+    url: "../../assets/blog/resultado-final-Belgrano-Talleres.webp"
     alt: "Resultado final, Belgrano 2 - Talleres 2"
 pubDate: 2024-02-25
 tags: ["Analisis", "Noticias"]

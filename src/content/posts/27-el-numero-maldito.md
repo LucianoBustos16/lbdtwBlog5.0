@@ -2,7 +2,7 @@
 title: '27, el número maldito'
 author: 'LBDTw'
 image:
-    url: '27-numero-maldito.jpeg'
+    url: '../../assets/blog/27-numero-maldito.webp'
     alt: 'Camiseta número 27 de Belgrano'
 pubDate: 2016-02-02
 tags: ["Noticias", "Belgrano", "Curiosidades"]
@@ -12,7 +12,7 @@ tags: ["Noticias", "Belgrano", "Curiosidades"]
 
 Desde que Belgrano volvió a Primera, aquella tarde del 26 de junio de 2011, comenzó una maldición difícil de dejar atrás: el número mufa, el 27. Apenas ascendió el pirata, debió repartir entre sus jugadores números únicos (al contrario de lo que hacía en la B Nacional, que repartía 11 entre los titulares). La 1 para el Juanca, la 10 para el Mudo, la 9 para Parodi… y la 27 le tocó al juvenil **Giuliano Bardín**. Hasta ahí nada mal.
 
-![Giuliano Bardín](/images/blog/bardin_0.webp)
+![Giuliano Bardín](../../assets/blog/bardin_0.webp)
 
 ¿Se acuerdan de Bardín? Extremo izquierdo, habilidoso, rápido, petiso con pinta de crack. En los partidos de reserva se destacaba por su desequilibrio, y la platea entera discutía porqué ese pibe no estaba en primera, si hasta tiene un video editado en YouTube que lo dejaría en las puertas del Camp Nou…
 
@@ -22,13 +22,13 @@ Si bien entraba pocos minutos en la Primera, su gran oportunidad sería jugar de
 
 El delantero, cuando se recuperó, ya había perdido lugar en el plantel ante las apariciones de tipos como Melano, Zelarayán y Tobías Figueroa, y se fue a jugar a Gimnasia de Jujuy, donde solo completó ¡1 partido! Su destino fue cruel, tan cruel que en 2015 llegó libre a Instituto.
 
-![Bardín en Instituto](/images/blog/hqdefault.jpg)
+![Bardín en Instituto](../../assets/blog/hqdefault.webp)
 
 ### El turno de Jerry
 
 El número 27 quedó libre tras la partida de Giuliano Bardín a Jujuy. Y en ese mercado de pases, llegaría el goleador innato proveniente de un país caribeño con una enorme tradición futbolística: el hondureño **Jerry Bengtson**, uno de los personajes más queribles de las últimas épocas.
 
-![Presentación de Jerry Bengtson](/images/blog/jerryb.jpg)
+![Presentación de Jerry Bengtson](../../assets/blog/jerryb.webp)
 
 Jerry, que fue anunciado con bombos y platillos, creó una expectativa inmensa en los corazones piratas. Lógicamente, por su atributo principal: ser un goleador de raza.
 
@@ -38,7 +38,7 @@ Todos recordamos su efímero paso por Alberdi: cientos de corridas sin sentido, 
 
 Luego de la partida de Jerry, el único 9 del equipo era Mauro Iván Óbolo. Belgrano contrató a **Luciano Becchio**, un delantero de amplia trayectoria en el ascenso inglés. Justo lo que necesitábamos.
 
-![Ficha de Becchio](/images/blog/becchio.jpg)
+![Ficha de Becchio](../../assets/blog/becchio.webp)
 
 Becchio llegó por un año y comentaba a la prensa que estaba bien físicamente, algo que nunca pudimos comprobar en los partidos. Apenas llegó, desde el club lo bendijeron con la camiseta que había dejado Jerry: la número 27.
 
