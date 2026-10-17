@@ -1,0 +1,21 @@
+---
+// Página de prueba del hero v2 (bengala + humo). No está en el menú.
+import Layout from '../layouts/Layout.astro';
+import HeroBengala from "../components/sections/landing/HeroBengala.astro";
+import CardNextMatch from "@/components/ui/cards/CardNextMatch.astro";
+import Carousel from '@/components/sections/landing/Carousel.astro';
+
+const pageTitle = "Hero v2";
+---
+
+<Layout title={pageTitle}>
+	<HeroBengala
+    title=`Hinchas de <span class="text-sky-500">Belgrano</span>`
+    subTitle="Políticamente Incorrectos"
+    color="celeste"
+	/>
+
+	<CardNextMatch />
+
+	<Carousel/>
+</Layout>

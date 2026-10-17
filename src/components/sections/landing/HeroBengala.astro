@@ -1,0 +1,162 @@
+---
+import HeroLogo from './HeroLogo.astro';
+
+interface Props {
+  title: string;
+  subTitle?: string;
+  /** Color de la bengala */
+  color?: 'celeste' | 'lima' | 'roja';
+}
+
+const { title, subTitle, color = 'celeste' } = Astro.props;
+---
+
+<section class="hb" data-hero-bengala data-color={color}>
+  <div class="hb-scene" aria-hidden="true">
+    <canvas class="hb-smoke" data-smoke></canvas>
+    <canvas class="hb-sparks" data-sparks></canvas>
+    <div class="hb-fade"></div>
+  </div>
+
+  <div class="hb-content">
+    <HeroLogo />
+    <h1 class="hb-title font-display" data-title set:html={title} />
+    {subTitle && <p class="hb-sub font-display">{subTitle}</p>}
+  </div>
+
+  <span class="hb-hint font-display" aria-hidden="true">Mové la bengala</span>
+</section>
+
+<script>
+  import { initHeroBengala } from '@/lib/heroBengala';
+  const boot = () =>
+    document.querySelectorAll<HTMLElement>('[data-hero-bengala]').forEach(initHeroBengala);
+  boot();
+  document.addEventListener('astro:page-load', boot);
+</script>
+
+<style>
+  /* El humo ocupa todo el ancho aunque el layout tenga max-width */
+  :global(body) { overflow-x: clip; }
+
+  .hb {
+    --bleed: 0px;
+    --glow: 110 205 255;
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #e7ecf3;
+    cursor: crosshair;
+    touch-action: pan-y;
+  }
+  @media (min-width: 1024px) {
+    /* se mete detrás del header flotante */
+    .hb { --bleed: 96px; min-height: calc(100svh - var(--bleed)); }
+  }
+
+  .hb-scene {
+    position: absolute;
+    z-index: -1;
+    top: calc(-1 * var(--bleed));
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    background: #03050a;
+    overflow: hidden;
+  }
+  .hb-smoke, .hb-sparks {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hb-smoke { animation: hb-in 1.6s ease-out both; }
+
+  /* Fundido hacia el fondo de la página (sirve en modo claro y oscuro) */
+  .hb-fade {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 28%;
+    background: linear-gradient(to bottom, transparent, var(--bg-web));
+    pointer-events: none;
+  }
+
+  /* Sin WebGL: gradiente que sigue a la bengala */
+  :global(.hb-no-gl) .hb-scene {
+    background:
+      radial-gradient(circle 380px at var(--fx, 50%) var(--fy, 70%), rgb(var(--glow) / .45), transparent 70%),
+      #03050a;
+  }
+
+  .hb-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-inline: 16px;
+    pointer-events: none;
+  }
+  .hb-content :global(svg) {
+    filter: drop-shadow(0 6px 24px rgb(var(--glow) / .35));
+  }
+
+  .hb-title {
+    margin: 1.25rem 0 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: .88;
+    letter-spacing: -.01em;
+    font-size: clamp(3.4rem, 13vw, 10rem);
+    text-wrap: balance;
+    animation: hb-up .9s .5s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .hb-title :global(.hb-word) { display: inline-block; white-space: nowrap; }
+  .hb-title :global(.hb-ch) {
+    --k: 0; --sx: 0px; --sy: 6px;
+    display: inline-block;
+    color: color-mix(in oklab, currentColor, #fff calc(var(--k) * 75%));
+    text-shadow:
+      0 0 calc(var(--k) * 28px) rgb(var(--glow) / calc(var(--k) * .95)),
+      var(--sx) var(--sy) calc(3px + var(--k) * 6px) rgb(0 0 0 / calc(.35 + var(--k) * .45));
+  }
+
+  .hb-sub {
+    margin: 1rem 0 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .35em;
+    font-size: clamp(.85rem, 2.2vw, 1.25rem);
+    color: rgb(255 255 255 / .6);
+    animation: hb-up .9s .8s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .hb-hint {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: .75rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / .35);
+    white-space: nowrap;
+    animation: hb-hint 6s 2s ease-in-out both;
+    pointer-events: none;
+  }
+
+  @keyframes hb-in { from { opacity: 0; } }
+  @keyframes hb-up { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } }
+  @keyframes hb-hint { 0%, 100% { opacity: 0; } 15%, 75% { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hb-smoke, .hb-title, .hb-sub { animation: none; }
+    .hb-hint { display: none; }
+  }
+</style>
